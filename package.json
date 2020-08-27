@@ -1,0 +1,11 @@
+{
+  "name": "viewer-communication",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.softneta.com/MedDream/viewer-communication.git"
+  },
+  "author": "UAB Softneta",
+  "license": "UNLICENSED"
+}
