@@ -13,6 +13,7 @@ Parameters:
 - `integration` (Optional) - Integration type: `study` or `token`. Default value: `study`.
 
 ##Window reference functions
+
 ####Get available Viewer window reference
 ```js
 const windowReference = viewerCommunication.getWindowReference();
@@ -36,6 +37,7 @@ Parameters:
 For more details about available action messages check: `MedDream communication documentation`
 
 ##Functions to open MedDream Viewer
+
 ####Open studies in MedDream
 ```js
 viewerCommunication.openInMedDream(studies/token);
@@ -67,7 +69,9 @@ Parameters:
 - `token` (For `token` integration) - Token with study information.
 
 ##Communication functions
+
 ###Functions only for Study integration
+
 ####Open study
 ```js
 viewerCommunication.openStudy(study);
@@ -120,6 +124,7 @@ const studies = [
 ```
 
 ###Functions only for Token integration
+
 ####Open studies
 ```js
 viewerCommunication.openStudies(token);
@@ -148,6 +153,7 @@ Parameter:
 - `token` - Generated token with studies information.
 
 ###Common functions
+
 ####Preload all studies
 ```js
 viewerCommunication.preloadAllStudies();
