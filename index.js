@@ -32,11 +32,35 @@
             windowReference = window.open(`${targetURL}?${integrationType}=${value}&replace=true`, "_blank");
         };
 
-        /*if (integration === 'study') {
+        if (integrationType === 'study') {
+            functions.openStudy = function (study) {
+                this.postActionMessage("OPEN_STUDY", {study});
+            };
 
+            functions.openStudies = function (studies) {
+                this.postActionMessage("OPEN_STUDIES", {studies});
+            };
+
+            functions.replaceStudies = function (studies) {
+                this.postActionMessage("REPLACE_STUDIES", {studies});
+            };
+
+            functions.preloadStudies = function (studies) {
+                this.postActionMessage("PRELOAD_STUDIES", {studies});
+            };
         } else {
+            functions.openStudies = function (token) {
+                this.postActionMessage("OPEN_STUDIES_WITH_TOKEN", {token});
+            };
 
-        }*/
+            functions.replaceStudies = function (token) {
+                this.postActionMessage("REPLACE_STUDIES_WITH_TOKEN", {token});
+            };
+
+            functions.preloadStudies = function (token) {
+                this.postActionMessage("PRELOAD_STUDIES_WITH_TOKEN", {token});
+            };
+        }
 
         return functions;
     }
