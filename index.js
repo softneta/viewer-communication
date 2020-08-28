@@ -13,6 +13,13 @@
             return windowReference;
         };
 
+        functions.focusWindow = function () {
+            const reference = this.getWindowReference();
+            if (reference) {
+                reference.focus();
+            }
+        };
+
         functions.postActionMessage = function (actionType, actionData) {
             const reference = this.getWindowReference();
             if (reference) {
@@ -61,6 +68,22 @@
                 this.postActionMessage("PRELOAD_STUDIES_WITH_TOKEN", {token});
             };
         }
+
+        functions.preloadAllStudies = function () {
+            this.postActionMessage("PRELOAD_ALL_STUDIES");
+        };
+
+        functions.closeAllStudies = function () {
+            this.postActionMessage("CLOSE_ALL_STUDIES");
+        };
+
+        functions.setLayout = function (columns, rows) {
+            this.postActionMessage("SET_LAYOUT", {columns, rows});
+        };
+
+        functions.openInstance = function (instanceUid, viewportColumn, viewportRow, viewportActions) {
+            this.postActionMessage("OPEN_INSTANCE", {instanceUid, viewportColumn, viewportRow, viewportActions});
+        };
 
         return functions;
     }
