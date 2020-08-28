@@ -1,12 +1,88 @@
 (function(globals) {
     'use strict';
 
-    function ViewerCommunication (url) {
-        const targetURL = url;
+    function ViewerCommunication (targetURL, integration = 'study') {
+        let windowReference;
+        const integrationType = integration === 'study' ? 'study' : 'token';
         const functions = {};
 
-        functions.test = function () {
-            console.log(targetURL);
+        functions.getWindowReference = function () {
+            if (!windowReference || windowReference && windowReference.closed) {
+                windowReference = window.open('', 'MedDreamViewer');
+            }
+            return windowReference;
+        };
+
+        functions.focusWindow = function () {
+            const reference = this.getWindowReference();
+            if (reference) {
+                reference.focus();
+            }
+        };
+
+        functions.postActionMessage = function (actionType, actionData) {
+            const reference = this.getWindowReference();
+            if (reference) {
+                reference.postMessage({actionType, actionData}, targetURL);
+            }
+        };
+
+        functions.openInMedDream = function (value) {
+            windowReference = window.open(`${targetURL}?${integrationType}=${value}`, "_blank");
+        };
+
+        functions.addToMedDream = function (value) {
+            windowReference = window.open(`${targetURL}?${integrationType}=${value}&add=true`, "_blank");
+        };
+
+        functions.replaceInMedDream = function (value) {
+            windowReference = window.open(`${targetURL}?${integrationType}=${value}&replace=true`, "_blank");
+        };
+
+        if (integrationType === 'study') {
+            functions.openStudy = function (study) {
+                this.postActionMessage("OPEN_STUDY", {study});
+            };
+
+            functions.openStudies = function (studies) {
+                this.postActionMessage("OPEN_STUDIES", {studies});
+            };
+
+            functions.replaceStudies = function (studies) {
+                this.postActionMessage("REPLACE_STUDIES", {studies});
+            };
+
+            functions.preloadStudies = function (studies) {
+                this.postActionMessage("PRELOAD_STUDIES", {studies});
+            };
+        } else {
+            functions.openStudies = function (token) {
+                this.postActionMessage("OPEN_STUDIES_WITH_TOKEN", {token});
+            };
+
+            functions.replaceStudies = function (token) {
+                this.postActionMessage("REPLACE_STUDIES_WITH_TOKEN", {token});
+            };
+
+            functions.preloadStudies = function (token) {
+                this.postActionMessage("PRELOAD_STUDIES_WITH_TOKEN", {token});
+            };
+        }
+
+        functions.preloadAllStudies = function () {
+            this.postActionMessage("PRELOAD_ALL_STUDIES");
+        };
+
+        functions.closeAllStudies = function () {
+            this.postActionMessage("CLOSE_ALL_STUDIES");
+        };
+
+        functions.setLayout = function (columns, rows) {
+            this.postActionMessage("SET_LAYOUT", {columns, rows});
+        };
+
+        functions.openInstance = function (instanceUid, viewportColumn, viewportRow, viewportActions) {
+            this.postActionMessage("OPEN_INSTANCE", {instanceUid, viewportColumn, viewportRow, viewportActions});
         };
 
         return functions;
