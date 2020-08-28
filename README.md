@@ -1,4 +1,5 @@
 #MedDream Viewer Communication
+
 ##Add component to your project
 Import and create new Viewer Communication component in your project:
 
@@ -12,17 +13,17 @@ Parameters:
 - `integration` (Optional) - Integration type: `study` or `token`. Default value: `study`.
 
 ##Window reference functions
-#####Get available Viewer window reference
+####Get available Viewer window reference
 ```js
 const windowReference = viewerCommunication.getWindowReference();
 ```
 
-#####Focus available window
+####Focus available window
 ```js
 viewerCommunication.focusWindow();
 ```
 
-#####Post action message to MedDream Viewer
+####Post action message to MedDream Viewer
 ```js
 viewerCommunication.postActionMessage(actionType, actionData);
 ```
@@ -35,7 +36,7 @@ Parameters:
 For more details about available action messages check: `MedDream communication documentation`
 
 ##Functions to open MedDream Viewer
-#####Open studies in MedDream
+####Open studies in MedDream
 ```js
 viewerCommunication.openInMedDream(studies/token);
 ```
@@ -45,7 +46,7 @@ Parameters:
 - `studies` (For `study` integration) - Study uid's list separated with `,`;
 - `token` (For `token` integration) - Token with study information.
 
-#####Add studies to MedDream
+####Add studies to MedDream
 ```js
 viewerCommunication.addToMedDream(studies/token);
 ```
@@ -55,7 +56,7 @@ Parameters:
 - `studies` (For `study` integration) - Study uid's list separated with `,`;
 - `token` (For `token` integration) - Token with study information.
 
-#####Replace studies in MedDream
+####Replace studies in MedDream
 ```js
 viewerCommunication.replaceInMedDream(studies/token);
 ```
@@ -67,7 +68,7 @@ Parameters:
 
 ##Communication functions
 ###Functions only for Study integration
-#####Open study
+####Open study
 ```js
 viewerCommunication.openStudy(study);
 ```
@@ -76,7 +77,7 @@ Parameter:
 
 - `study` - Study uid.
 
-#####Open studies
+####Open studies
 ```js
 viewerCommunication.openStudies(studies);
 ```
@@ -85,7 +86,7 @@ Parameter:
 
 - `studies` - Array of study uid's.
 
-#####Replace studies
+####Replace studies
 ```js
 viewerCommunication.replaceStudies(studies);
 ```
@@ -94,7 +95,7 @@ Parameter:
 
 - `studies` - Array of study uid's.
 
-#####Preload studies
+####Preload studies
 ```js
 viewerCommunication.preloadStudies(studies);
 ```
@@ -119,7 +120,7 @@ const studies = [
 ```
 
 ###Functions only for Token integration
-#####Open studies
+####Open studies
 ```js
 viewerCommunication.openStudies(token);
 ```
@@ -128,7 +129,7 @@ Parameter:
 
 - `token` - Generated token with studies information.
 
-#####Replace studies
+####Replace studies
 ```js
 viewerCommunication.replaceStudies(token);
 ```
@@ -137,7 +138,7 @@ Parameter:
 
 - `token` - Generated token with studies information.
 
-#####Preload studies
+####Preload studies
 ```js
 viewerCommunication.preloadStudies(token);
 ```
@@ -147,17 +148,17 @@ Parameter:
 - `token` - Generated token with studies information.
 
 ###Common functions
-#####Preload all studies
+####Preload all studies
 ```js
 viewerCommunication.preloadAllStudies();
 ```
 
-#####Close all studies
+####Close all studies
 ```js
 viewerCommunication.closeAllStudies();
 ```
 
-#####Set layout
+####Set layout
 ```js
 viewerCommunication.setLayout(columns, rows);
 ```
@@ -167,7 +168,7 @@ Parameters:
 - `columns` - Number of columns;
 - `rows` - Number of rows.
 
-#####Open instance
+####Open instance
 ```js
 viewerCommunication.openInstance(instanceUid, viewportColumn, viewportRow, viewportActions);
 ```
