@@ -1,10 +1,13 @@
 #MedDream Viewer Communication
 ##Add component to your project
 Import and create new Viewer Communication component in your project:
+
 ```js
 const viewerCommunication = new ViewerCommunication(targetURL, integration);
 ```
+
 Parameters:
+
 - `targetURL` - MedDream Viewer URL;
 - `integration` (Optional) - Integration type: `study` or `token`. Default value: `study`.
 
@@ -23,7 +26,9 @@ viewerCommunication.focusWindow();
 ```js
 viewerCommunication.postActionMessage(actionType, actionData);
 ```
+
 Parameters:
+
 - `actionType` - Action message command type;
 - `actionData` - Data needed for action message.
 
@@ -34,7 +39,9 @@ For more details about available action messages check: `MedDream communication 
 ```js
 viewerCommunication.openInMedDream(studies/token);
 ```
+
 Parameters:
+
 - `studies` (For `study` integration) - Study uid's list separated with `,`;
 - `token` (For `token` integration) - Token with study information.
 
@@ -42,7 +49,9 @@ Parameters:
 ```js
 viewerCommunication.addToMedDream(studies/token);
 ```
+
 Parameters:
+
 - `studies` (For `study` integration) - Study uid's list separated with `,`;
 - `token` (For `token` integration) - Token with study information.
 
@@ -50,7 +59,9 @@ Parameters:
 ```js
 viewerCommunication.replaceInMedDream(studies/token);
 ```
+
 Parameters:
+
 - `studies` (For `study` integration) - Study uid's list separated with `,`;
 - `token` (For `token` integration) - Token with study information.
 
@@ -60,31 +71,40 @@ Parameters:
 ```js
 viewerCommunication.openStudy(study);
 ```
+
 Parameter:
+
 - `study` - Study uid.
 
 #####Open studies
 ```js
 viewerCommunication.openStudies(studies);
 ```
+
 Parameter:
+
 - `studies` - Array of study uid's.
 
 #####Replace studies
 ```js
 viewerCommunication.replaceStudies(studies);
 ```
+
 Parameter:
+
 - `studies` - Array of study uid's.
 
 #####Preload studies
 ```js
 viewerCommunication.preloadStudies(studies);
 ```
+
 Parameter:
+
 - `studies` - Array of study objects. Each study object has **_studyUid_** and **_storageId_** parameters.
 
 Array example:
+
 ```js
 const studies = [
     {
@@ -103,21 +123,27 @@ const studies = [
 ```js
 viewerCommunication.openStudies(token);
 ```
+
 Parameter:
+
 - `token` - Generated token with studies information.
 
 #####Replace studies
 ```js
 viewerCommunication.replaceStudies(token);
 ```
+
 Parameter:
+
 - `token` - Generated token with studies information.
 
 #####Preload studies
 ```js
 viewerCommunication.preloadStudies(token);
 ```
+
 Parameter:
+
 - `token` - Generated token with studies information.
 
 ###Common functions
@@ -135,7 +161,9 @@ viewerCommunication.closeAllStudies();
 ```js
 viewerCommunication.setLayout(columns, rows);
 ```
+
 Parameters:
+
 - `columns` - Number of columns;
 - `rows` - Number of rows.
 
@@ -143,13 +171,16 @@ Parameters:
 ```js
 viewerCommunication.openInstance(instanceUid, viewportColumn, viewportRow, viewportActions);
 ```
+
 Parameters:
+
 - `instanceUid` - Unique instance uid which has to be opened to viewport;
 - `viewportColumn` - Column number of desired viewport;
 - `viewportRow` - Row number of desired viewport;
 - `viewportActions` - Object of actions which have to be performed on viewport after instance is loaded.
 
 Available viewport actions:
+
 - `windowing` - Windowing level. Available options: **_"DEFAULT"_**, **_"AUTO"_**, **_"CUSTOM"_**.
 If **_"CUSTOM"_** windowing is selected, **_customWindowing_** parameter has to be defined in **_viewportActions_** object;
 - `customWindowing` - Custom windowing level. This parameter allows to set custom windowing **_width_** and **_center_** levels.
@@ -163,6 +194,7 @@ If **_"CUSTOM"_** scale is selected, **_customScale_** parameter has to be defin
 - `alignment` - Instance alignment in viewport. Available options: **_"RIGHT"_**, **_"LEFT"_**, **_"CENTER"_**.
 
 Viewport actions object example:
+
 ```js
 const viewportActions = {
     windowing: 'CUSTOM',                    //DEFAULT, AUTO, CUSTOM
