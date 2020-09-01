@@ -114,6 +114,10 @@
             this.postActionMessage('SET_LAYOUT', {columns, rows});
         };
 
+        functions.exportActiveInstance = function () {
+            this.postActionMessage('EXPORT_ACTIVE_INSTANCE');
+        };
+
         functions.openInstance = function (instanceUid, viewportColumn, viewportRow, viewportActions) {
             this.postActionMessage('OPEN_INSTANCE', {instanceUid, viewportColumn, viewportRow, viewportActions});
         };
