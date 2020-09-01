@@ -258,6 +258,6 @@ viewerCommunication.getOpenedStudies();
 
 Usage:
 
-- Register onGetOpenedStudies callback function;
-- Call getOpenedStudies function to request opened studies callback;
-- Once message is processed, callback function will be triggered with opened studies array.
+- Register **_onGetOpenedStudies_** **_callback_** function;
+- Call **_getOpenedStudies_** function to request opened studies callback;
+- Once message is processed, **_callback_** function will be triggered with opened studies array.
