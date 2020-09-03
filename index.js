@@ -118,8 +118,8 @@
             this.postActionMessage('OPEN_INSTANCE', {instanceUid, viewportColumn, viewportRow, viewportActions});
         };
 
-        functions.exportActiveInstance = function () {
-            this.postActionMessage('EXPORT_ACTIVE_INSTANCE');
+        functions.exportInstance = function (viewportColumn, viewportRow) {
+            this.postActionMessage('EXPORT_INSTANCE', {viewportColumn, viewportRow});
         };
 
         functions.getOpenedStudies = function () {

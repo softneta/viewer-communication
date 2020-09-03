@@ -244,10 +244,17 @@ const viewportActions = {
 };
 ```
 
-#### Export active instance
+#### Export instance
 ```js
-viewerCommunication.exportActiveInstance();
+viewerCommunication.exportInstance(viewportColumn, viewportRow);
 ```
+
+Parameters:
+
+- `viewportColumn` (Optional) - Column number of desired viewport;
+- `viewportRow` (Optional) - Row number of desired viewport;
+
+Currently active viewport instance is exported, if `viewportColumn` and `viewportRow` are not provided.
 
 #### Get opened studies
 ```js
