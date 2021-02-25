@@ -81,6 +81,10 @@
                 this.postActionMessage('PRELOAD_STUDIES', {studies});
             };
 
+            functions.cacheStudies = function (studies) {
+                this.postActionMessage('CACHE_STUDIES', {studies});
+            };
+
             functions.closeStudies = function (studies) {
                 this.postActionMessage('CLOSE_STUDIES', {studies});
             };
@@ -97,13 +101,17 @@
                 this.postActionMessage('PRELOAD_STUDIES_WITH_TOKEN', {token});
             };
 
+            functions.cacheStudies = function (token) {
+                this.postActionMessage('CACHE_STUDIES_WITH_TOKEN', {token});
+            };
+
             functions.closeStudies = function (token) {
                 this.postActionMessage('CLOSE_STUDIES_WITH_TOKEN', {token});
             };
         }
 
-        functions.preloadAllStudies = function () {
-            this.postActionMessage('PRELOAD_ALL_STUDIES');
+        functions.cacheAllStudies = function () {
+            this.postActionMessage('CACHE_ALL_STUDIES');
         };
 
         functions.closeAllStudies = function () {
