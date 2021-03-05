@@ -106,6 +106,15 @@ viewerCommunication.preloadStudies(studies);
 
 Parameter:
 
+- `studies` - Array of study uid's.
+
+#### Cache studies
+```js
+viewerCommunication.cacheStudies(studies);
+```
+
+Parameter:
+
 - `studies` - Array of study objects. Each study object has **_studyUid_** and **_storageId_** parameters.
 
 Array example:
@@ -172,6 +181,15 @@ Parameter:
 
 - `token` - Generated token with studies information.
 
+#### Cache studies
+```js
+viewerCommunication.cacheStudies(token);
+```
+
+Parameter:
+
+- `token` - Generated token with studies information.
+
 #### Close studies
 ```js
 viewerCommunication.closeStudies(token);
@@ -183,9 +201,9 @@ Parameter:
 
 ### Common functions
 
-#### Preload all studies
+#### Cache all studies
 ```js
-viewerCommunication.preloadAllStudies();
+viewerCommunication.cacheAllStudies();
 ```
 
 #### Close all studies
