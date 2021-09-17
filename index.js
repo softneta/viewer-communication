@@ -3,9 +3,8 @@
 
     function ViewerCommunication (targetURL, integration = 'study') {
         let windowReference;
-        let messageReceivedEvent;
-        let onGetOpenedStudiesCallback;
         const integrationType = integration === 'study' ? 'study' : 'token';
+        const callbacks = {};
         const functions = {};
 
         functions.getWindowReference = function () {
@@ -30,9 +29,7 @@
         };
 
         functions.registerMessageReceivedEvent = function () {
-            if (!messageReceivedEvent) {
-                messageReceivedEvent = window.addEventListener('message', this.onMessageReceived.bind(this));
-            }
+            window.addEventListener('message', this.onMessageReceived.bind(this));
         };
 
         functions.onMessageReceived = function ({data, origin}) {
@@ -42,14 +39,45 @@
         };
 
         functions.performCallback = function (actionType, actionData) {
-            if (actionType === 'GET_OPENED_STUDIES' && onGetOpenedStudiesCallback) {
-                onGetOpenedStudiesCallback(actionData.studies);
+            if (actionType === 'COMMUNICATION_SERVICE_READY') {
+                this.performOnCommunicationServiceReadyCallback();
+            }
+            if (actionType === 'GET_OPENED_STUDIES') {
+                this.performOnGetOpenedStudiesCallback(actionData);
+            }
+            if (actionType === 'ANNOTATION_SAVED') {
+                this.performOnAnnotationSavedCallback(actionData);
             }
         };
 
+        functions.performOnCommunicationServiceReadyCallback = function () {
+            if (callbacks.onCommunicationServiceReadyCallback) {
+                callbacks.onCommunicationServiceReadyCallback();
+            }
+        }
+
+        functions.performOnGetOpenedStudiesCallback = function (actionData) {
+            if (callbacks.onGetOpenedStudiesCallback) {
+                callbacks.onGetOpenedStudiesCallback(actionData);
+            }
+        }
+
+        functions.performOnAnnotationSavedCallback = function (actionData) {
+            if (callbacks.onAnnotationSavedCallback) {
+                callbacks.onAnnotationSavedCallback(actionData);
+            }
+        }
+
+        functions.onCommunicationServiceReady = function (callback) {
+            callbacks.onCommunicationServiceReadyCallback = callback;
+        }
+
         functions.onGetOpenedStudies = function (callback) {
-            this.registerMessageReceivedEvent();
-            onGetOpenedStudiesCallback = callback;
+            callbacks.onGetOpenedStudiesCallback = callback;
+        };
+
+        functions.onAnnotationSaved = function (callback) {
+            callbacks.onAnnotationSavedCallback = callback;
         };
 
         functions.openInMedDream = function (value) {
@@ -133,6 +161,16 @@
         functions.getOpenedStudies = function () {
             this.postActionMessage('GET_OPENED_STUDIES');
         };
+
+        functions.subscribeEvent = function (eventType, callback) {
+            this.postActionMessage('SUBSCRIBE_EVENT', {eventType, callback});
+        };
+
+        functions.unsubscribeEvent = function (eventType) {
+            this.postActionMessage('UNSUBSCRIBE_EVENT', {eventType});
+        };
+
+        functions.registerMessageReceivedEvent();
 
         return functions;
     }
