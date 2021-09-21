@@ -52,16 +52,22 @@
             onGetOpenedStudiesCallback = callback;
         };
 
-        functions.openInMedDream = function (value) {
+        functions.openInMedDreamWindow = function (value) {
             windowReference = window.open(`${targetURL}?${integrationType}=${value}`, '_blank');
         };
 
-        functions.addToMedDream = function (value) {
+        functions.addToMedDreamWindow = function (value) {
             windowReference = window.open(`${targetURL}?${integrationType}=${value}&add=true`, '_blank');
         };
 
-        functions.replaceInMedDream = function (value) {
+        functions.replaceInMedDreamWindow = function (value) {
             windowReference = window.open(`${targetURL}?${integrationType}=${value}&replace=true`, '_blank');
+        };
+
+        functions.openMedDreamToIframe = function (iframeId, value) {
+            const iframe = document.getElementById(iframeId);
+            iframe.src = `${targetURL}?${integrationType}=${value}`;
+            windowReference = iframe.contentWindow;
         };
 
         if (integrationType === 'study') {

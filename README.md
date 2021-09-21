@@ -38,9 +38,9 @@ For more details about available action messages check: `MedDream communication 
 
 ## Functions to open MedDream Viewer
 
-#### Open studies in MedDream
+#### Open studies in MedDream Viewer window
 ```js
-viewerCommunication.openInMedDream(studies/token);
+viewerCommunication.openInMedDreamWindow(studies/token);
 ```
 
 Parameters:
@@ -48,9 +48,9 @@ Parameters:
 - `studies` (For `study` integration) - Study uid's list separated with `,`;
 - `token` (For `token` integration) - Token with study information.
 
-#### Add studies to MedDream
+#### Add studies to MedDream Viewer window
 ```js
-viewerCommunication.addToMedDream(studies/token);
+viewerCommunication.addToMedDreamWindow(studies/token);
 ```
 
 Parameters:
@@ -58,13 +58,23 @@ Parameters:
 - `studies` (For `study` integration) - Study uid's list separated with `,`;
 - `token` (For `token` integration) - Token with study information.
 
-#### Replace studies in MedDream
+#### Replace studies in MedDream Viewer window
 ```js
-viewerCommunication.replaceInMedDream(studies/token);
+viewerCommunication.replaceInMedDreamWindow(studies/token);
 ```
 
 Parameters:
 
+- `studies` (For `study` integration) - Study uid's list separated with `,`;
+- `token` (For `token` integration) - Token with study information.
+
+#### Open MedDream with studies to iframe
+```js
+viewerCommunication.openMedDreamToIframe(iframeId, studies/token);
+```
+
+Parameters:
+- `iframeId` - Iframe element id;
 - `studies` (For `study` integration) - Study uid's list separated with `,`;
 - `token` (For `token` integration) - Token with study information.
 
