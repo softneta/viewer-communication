@@ -9,7 +9,7 @@ const viewerCommunication = new ViewerCommunication(targetURL, integration);
 
 Parameters:
 
-- `targetURL` - MedDream Viewer URL;
+- `targetURL` - MedDream Viewer URL.
 - `integration` (Optional) - Integration type: `study` or `token`. Default value: `study`.
 
 ## Window reference functions
@@ -31,41 +31,52 @@ viewerCommunication.postActionMessage(actionType, actionData);
 
 Parameters:
 
-- `actionType` - Action message command type;
+- `actionType` - Action message command type.
 - `actionData` - Data needed for action message.
 
-For more details about available action messages check: `MedDream communication documentation`
+For more details about available action messages check: `MedDream communication documentation`.
 
 ## Functions to open MedDream Viewer
 
-#### Open studies in MedDream
+#### Open studies in MedDream Viewer window
 ```js
-viewerCommunication.openInMedDream(studies/token);
+viewerCommunication.openInMedDreamWindow(studies/token);
 ```
 
 Parameters:
 
-- `studies` (For `study` integration) - Study uid's list separated with `,`;
+- `studies` (For `study` integration) - Study uid's list separated with `,`.
 - `token` (For `token` integration) - Token with study information.
 
-#### Add studies to MedDream
+#### Add studies to MedDream Viewer window
 ```js
-viewerCommunication.addToMedDream(studies/token);
+viewerCommunication.addToMedDreamWindow(studies/token);
 ```
 
 Parameters:
 
-- `studies` (For `study` integration) - Study uid's list separated with `,`;
+- `studies` (For `study` integration) - Study uid's list separated with `,`.
 - `token` (For `token` integration) - Token with study information.
 
-#### Replace studies in MedDream
+#### Replace studies in MedDream Viewer window
 ```js
-viewerCommunication.replaceInMedDream(studies/token);
+viewerCommunication.replaceInMedDreamWindow(studies/token);
 ```
 
 Parameters:
 
-- `studies` (For `study` integration) - Study uid's list separated with `,`;
+- `studies` (For `study` integration) - Study uid's list separated with `,`.
+- `token` (For `token` integration) - Token with study information.
+
+#### Open MedDream with studies to iframe
+```js
+viewerCommunication.openMedDreamToIframe(iframeId, studies/token);
+```
+
+Parameters:
+
+- `iframeId` - Iframe element id.
+- `studies` (For `study` integration) - Study uid's list separated with `,`.
 - `token` (For `token` integration) - Token with study information.
 
 ## Communication functions
@@ -218,7 +229,7 @@ viewerCommunication.setLayout(columns, rows);
 
 Parameters:
 
-- `columns` - Number of columns;
+- `columns` - Number of columns.
 - `rows` - Number of rows.
 
 #### Open instance
@@ -228,20 +239,20 @@ viewerCommunication.openInstance(instanceUid, viewportColumn, viewportRow, viewp
 
 Parameters:
 
-- `instanceUid` - Unique instance uid which has to be opened to viewport;
-- `viewportColumn` - Column number of desired viewport;
-- `viewportRow` - Row number of desired viewport;
+- `instanceUid` - Unique instance uid which has to be opened to viewport.
+- `viewportColumn` - Column number of desired viewport.
+- `viewportRow` - Row number of desired viewport.
 - `viewportActions` - Object of actions which have to be performed on viewport after instance is loaded.
 
 Available viewport actions:
 
 - `windowing` - Windowing level. Available options: **_"DEFAULT"_**, **_"AUTO"_**, **_"CUSTOM"_**.
-If **_"CUSTOM"_** windowing is selected, **_customWindowing_** parameter has to be defined in **_viewportActions_** object;
+If **_"CUSTOM"_** windowing is selected, **_customWindowing_** parameter has to be defined in **_viewportActions_** object.
 - `customWindowing` - Custom windowing level. This parameter allows to set custom windowing **_width_** and **_center_** levels.
-**_customWindowing_** has to be defined only when **_"CUSTOM"_** windowing is selected;
-- `rotation` - Instance rotation by defined number of degrees;
-- `verticalFlip` - Vertical instance flip. Available options: **_true_**/**_false_**;
-- `horizontalFlip` - Horizontal instance flip. Available options: **_true_**/**_false_**;
+**_customWindowing_** has to be defined only when **_"CUSTOM"_** windowing is selected.
+- `rotation` - Instance rotation by defined number of degrees.
+- `verticalFlip` - Vertical instance flip. Available options: **_true_**/**_false_**.
+- `horizontalFlip` - Horizontal instance flip. Available options: **_true_**/**_false_**.
 - `scale` - Instance scaling option. Available options: **_"ORIGINAL"_**, **_"FIT_TO_SCREEN"_**, **_"CUSTOM"_**.
 If **_"CUSTOM"_** scale is selected, **_customScale_** parameter has to be defined in **_viewportActions_** object.
 - `customScale` - Custom scale number.
@@ -269,8 +280,8 @@ viewerCommunication.exportInstance(viewportColumn, viewportRow);
 
 Parameters:
 
-- `viewportColumn` (Optional) - Column number of desired viewport;
-- `viewportRow` (Optional) - Row number of desired viewport;
+- `viewportColumn` (Optional) - Column number of desired viewport.
+- `viewportRow` (Optional) - Row number of desired viewport.
 
 Currently active viewport instance is exported, if `viewportColumn` and `viewportRow` are not provided.
 
@@ -283,6 +294,18 @@ viewerCommunication.getOpenedStudies();
 
 Usage:
 
-- Register **_onGetOpenedStudies_** **_callback_** function;
-- Call **_getOpenedStudies_** function to request opened studies callback;
+- Register **_onGetOpenedStudies_** **_callback_** function.
+- Call **_getOpenedStudies_** function to request opened studies callback.
 - Once message is processed, **_callback_** function will be triggered with opened studies array.
+
+## Change log
+
+### 1.0.2 (2021-09-22)
+
+#### Changes
+- Added `openMedDreamToIframe` function to open studies in iframe.
+
+#### Breaking changes
+- Renamed `openInMedDream` function to `openInMedDreamWindow`.
+- Renamed `addToMedDream` function to `addToMedDreamWindow`.
+- Renamed `replaceInMedDream` function to `replaceInMedDreamWindow`.

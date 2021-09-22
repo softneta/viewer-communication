@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Demo Example</title>
+	<script src='js/index.js'></script>
+	<script>
+		const integrationType = 'study';
+		const viewerCommunication = new ViewerCommunication('http://localhost:8080', integrationType);
+		viewerCommunication.onGetOpenedStudies(onGetOpenedStudies);
+
+		function onOpeningTypeChange () {
+			const openingType = document.getElementById('openingType').value;
+			const windowIntegrationContainer = document.getElementById('windowIntegrationContainer');
+			const iframeIntegrationContainer = document.getElementById('iframeIntegrationContainer');
+			if (openingType === 'window') {
+				windowIntegrationContainer.style.display = 'block';
+				iframeIntegrationContainer.style.display = 'none';
+			} else {
+				iframeIntegrationContainer.style.display = 'block';
+				windowIntegrationContainer.style.display = 'none';
+			}
+		}
+
+		function onIntegrationTypeChange () {
+			const integrationType = document.getElementById('integrationType').value;
+			const studySelectionContainer = document.getElementById('studySelectionContainer');
+			const studyIntegrationContainer = document.getElementById('studyIntegrationContainer');
+			const tokenSelectionContainer = document.getElementById('tokenSelectionContainer');
+			const tokenIntegrationContainer = document.getElementById('tokenIntegrationContainer');
+			if (integrationType === 'study') {
+				studySelectionContainer.style.display = 'block';
+				studyIntegrationContainer.style.display = 'block';
+				tokenSelectionContainer.style.display = 'none';
+				tokenIntegrationContainer.style.display = 'none';
+			} else {
+				tokenSelectionContainer.style.display = 'block';
+				tokenIntegrationContainer.style.display = 'block';
+				studySelectionContainer.style.display = 'none';
+				studyIntegrationContainer.style.display = 'none';
+			}
+		}
+
+		function getSelectedStudyUid () {
+			return document.getElementById('studySelection').value;
+		}
+
+		function getSelectedToken () {
+			return document.getElementById('tokenSelection').value;
+		}
+
+		function getSelectedValueByIntegrationType () {
+			return integrationType === 'study' ? getSelectedStudyUid() : getSelectedToken();
+		}
+
+		function openInMedDreamWindow () {
+			const selectedValue = getSelectedValueByIntegrationType();
+			viewerCommunication.openInMedDreamWindow(selectedValue);
+		}
+
+		function addToMedDreamWindow () {
+			const selectedValue = getSelectedValueByIntegrationType();
+			viewerCommunication.addToMedDreamWindow(selectedValue);
+		}
+
+		function replaceInMedDreamWindow () {
+			const selectedValue = getSelectedValueByIntegrationType();
+			viewerCommunication.replaceInMedDreamWindow(selectedValue);
+		}
+
+		function openMedDreamToIframe () {
+			const iframeId = 'medDreamIframe';
+			const selectedValue = getSelectedValueByIntegrationType();
+			viewerCommunication.openMedDreamToIframe(iframeId, selectedValue);
+			const iframe = document.getElementById(iframeId);
+			iframe.style.display = 'block';
+		}
+
+		function focusWindow () {
+			viewerCommunication.focusWindow();
+		}
+
+		function openStudy () {
+			const study = getSelectedStudyUid();
+			viewerCommunication.openStudy(study);
+		}
+
+		function openStudies () {
+			const studies = [
+				'1.3.6.1.4.1.44316.4.400.1.20190514111215.207.8416384005183062934',
+				'1.2.840.113619.2.55.3.4271045733.996.1449464144.595'
+			];
+			viewerCommunication.openStudies(studies);
+		}
+
+		function openStudiesWithToken () {
+			const token = getSelectedToken();
+			viewerCommunication.openStudies(token);
+		}
+
+		function replaceOpenedStudies () {
+			const studies = [
+				'1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
+				'1.2.826.0.1.3680043.8.1055.1.20200428153534751.778649273.8595535'
+			];
+			viewerCommunication.replaceStudies(studies);
+		}
+
+		function replaceOpenedStudiesWithToken () {
+			const token = getSelectedToken();
+			viewerCommunication.replaceStudies(token);
+		}
+
+		function preloadStudies () {
+			const studies = [
+				'1.3.6.1.4.1.44316.4.400.1.20190514111215.207.8416384005183062934',
+				'1.2.840.113619.2.55.3.4271045733.996.1449464144.595'
+			];
+			viewerCommunication.preloadStudies(studies);
+		}
+
+		function preloadStudiesWithToken () {
+			const token = getSelectedToken();
+			viewerCommunication.preloadStudies(token);
+		}
+
+		function cacheStudies () {
+			const studies = [
+				{studyUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595', storageId: 'Orthanc'},
+				{studyUid: '1.2.826.0.1.3680043.8.1055.1.20200428153534751.778649273.8595535', storageId: 'Orthanc'}
+			];
+			viewerCommunication.cacheStudies(studies);
+		}
+
+		function cacheStudiesWithToken () {
+			const token = getSelectedToken();
+			viewerCommunication.cacheStudies(token);
+		}
+
+		function cacheAllStudies () {
+			viewerCommunication.cacheAllStudies();
+		}
+
+		function closeStudies () {
+			const studies = [
+				{studyUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595', storageId: 'Orthanc'},
+				{studyUid: '1.2.826.0.1.3680043.8.1055.1.20200428153534751.778649273.8595535', storageId: 'Orthanc'}
+			];
+			viewerCommunication.closeStudies(studies);
+		}
+
+		function closeStudiesWithToken () {
+			const token = getSelectedToken();
+			viewerCommunication.closeStudies(token);
+		}
+
+		function closeAllStudies () {
+			viewerCommunication.closeAllStudies();
+		}
+
+		function setLayout (columns, rows) {
+			viewerCommunication.setLayout(columns, rows);
+		}
+
+		function openInstance () {
+			const instanceUid = '1.2.276.0.7230010.3.1.4.313262848.1.1603208968.321005';
+			const viewportColumn = 2;
+			const viewportRow = 1;
+			const viewportActions = {
+				windowing: 'AUTO',							//DEFAULT, AUTO, CUSTOM
+				//customWindowing: {width: 2, center: 2},	//Use if custom windowing
+				//rotation: 45,
+				//verticalFlip: true,
+				//horizontalFlip: true,
+				//scale: 'CUSTOM',							//ORIGINAL, FIT_TO_SCREEN, CUSTOM
+				//customScale: 0.5,							//Use if custom scale
+				//alignment: 'CENTER'						//RIGHT, LEFT, CENTER
+			};
+			viewerCommunication.openInstance(instanceUid, viewportColumn, viewportRow, viewportActions);
+		}
+
+		function exportActiveInstance () {
+			viewerCommunication.exportInstance();
+		}
+
+		function exportContainerInstance (viewportColumn, viewportRow) {
+			viewerCommunication.exportInstance(viewportColumn, viewportRow);
+		}
+
+		function getOpenedStudies () {
+			viewerCommunication.getOpenedStudies();
+		}
+
+		function onGetOpenedStudies (studies) {
+			console.log(studies);
+		}
+	</script>
+</head>
+<body>
+	<div>
+		<label for='openingType'>MedDream opening type:</label>
+		<select id='openingType' onchange='onOpeningTypeChange()'>
+			<option value='window'>Window</option>
+			<option value='iframe'>Iframe</option>
+		</select>
+		<label for='integrationType'>MedDream integration type:</label>
+		<select id='integrationType' onchange='onIntegrationTypeChange()'>
+			<option value='study'>Study</option>
+			<option value='token'>Token</option>
+		</select>
+	</div>
+	<br>
+	<div id='studySelectionContainer'>
+		<label for='studySelection'>Choose a Study:</label>
+		<select id='studySelection'>
+			<option value='1.2.826.0.1.3680043.2.4852.20141127.125444688.652396029'>1.2.826.0.1.3680043.2.4852.20141127.125444688.652396029</option>
+			<option value='1.2.826.0.1.3680043.8.1055.1.20200428153534751.778649273.8595535'>1.2.826.0.1.3680043.8.1055.1.20200428153534751.778649273.8595535</option>
+			<option value='1.2.840.113619.2.55.3.4271045733.996.1449464144.595'>1.2.840.113619.2.55.3.4271045733.996.1449464144.595</option>
+			<option value='1.2.826.0.1.3680043.8.1055.1.202005081343362.62369770.569668000'>1.2.826.0.1.3680043.8.1055.1.202005081343362.62369770.569668000</option>
+			<option value='1.2.392.200036.9116.2.6.1.37.2423319810.1435805805.198702'>1.2.392.200036.9116.2.6.1.37.2423319810.1435805805.198702</option>
+			<option value='1.3.6.1.4.1.44316.4.400.1.20190514111215.207.8416384005183062934'>1.3.6.1.4.1.44316.4.400.1.20190514111215.207.8416384005183062934</option>
+		</select>
+	</div>
+	<div id='tokenSelectionContainer' style='display: none;'>
+		<label for='tokenSelection'>Choose a Token:</label>
+		<select id='tokenSelection'>
+			<option value='PA2kdugjw3kQ9Mndbfoo1xfyou59xQAzK_H6GI9pvjjttdD0w460KTK2pR-Kg-W_XK3n6HcKpcS_fDn_DoQv8KPFynvPwAVULnWLYsuWN3hKrm8DBpI='>Token1</option>
+			<option value='PA2kdugjw3kQ9Mndbfoo1xfyou55xQUyK_X_F49pvjjttdSlmNK0L2SypUeA2L2_XPHhundTpMS4fGupX4Et9a-UnSvMnnd-MUaFtW5PT3fzqkrgr14='>Token2</option>
+			<option value='XNH8WmSy5Qwl430OgdXfBGeK4GfTOQZZAbflH4xzU8K6fkFaCNaNL0GQMFTQ7sNXlDPVPU9nhCxyAxwE9wUX1AiEtecydDhaTvjHbE1bOQo='>Token3</option>
+		</select>
+	</div>
+	<br>
+	<div id='windowIntegrationContainer'>
+		<label>Window:</label>
+		<button type='button' onclick='openInMedDreamWindow()'>Open in MedDream</button>
+		<button type='button' onclick='addToMedDreamWindow()'>Add to MedDream</button>
+		<button type='button' onclick='replaceInMedDreamWindow()'>Replace in MedDream</button>
+		<button type='button' onclick='focusWindow()'>Focus MedDream</button>
+	</div>
+	<div id='iframeIntegrationContainer' style='display: none;'>
+		<label>Iframe:</label>
+		<button type='button' onclick='openMedDreamToIframe()'>Open MedDream to Iframe</button>
+	</div>
+	<br>
+	<div id='studyIntegrationContainer'>
+		<label>Study integration:</label>
+		<button type='button' onclick='openStudy()'>Open study</button>
+		<button type='button' onclick='openStudies()'>Open studies</button>
+		<button type='button' onclick='replaceOpenedStudies()'>Replace opened studies</button>
+		<button type='button' onclick='preloadStudies()'>Preload studies</button>
+		<button type='button' onclick='cacheStudies()'>Cache studies</button>
+		<button type='button' onclick='closeStudies()'>Close studies</button>
+	</div>
+	<div id='tokenIntegrationContainer' style='display: none;'>
+		<label>Token integration:</label>
+		<button type='button' onclick='openStudiesWithToken()'>Open studies</button>
+		<button type='button' onclick='replaceOpenedStudiesWithToken()'>Replace opened studies</button>
+		<button type='button' onclick='preloadStudiesWithToken()'>Preload studies</button>
+		<button type='button' onclick='cacheStudiesWithToken()'>Cache studies</button>
+		<button type='button' onclick='closeStudiesWithToken()'>Close studies</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='cacheAllStudies()'>Cache all studies</button>
+		<button type='button' onclick='closeAllStudies()'>Close all studies</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='setLayout(3, 3)'>Set layout 3x3</button>
+		<button type='button' onclick='setLayout(2, 1)'>Set layout 2x1</button>
+		<button type='button' onclick='setLayout(1, 2)'>Set layout 1x2</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='openInstance()'>Open instance</button>
+		<button type='button' onclick='getOpenedStudies()'>Get opened studies</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='exportActiveInstance()'>Export active instance</button>
+		<button type='button' onclick='exportContainerInstance(2, 2)'>Export container 2:2 instance</button>
+	</div>
+	<br>
+	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='600px' style='display: none;'></iframe>
+</body>
+</html>
