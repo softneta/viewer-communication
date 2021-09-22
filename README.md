@@ -34,7 +34,7 @@ Parameters:
 - `actionType` - Action message command type.
 - `actionData` - Data needed for action message.
 
-For more details about available action messages check: `MedDream communication documentation`
+For more details about available action messages check: `MedDream communication documentation`.
 
 ## Functions to open MedDream Viewer
 
