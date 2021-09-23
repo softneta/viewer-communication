@@ -6,7 +6,8 @@
 	<script>
 		const integrationType = 'study';
 		const viewerCommunication = new ViewerCommunication('http://localhost:8080', integrationType);
-		viewerCommunication.onGetOpenedStudies(onGetOpenedStudies);
+		viewerCommunication.subscribeCommunicationServiceReadyEvent(onCommunicationServiceReady);
+		viewerCommunication.subscribeGetOpenedStudiesEvent(onGetOpenedStudies);
 
 		function onOpeningTypeChange () {
 			const openingType = document.getElementById('openingType').value;
@@ -193,6 +194,52 @@
 		function onGetOpenedStudies (studies) {
 			console.log(studies);
 		}
+
+		function onCommunicationServiceReady () {
+			console.log('Communication Service Ready');
+		}
+
+		function subscribeAnnotationsSavedEvent () {
+			viewerCommunication.subscribeAnnotationsSavedEvent(this.onAnnotationsSaved);
+		}
+
+		function unsubscribeAnnotationsSavedEvent () {
+			viewerCommunication.unsubscribeAnnotationsSavedEvent(this.onAnnotationsSaved);
+		}
+
+		function onAnnotationsSaved (annotationsData) {
+			console.log(annotationsData);
+		}
+
+		function enableFreeDraw () {
+			const permissions = {
+				boundingBoxView: true,
+				boundingBoxEdit: true,
+				freeDrawView: true,
+				freeDrawEdit: true
+			};
+			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		}
+
+		function disableEditing () {
+			const permissions = {
+				boundingBoxView: true,
+				boundingBoxEdit: false,
+				freeDrawView: true,
+				freeDrawEdit: false
+			};
+			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		}
+
+		function disableSegmentation () {
+			const permissions = {
+				boundingBoxView: false,
+				boundingBoxEdit: false,
+				freeDrawView: false,
+				freeDrawEdit: false
+			};
+			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		}
 	</script>
 </head>
 <body>
@@ -280,6 +327,14 @@
 		<button type='button' onclick='exportContainerInstance(2, 2)'>Export container 2:2 instance</button>
 	</div>
 	<br>
-	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='600px' style='display: none;'></iframe>
+	<div>
+		<button type='button' onclick='subscribeAnnotationsSavedEvent()'>Subscribe annotations saved</button>
+		<button type='button' onclick='unsubscribeAnnotationsSavedEvent()'>Unsubscribe annotations saved</button>
+		<button type='button' onclick='enableFreeDraw()'>Enable free draw</button>
+		<button type='button' onclick='disableEditing()'>Disable editing</button>
+		<button type='button' onclick='disableSegmentation()'>Disable segmentation</button>
+	</div>
+	<br>
+	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
 </body>
 </html>
