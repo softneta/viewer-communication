@@ -211,7 +211,27 @@
 			console.log(annotationsData);
 		}
 
-		function enableFreeDraw () {
+		function disableFreeDraw () {
+			const permissions = {
+				boundingBoxView: true,
+				boundingBoxEdit: true,
+				freeDrawView: false,
+				freeDrawEdit: false
+			};
+			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		}
+
+		function disableSegmentation () {
+			const permissions = {
+				boundingBoxView: false,
+				boundingBoxEdit: false,
+				freeDrawView: false,
+				freeDrawEdit: false
+			};
+			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		}
+
+		function enableSegmentation () {
 			const permissions = {
 				boundingBoxView: true,
 				boundingBoxEdit: true,
@@ -231,12 +251,26 @@
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
 
-		function disableSegmentation () {
+		function disableInformation () {
 			const permissions = {
-				boundingBoxView: false,
-				boundingBoxEdit: false,
-				freeDrawView: false,
-				freeDrawEdit: false
+				boundingBoxView: true,
+				boundingBoxEdit: true,
+				boundingBoxInfo: false,
+				freeDrawView: true,
+				freeDrawEdit: true,
+				boundingBoxInfo: false,
+			};
+			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		}
+
+		function enableInformation () {
+			const permissions = {
+				boundingBoxView: true,
+				boundingBoxEdit: true,
+				boundingBoxInfo: true,
+				freeDrawView: true,
+				freeDrawEdit: true,
+				freeDrawInfo: true,
 			};
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
@@ -330,9 +364,12 @@
 	<div>
 		<button type='button' onclick='subscribeAnnotationsSavedEvent()'>Subscribe annotations saved</button>
 		<button type='button' onclick='unsubscribeAnnotationsSavedEvent()'>Unsubscribe annotations saved</button>
-		<button type='button' onclick='enableFreeDraw()'>Enable free draw</button>
-		<button type='button' onclick='disableEditing()'>Disable editing</button>
+		<button type='button' onclick='disableFreeDraw()'>Disable free draw</button>
 		<button type='button' onclick='disableSegmentation()'>Disable segmentation</button>
+		<button type='button' onclick='enableSegmentation()'>Enable segmentation</button>
+		<button type='button' onclick='disableEditing()'>Disable editing</button>
+		<button type='button' onclick='disableInformation()'>Disable information</button>
+		<button type='button' onclick='enableInformation()'>Enable information</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
