@@ -3,9 +3,8 @@
 
     function ViewerCommunication (targetURL, integration = 'study') {
         let windowReference;
-        let messageReceivedEvent;
-        let onGetOpenedStudiesCallback;
         const integrationType = integration === 'study' ? 'study' : 'token';
+        const callbacks = {};
         const functions = {};
 
         functions.getWindowReference = function () {
@@ -30,9 +29,7 @@
         };
 
         functions.registerMessageReceivedEvent = function () {
-            if (!messageReceivedEvent) {
-                messageReceivedEvent = window.addEventListener('message', this.onMessageReceived.bind(this));
-            }
+            window.addEventListener('message', this.onMessageReceived.bind(this));
         };
 
         functions.onMessageReceived = function ({data, origin}) {
@@ -42,15 +39,34 @@
         };
 
         functions.performCallback = function (actionType, actionData) {
-            if (actionType === 'GET_OPENED_STUDIES' && onGetOpenedStudiesCallback) {
-                onGetOpenedStudiesCallback(actionData.studies);
+            if (actionType === 'COMMUNICATION_SERVICE_READY') {
+                this.performOnCommunicationServiceReadyCallback();
+            }
+            if (actionType === 'GET_OPENED_STUDIES') {
+                this.performOnGetOpenedStudiesCallback(actionData);
+            }
+            if (actionType === 'ANNOTATION_SAVED') {
+                this.performOnAnnotationSavedCallback(actionData);
             }
         };
 
-        functions.onGetOpenedStudies = function (callback) {
-            this.registerMessageReceivedEvent();
-            onGetOpenedStudiesCallback = callback;
-        };
+        functions.performOnCommunicationServiceReadyCallback = function () {
+            if (callbacks.onCommunicationServiceReadyCallback) {
+                callbacks.onCommunicationServiceReadyCallback();
+            }
+        }
+
+        functions.performOnGetOpenedStudiesCallback = function (actionData) {
+            if (callbacks.onGetOpenedStudiesCallback) {
+                callbacks.onGetOpenedStudiesCallback(actionData);
+            }
+        }
+
+        functions.performOnAnnotationSavedCallback = function (actionData) {
+            if (callbacks.onAnnotationSavedCallback) {
+                callbacks.onAnnotationSavedCallback(actionData);
+            }
+        }
 
         functions.openInMedDreamWindow = function (value) {
             windowReference = window.open(`${targetURL}?${integrationType}=${value}`, '_blank');
@@ -136,9 +152,49 @@
             this.postActionMessage('EXPORT_INSTANCE', {viewportColumn, viewportRow});
         };
 
+        functions.updateSegmentationToolPermissions = function (permissions) {
+            this.postActionMessage('UPDATE_SEGMENTATION_TOOL_PERMISSIONS', {permissions});
+        };
+
         functions.getOpenedStudies = function () {
             this.postActionMessage('GET_OPENED_STUDIES');
         };
+
+        functions.subscribeEvent = function (eventType) {
+            this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
+        };
+
+        functions.unsubscribeEvent = function (eventType) {
+            this.postActionMessage('UNSUBSCRIBE_EVENT', {eventType});
+        };
+
+        functions.subscribeCommunicationServiceReadyEvent = function (callback) {
+            callbacks.onCommunicationServiceReadyCallback = callback;
+        }
+
+        functions.unsubscribeCommunicationServiceReadyEvent = function () {
+            callbacks.onCommunicationServiceReadyCallback = undefined;
+        }
+
+        functions.subscribeGetOpenedStudiesEvent = function (callback) {
+            callbacks.onGetOpenedStudiesCallback = callback;
+        };
+
+        functions.unsubscribeGetOpenedStudiesEvent = function () {
+            callbacks.onGetOpenedStudiesCallback = undefined;
+        }
+
+        functions.subscribeAnnotationsSavedEvent = function (callback) {
+            callbacks.onAnnotationSavedCallback = callback;
+            this.subscribeEvent('ANNOTATION_SAVED');
+        };
+
+        functions.unsubscribeAnnotationsSavedEvent = function () {
+            callbacks.onAnnotationSavedCallback = undefined;
+            this.unsubscribeEvent('ANNOTATION_SAVED');
+        };
+
+        functions.registerMessageReceivedEvent();
 
         return functions;
     }
