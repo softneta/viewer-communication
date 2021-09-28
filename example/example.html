@@ -215,8 +215,10 @@
 			const permissions = {
 				boundingBoxView: true,
 				boundingBoxEdit: true,
+				boundingBoxInfo: true,
 				freeDrawView: false,
-				freeDrawEdit: false
+				freeDrawEdit: false,
+				freeDrawInfo: false
 			};
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
@@ -235,8 +237,10 @@
 			const permissions = {
 				boundingBoxView: true,
 				boundingBoxEdit: true,
+				boundingBoxInfo: true,
 				freeDrawView: true,
-				freeDrawEdit: true
+				freeDrawEdit: true,
+				freeDrawInfo: true,
 			};
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
@@ -245,8 +249,10 @@
 			const permissions = {
 				boundingBoxView: true,
 				boundingBoxEdit: false,
+				boundingBoxInfo: true,
 				freeDrawView: true,
-				freeDrawEdit: false
+				freeDrawEdit: false,
+				freeDrawInfo: true
 			};
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
