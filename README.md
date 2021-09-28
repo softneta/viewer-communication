@@ -285,20 +285,112 @@ Parameters:
 
 Currently active viewport instance is exported, if `viewportColumn` and `viewportRow` are not provided.
 
+#### Update segmentation tool permissions
+```js
+viewerCommunication.updateSegmentationToolPermissions(permissions);
+```
+
+Parameter:
+
+- `permissions` - Object with segmentation permissions.
+
+Available segmentation permissions:
+
+- `boundingBoxView` - Permission to see bounding box tab. Default value: **_false_**.
+- `boundingBoxEdit` - Permission to edit bounding box tab. Default value: **_false_**.
+- `boundingBoxInfo` - Permission to see bounding box information button and panel. Default value: **_false_**.
+- `freeDrawView` - Permission to see free draw tab. Default value: **_false_**.
+- `freeDrawEdit` - Permission to edit free draw tab. Default value: **_false_**.
+- `freeDrawInfo` - Permission to see free draw information button and panel. Default value: **_false_**.
+
+Usage example:
+
+```js
+const permissions = {
+    boundingBoxView: true,
+    boundingBoxEdit: true,
+    boundingBoxInfo: false,
+    freeDrawView: true,
+    freeDrawEdit: true,
+    freeDrawInfo: false,
+};
+viewerCommunication.updateSegmentationToolPermissions(permissions);
+```
+
 #### Get opened studies
 ```js
-const callback = (studies) => {console.log(studies)};
-viewerCommunication.onGetOpenedStudies(callback);
+const callback = (studies) => console.log(studies);
+viewerCommunication.subscribeGetOpenedStudiesEvent(callback);
 viewerCommunication.getOpenedStudies();
 ```
 
 Usage:
 
-- Register **_onGetOpenedStudies_** **_callback_** function.
-- Call **_getOpenedStudies_** function to request opened studies callback.
+- Register **_subscribeGetOpenedStudiesEvent_** **_callback_** function.
+- Call **_getOpenedStudies_** function to request opened studies data in callback function.
 - Once message is processed, **_callback_** function will be triggered with opened studies array.
 
+### Events
+
+#### Subscribe communication service ready event
+```js
+const callback = (annotations) => console.log(annotations);
+viewerCommunication.subscribeCommunicationServiceReadyEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe communication service ready event
+```js
+viewerCommunication.unsubscribeCommunicationServiceReadyEvent();
+```
+
+#### Subscribe get opened studies event
+```js
+const callback = (studies) => console.log(studies);
+viewerCommunication.subscribeGetOpenedStudiesEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe get opened studies event
+```js
+viewerCommunication.unsubscribeGetOpenedStudiesEvent();
+```
+
+#### Subscribe annotations saved event
+```js
+const callback = (annotations) => console.log(annotations);
+viewerCommunication.subscribeAnnotationsSavedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe annotations saved event
+```js
+viewerCommunication.unsubscribeAnnotationsSavedEvent();
+```
+
 ## Change log
+
+### 1.0.3 (2021-09-28)
+
+#### Changes
+- Added `updateSegmentationToolPermissions` function to update segmentation tool permissions.
+- Added `subscribeCommunicationServiceReadyEvent` function to subscribe communication service ready event.
+- Added `unsubscribeCommunicationServiceReadyEvent` function to unsubscribe communication service ready event.
+- Added `unsubscribeGetOpenedStudiesEvent` function to unsubscribe get opened studies event.
+- Added `subscribeAnnotationsSavedEvent` function to subscribe annotation saved event.
+- Added `unsubscribeAnnotationsSavedEvent` function to unsubscribe annotation saved event.
+
+#### Breaking changes
+- Renamed `onGetOpenedStudies` function to `subscribeGetOpenedStudiesEvent`.
 
 ### 1.0.2 (2021-09-22)
 
