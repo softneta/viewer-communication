@@ -1,4 +1,4 @@
-# MedDream Viewer Communication
+# MedDream Viewer Communication API
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
