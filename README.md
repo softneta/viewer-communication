@@ -384,7 +384,7 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ### 1.0.4 (2021-11-11)
 
 #### Breaking changes
-- Updated segmentation permission `boundingBoxEdit` to `boundingBox2dEdit` and `boundingBox3dEdit` for 2d and 3d segmentation permissions control.
+- Updated segmentation permission `boundingBoxEdit` to `boundingBox2dEdit` and `boundingBox3dEdit` for 2d and 3d bounding box permissions control.
 
 ### 1.0.3 (2021-09-28)
 
