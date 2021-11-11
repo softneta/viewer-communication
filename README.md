@@ -297,7 +297,8 @@ Parameter:
 Available segmentation permissions:
 
 - `boundingBoxView` - Permission to see bounding box tab. Default value: **_false_**.
-- `boundingBoxEdit` - Permission to edit bounding box tab. Default value: **_false_**.
+- `boundingBox2dEdit` - Permission to edit 2d bounding box tab. Default value: **_false_**.
+- `boundingBox3dEdit` - Permission to edit 3d bounding box tab. Default value: **_false_**.
 - `boundingBoxInfo` - Permission to see bounding box information button and panel. Default value: **_false_**.
 - `freeDrawView` - Permission to see free draw tab. Default value: **_false_**.
 - `freeDrawEdit` - Permission to edit free draw tab. Default value: **_false_**.
@@ -308,7 +309,8 @@ Usage example:
 ```js
 const permissions = {
     boundingBoxView: true,
-    boundingBoxEdit: true,
+    boundingBox2dEdit: true,
+    boundingBox3dEdit: true,
     boundingBoxInfo: false,
     freeDrawView: true,
     freeDrawEdit: true,
@@ -378,6 +380,11 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
 ## Change log
+
+### 1.0.4 (2021-11-11)
+
+#### Breaking changes
+- Updated segmentation permission `boundingBoxEdit` to `boundingBox2dEdit` and `boundingBox3dEdit` for 2d and 3d bounding box permissions control.
 
 ### 1.0.3 (2021-09-28)
 

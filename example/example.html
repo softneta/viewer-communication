@@ -214,7 +214,8 @@
 		function disableFreeDraw () {
 			const permissions = {
 				boundingBoxView: true,
-				boundingBoxEdit: true,
+				boundingBox2dEdit: true,
+				boundingBox3dEdit: true,
 				boundingBoxInfo: true,
 				freeDrawView: false,
 				freeDrawEdit: false,
@@ -226,7 +227,8 @@
 		function disableSegmentation () {
 			const permissions = {
 				boundingBoxView: false,
-				boundingBoxEdit: false,
+				boundingBox2dEdit: false,
+				boundingBox3dEdit: false,
 				freeDrawView: false,
 				freeDrawEdit: false
 			};
@@ -236,7 +238,8 @@
 		function enableSegmentation () {
 			const permissions = {
 				boundingBoxView: true,
-				boundingBoxEdit: true,
+				boundingBox2dEdit: true,
+				boundingBox3dEdit: true,
 				boundingBoxInfo: true,
 				freeDrawView: true,
 				freeDrawEdit: true,
@@ -248,7 +251,8 @@
 		function disableEditing () {
 			const permissions = {
 				boundingBoxView: true,
-				boundingBoxEdit: false,
+				boundingBox2dEdit: false,
+				boundingBox3dEdit: false,
 				boundingBoxInfo: true,
 				freeDrawView: true,
 				freeDrawEdit: false,
@@ -260,7 +264,8 @@
 		function disableInformation () {
 			const permissions = {
 				boundingBoxView: true,
-				boundingBoxEdit: true,
+				boundingBox2dEdit: true,
+				boundingBox3dEdit: true,
 				boundingBoxInfo: false,
 				freeDrawView: true,
 				freeDrawEdit: true,
@@ -269,10 +274,37 @@
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
 
+		function disable2dBoundingBox () {
+			const permissions = {
+				boundingBoxView: true,
+				boundingBox2dEdit: false,
+				boundingBox3dEdit: true,
+				boundingBoxInfo: true,
+				freeDrawView: true,
+				freeDrawEdit: true,
+				freeDrawInfo: true,
+			};
+			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		}
+
+		function disable3dBoundingBox () {
+			const permissions = {
+				boundingBoxView: true,
+				boundingBox2dEdit: true,
+				boundingBox3dEdit: false,
+				boundingBoxInfo: true,
+				freeDrawView: true,
+				freeDrawEdit: true,
+				freeDrawInfo: true,
+			};
+			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		}
+
 		function enableInformation () {
 			const permissions = {
 				boundingBoxView: true,
-				boundingBoxEdit: true,
+				boundingBox2dEdit: true,
+				boundingBox3dEdit: true,
 				boundingBoxInfo: true,
 				freeDrawView: true,
 				freeDrawEdit: true,
@@ -360,22 +392,24 @@
 	<div>
 		<button type='button' onclick='openInstance()'>Open instance</button>
 		<button type='button' onclick='getOpenedStudies()'>Get opened studies</button>
-	</div>
-	<br>
-	<div>
 		<button type='button' onclick='exportActiveInstance()'>Export active instance</button>
 		<button type='button' onclick='exportContainerInstance(2, 2)'>Export container 2:2 instance</button>
 	</div>
 	<br>
 	<div>
-		<button type='button' onclick='subscribeAnnotationsSavedEvent()'>Subscribe annotations saved</button>
-		<button type='button' onclick='unsubscribeAnnotationsSavedEvent()'>Unsubscribe annotations saved</button>
 		<button type='button' onclick='disableFreeDraw()'>Disable free draw</button>
 		<button type='button' onclick='disableSegmentation()'>Disable segmentation</button>
 		<button type='button' onclick='enableSegmentation()'>Enable segmentation</button>
 		<button type='button' onclick='disableEditing()'>Disable editing</button>
 		<button type='button' onclick='disableInformation()'>Disable information</button>
+		<button type='button' onclick='disable2dBoundingBox()'>Disable 2d bounding box</button>
+		<button type='button' onclick='disable3dBoundingBox()'>Disable 3d bounding box</button>
 		<button type='button' onclick='enableInformation()'>Enable information</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='subscribeAnnotationsSavedEvent()'>Subscribe annotations saved</button>
+		<button type='button' onclick='unsubscribeAnnotationsSavedEvent()'>Unsubscribe annotations saved</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
