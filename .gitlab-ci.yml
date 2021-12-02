@@ -1,8 +1,7 @@
-image: node:14-alpine
+image: node:alpine
 
 stages:
     - npm-publish
-    - github-publish
 
 npm-publish:
     stage: npm-publish
@@ -11,14 +10,5 @@ npm-publish:
     when: manual
     script:
         - npm install
-#        - npm init --scope=@meddream
         - echo "//registry.npmjs.org/:_authToken=$NPM_REG_TOKEN" > $CI_PROJECT_DIR/.npmrc
         - npm publish --access public
-
-github-publish:
-    stage: github-publish
-    tags:
-        - docker
-    when: manual
-    script:
-        - apk add --update --no-cache git
