@@ -1,0 +1,14 @@
+image: node:alpine
+
+stages:
+    - npm-publish
+
+npm-publish:
+    stage: npm-publish
+    tags:
+        - docker
+    when: manual
+    script:
+        - npm install
+        - echo "//registry.npmjs.org/:_authToken=$NPM_REG_TOKEN" > $CI_PROJECT_DIR/.npmrc
+        - npm publish --access public
