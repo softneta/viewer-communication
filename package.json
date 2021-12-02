@@ -2,7 +2,7 @@
   "name": "@meddream/viewer-communication",
   "version": "1.0.4",
   "main": "index.js",
-  "repository": "meddream/viewer-communication",
+  "repository": "softneta/viewer-communication",
   "author": "UAB Softneta",
   "license": "UNLICENSED"
 }
