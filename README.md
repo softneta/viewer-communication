@@ -1,4 +1,4 @@
-# MedDream DICOM Viewer Communication API
+# MedDream WEB DICOM Viewer Communication API
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
