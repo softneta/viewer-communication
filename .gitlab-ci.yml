@@ -1,65 +1,24 @@
 image: node:14-alpine
 
 stages:
-    - prepare
-    - build
-    - deploy
+    - npm-publish
+    - github-publish
 
-prepare:
-    stage: prepare
-    tags:
-        - docker
-    script:
-        - npm install
-    cache:
-        key: "$CI_COMMIT_REF_SLUG"
-        policy: push
-        paths:
-            - node_modules/
-
-build:
-    stage: build
-    tags:
-        - docker
-    script:
-        - apk add --update --no-cache git
-        - npm run build:production
-    cache:
-        key: "$CI_COMMIT_REF_SLUG"
-        policy: pull
-        paths:
-            - node_modules/
-    artifacts:
-        name: "viewports-core-$CI_COMMIT_SHORT_SHA"
-        paths:
-            - $CI_PROJECT_DIR/dist/*
-
-build-npm-public:
-    stage: build
+npm-publish:
+    stage: npm-publish
     tags:
         - docker
     when: manual
-    only:
-        - develop
-        - /^release/.*$/
-        - /^hotfix/.*$/
-        - master
-        - tags
+    script:
+        - npm install
+        - npm init --scope=@meddream
+        - echo "//registry.npmjs.org/:_authToken=$NPM_REG_TOKEN" > $CI_PROJECT_DIR/.npmrc
+        - npm publish --access public
+
+github-publish:
+    stage: github-publish
+    tags:
+        - docker
+    when: manual
     script:
         - apk add --update --no-cache git
-        - npm run build:production
-        - mv $CI_PROJECT_DIR/README.min.md $CI_PROJECT_DIR/dist/README.md
-        - echo "//registry.npmjs.org/:_authToken=$NPM_REG_TOKEN" > $CI_PROJECT_DIR/dist/.npmrc
-        - npm_version=$(node -p -e "require('./package.json').version")
-        - echo '{"name":"@meddream/viewports-core","version":"number","description":"MedDream Viewports-core for dicom viewer","main":"viewports-core.js","author":"UAB Softneta","license":"LICENSED"}' > $CI_PROJECT_DIR/dist/package.json
-        - sed -i 's/number/'$npm_version'/g' $CI_PROJECT_DIR/dist/package.json
-        - cd $CI_PROJECT_DIR/dist; npm publish
-    cache:
-        key: "$CI_COMMIT_REF_SLUG"
-        policy: pull
-        paths:
-            - node_modules/
-    artifacts:
-        name: "viewports-core-$CI_COMMIT_SHORT_SHA"
-        paths:
-            - $CI_PROJECT_DIR/dist/*
