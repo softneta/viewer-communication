@@ -11,7 +11,7 @@ npm-publish:
     when: manual
     script:
         - npm install
-        - npm init --scope=@meddream
+#        - npm init --scope=@meddream
         - echo "//registry.npmjs.org/:_authToken=$NPM_REG_TOKEN" > $CI_PROJECT_DIR/.npmrc
         - npm publish --access public
 
