@@ -303,6 +303,10 @@ Available segmentation permissions:
 - `freeDrawView` - Permission to see free draw tab. Default value: **_false_**.
 - `freeDrawEdit` - Permission to edit free draw tab. Default value: **_false_**.
 - `freeDrawInfo` - Permission to see free draw information button and panel. Default value: **_false_**.
+- `smartPaintView` - Permission to see smart paint tab. Default value: **_false_**.
+- `smartPaint2dEdit` - Permission to use 2d smart paint tool. Default value: **_false_**.
+- `smartPaint3dEdit` - Permission to use 3d smart paint tool. Default value: **_false_**.
+- `smartPaintInfo` - Permission to see smart paint information button and panel. Default value: **_false_**.
 
 Usage example:
 
@@ -315,6 +319,10 @@ const permissions = {
     freeDrawView: true,
     freeDrawEdit: true,
     freeDrawInfo: false,
+    smartPaintView: true,
+    smartPaint2dEdit: true,
+    smartPaint3dEdit: true,
+    smartPaintInfo: false
 };
 viewerCommunication.updateSegmentationToolPermissions(permissions);
 ```
@@ -380,6 +388,10 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
 ## Change log
+### 1.0.6 (2021-12-15)
+
+#### Changes
+- Updated `updateSegmentationToolPermissions` function to support new permissions: `smartPaintView`, `smartPaint2dEdit`, `smartPaint3dEdit`, `smartPaintInfo`.
 
 ### 1.0.4 (2021-11-11)
 
