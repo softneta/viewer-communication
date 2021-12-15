@@ -45,8 +45,8 @@
             if (actionType === 'GET_OPENED_STUDIES') {
                 this.performOnGetOpenedStudiesCallback(actionData);
             }
-            if (actionType === 'ANNOTATION_SAVED') {
-                this.performOnAnnotationSavedCallback(actionData);
+            if (actionType === 'ANNOTATIONS_SAVED') {
+                this.performOnAnnotationsSavedCallback(actionData);
             }
         };
 
@@ -62,9 +62,9 @@
             }
         }
 
-        functions.performOnAnnotationSavedCallback = function (actionData) {
-            if (callbacks.onAnnotationSavedCallback) {
-                callbacks.onAnnotationSavedCallback(actionData);
+        functions.performOnAnnotationsSavedCallback = function (actionData) {
+            if (callbacks.onAnnotationsSavedCallback) {
+                callbacks.onAnnotationsSavedCallback(actionData);
             }
         }
 
@@ -185,13 +185,13 @@
         }
 
         functions.subscribeAnnotationsSavedEvent = function (callback) {
-            callbacks.onAnnotationSavedCallback = callback;
-            this.subscribeEvent('ANNOTATION_SAVED');
+            callbacks.onAnnotationsSavedCallback = callback;
+            this.subscribeEvent('ANNOTATIONS_SAVED');
         };
 
         functions.unsubscribeAnnotationsSavedEvent = function () {
-            callbacks.onAnnotationSavedCallback = undefined;
-            this.unsubscribeEvent('ANNOTATION_SAVED');
+            callbacks.onAnnotationsSavedCallback = undefined;
+            this.unsubscribeEvent('ANNOTATIONS_SAVED');
         };
 
         functions.registerMessageReceivedEvent();
