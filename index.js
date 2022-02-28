@@ -45,6 +45,9 @@
             if (actionType === 'GET_OPENED_STUDIES') {
                 this.performOnGetOpenedStudiesCallback(actionData);
             }
+            if (actionType === 'GET_SNAPSHOT') {
+                this.performGetSnapshotCallback(actionData);
+            }
             if (actionType === 'ANNOTATIONS_SAVED') {
                 this.performOnAnnotationsSavedCallback(actionData);
             }
@@ -59,6 +62,12 @@
         functions.performOnGetOpenedStudiesCallback = function (actionData) {
             if (callbacks.onGetOpenedStudiesCallback) {
                 callbacks.onGetOpenedStudiesCallback(actionData);
+            }
+        }
+
+        functions.performGetSnapshotCallback = function (actionData) {
+            if (callbacks.onGetSnapshotCallback) {
+                callbacks.onGetSnapshotCallback(actionData);
             }
         }
 
@@ -160,6 +169,14 @@
             this.postActionMessage('GET_OPENED_STUDIES');
         };
 
+        functions.getSnapshot = function () {
+            this.postActionMessage('GET_SNAPSHOT');
+        };
+
+        functions.setSnapshot = function (snapshot) {
+            this.postActionMessage('SET_SNAPSHOT', {snapshot});
+        };
+
         functions.subscribeEvent = function (eventType) {
             this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
         };
@@ -182,6 +199,14 @@
 
         functions.unsubscribeGetOpenedStudiesEvent = function () {
             callbacks.onGetOpenedStudiesCallback = undefined;
+        }
+
+        functions.subscribeGetSnapshotEvent = function (callback) {
+            callbacks.onGetSnapshotCallback = callback;
+        };
+
+        functions.unsubscribeGetSnapshotEvent = function () {
+            callbacks.onGetSnapshotCallback = undefined;
         }
 
         functions.subscribeAnnotationsSavedEvent = function (callback) {
