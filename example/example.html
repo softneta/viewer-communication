@@ -286,13 +286,14 @@
 			viewerCommunication.getSnapshot();
 		}
 
+		let layoutSnapshot = undefined;
 		function onGetSnapshot (snapshot) {
 			console.log(snapshot);
+			layoutSnapshot = snapshot;
 		}
 
 		function setSnapshot () {
-			const snapshot = {};
-			viewerCommunication.setSnapshot(snapshot);
+			viewerCommunication.setSnapshot(layoutSnapshot);
 		}
 	</script>
 </head>
