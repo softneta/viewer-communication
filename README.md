@@ -1,4 +1,5 @@
 # MedDream Viewer Communication API
+##### Version 1.0.7 (2022-03-14)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -340,6 +341,28 @@ Usage:
 - Call **_getOpenedStudies_** function to request opened studies data in callback function.
 - Once message is processed, **_callback_** function will be triggered with opened studies array.
 
+#### Get snapshot
+```js
+const callback = (snapshot) => console.log(snapshot);
+viewerCommunication.subscribeGetSnapshotEvent(callback);
+viewerCommunication.getSnapshot();
+```
+
+Usage:
+
+- Register **_subscribeGetSnapshotEvent_** **_callback_** function.
+- Call **_getSnapshot_** function to generate current layout with viewports snapshot and return it to **_callback_** function.
+- Once message is processed, **_callback_** function will be triggered with snapshot data.
+
+#### Set snapshot
+```js
+viewerCommunication.setSnapshot(layoutSnapshot);
+```
+
+Parameter:
+
+- `layoutSnapshot` - layout and viewports snapshot which was requested by **_getSnapshot_** function and returned to **_callback_** function.
+
 ### Events
 
 #### Subscribe communication service ready event
@@ -372,6 +395,21 @@ Parameter:
 viewerCommunication.unsubscribeGetOpenedStudiesEvent();
 ```
 
+#### Subscribe get snapshot event
+```js
+const callback = (snapshot) => console.log(snapshot);
+viewerCommunication.subscribeGetSnapshotEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered with generated snapshot information.
+
+#### Unsubscribe get snapshot event
+```js
+viewerCommunication.unsubscribeGetSnapshotEvent();
+```
+
 #### Subscribe annotations saved event
 ```js
 const callback = (annotations) => console.log(annotations);
@@ -388,6 +426,14 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
 ## Change log
+### 1.0.7 (2022-03-14)
+
+#### Changes
+- Added `getSnapshot` function to generate viewer layout and viewports snapshot.
+- Added `setSnapshot` function to set previously generated snapshot back to the viewer.
+- Added `subscribeGetSnapshotEvent` function to subscribe of get snapshot event callback.
+- Added `unsubscribeGetSnapshotEvent` function to unsubscribe of get snapshot event callback.
+
 ### 1.0.6 (2021-12-15)
 
 #### Changes
