@@ -8,6 +8,7 @@
 		const viewerCommunication = new ViewerCommunication('http://localhost:8080', integrationType);
 		viewerCommunication.subscribeCommunicationServiceReadyEvent(onCommunicationServiceReady);
 		viewerCommunication.subscribeGetOpenedStudiesEvent(onGetOpenedStudies);
+		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
 
 		function onOpeningTypeChange () {
 			const openingType = document.getElementById('openingType').value;
@@ -280,6 +281,20 @@
 			};
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
+
+		function getSnapshot () {
+			viewerCommunication.getSnapshot();
+		}
+
+		let layoutSnapshot = undefined;
+		function onGetSnapshot (snapshot) {
+			console.log(snapshot);
+			layoutSnapshot = snapshot;
+		}
+
+		function setSnapshot () {
+			viewerCommunication.setSnapshot(layoutSnapshot);
+		}
 	</script>
 </head>
 <body>
@@ -367,11 +382,13 @@
 		<button type='button' onclick='disableSegmentationInformation()'>Disable segmentation information</button>
 		<button type='button' onclick='disableSegmentation()'>Disable segmentation</button>
 		<button type='button' onclick='enableSegmentation()'>Enable segmentation</button>
+		<button type='button' onclick='subscribeAnnotationsSavedEvent()'>Subscribe annotations saved</button>
+		<button type='button' onclick='unsubscribeAnnotationsSavedEvent()'>Unsubscribe annotations saved</button>
 	</div>
 	<br>
 	<div>
-		<button type='button' onclick='subscribeAnnotationsSavedEvent()'>Subscribe annotations saved</button>
-		<button type='button' onclick='unsubscribeAnnotationsSavedEvent()'>Unsubscribe annotations saved</button>
+		<button type='button' onclick='getSnapshot()'>Get snapshot</button>
+		<button type='button' onclick='setSnapshot()'>Set snapshot</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
