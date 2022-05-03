@@ -8,6 +8,7 @@
 		const viewerCommunication = new ViewerCommunication('http://localhost:8080', integrationType);
 		viewerCommunication.subscribeCommunicationServiceReadyEvent(onCommunicationServiceReady);
 		viewerCommunication.subscribeGetOpenedStudiesEvent(onGetOpenedStudies);
+		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
 
 		function onOpeningTypeChange () {
 			const openingType = document.getElementById('openingType').value;
@@ -213,15 +214,36 @@
 			console.log(annotationsData);
 		}
 
-		function disableFreeDraw () {
+		function disableSegmentationEditing () {
+			const permissions = {
+				boundingBoxView: true,
+				boundingBox2dEdit: false,
+				boundingBox3dEdit: false,
+				boundingBoxInfo: true,
+				freeDrawView: true,
+				freeDrawEdit: false,
+				freeDrawInfo: true,
+				smartPaintView: true,
+				smartPaint2dEdit: false,
+				smartPaint3dEdit: false,
+				smartPaintInfo: true
+			};
+			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		}
+
+		function disableSegmentationInformation () {
 			const permissions = {
 				boundingBoxView: true,
 				boundingBox2dEdit: true,
 				boundingBox3dEdit: true,
-				boundingBoxInfo: true,
-				freeDrawView: false,
-				freeDrawEdit: false,
-				freeDrawInfo: false
+				boundingBoxInfo: false,
+				freeDrawView: true,
+				freeDrawEdit: true,
+				freeDrawInfo: false,
+				smartPaintView: true,
+				smartPaint2dEdit: true,
+				smartPaint3dEdit: true,
+				smartPaintInfo: false
 			};
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
@@ -231,8 +253,14 @@
 				boundingBoxView: false,
 				boundingBox2dEdit: false,
 				boundingBox3dEdit: false,
+				boundingBoxInfo: false,
 				freeDrawView: false,
-				freeDrawEdit: false
+				freeDrawEdit: false,
+				freeDrawInfo: false,
+				smartPaintView: false,
+				smartPaint2dEdit: false,
+				smartPaint3dEdit: false,
+				smartPaintInfo: false
 			};
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
@@ -246,73 +274,26 @@
 				freeDrawView: true,
 				freeDrawEdit: true,
 				freeDrawInfo: true,
+				smartPaintView: true,
+				smartPaint2dEdit: true,
+				smartPaint3dEdit: true,
+				smartPaintInfo: true
 			};
 			viewerCommunication.updateSegmentationToolPermissions(permissions);
 		}
 
-		function disableEditing () {
-			const permissions = {
-				boundingBoxView: true,
-				boundingBox2dEdit: false,
-				boundingBox3dEdit: false,
-				boundingBoxInfo: true,
-				freeDrawView: true,
-				freeDrawEdit: false,
-				freeDrawInfo: true
-			};
-			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		function getSnapshot () {
+			viewerCommunication.getSnapshot();
 		}
 
-		function disableInformation () {
-			const permissions = {
-				boundingBoxView: true,
-				boundingBox2dEdit: true,
-				boundingBox3dEdit: true,
-				boundingBoxInfo: false,
-				freeDrawView: true,
-				freeDrawEdit: true,
-				freeDrawInfo: false,
-			};
-			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		let layoutSnapshot = undefined;
+		function onGetSnapshot (snapshot) {
+			console.log(snapshot);
+			layoutSnapshot = snapshot;
 		}
 
-		function disable2dBoundingBox () {
-			const permissions = {
-				boundingBoxView: true,
-				boundingBox2dEdit: false,
-				boundingBox3dEdit: true,
-				boundingBoxInfo: true,
-				freeDrawView: true,
-				freeDrawEdit: true,
-				freeDrawInfo: true,
-			};
-			viewerCommunication.updateSegmentationToolPermissions(permissions);
-		}
-
-		function disable3dBoundingBox () {
-			const permissions = {
-				boundingBoxView: true,
-				boundingBox2dEdit: true,
-				boundingBox3dEdit: false,
-				boundingBoxInfo: true,
-				freeDrawView: true,
-				freeDrawEdit: true,
-				freeDrawInfo: true,
-			};
-			viewerCommunication.updateSegmentationToolPermissions(permissions);
-		}
-
-		function enableInformation () {
-			const permissions = {
-				boundingBoxView: true,
-				boundingBox2dEdit: true,
-				boundingBox3dEdit: true,
-				boundingBoxInfo: true,
-				freeDrawView: true,
-				freeDrawEdit: true,
-				freeDrawInfo: true,
-			};
-			viewerCommunication.updateSegmentationToolPermissions(permissions);
+		function setSnapshot () {
+			viewerCommunication.setSnapshot(layoutSnapshot);
 		}
 	</script>
 </head>
@@ -397,19 +378,17 @@
 	</div>
 	<br>
 	<div>
-		<button type='button' onclick='disableFreeDraw()'>Disable free draw</button>
+		<button type='button' onclick='disableSegmentationEditing()'>Disable segmentation editing</button>
+		<button type='button' onclick='disableSegmentationInformation()'>Disable segmentation information</button>
 		<button type='button' onclick='disableSegmentation()'>Disable segmentation</button>
 		<button type='button' onclick='enableSegmentation()'>Enable segmentation</button>
-		<button type='button' onclick='disableEditing()'>Disable editing</button>
-		<button type='button' onclick='disableInformation()'>Disable information</button>
-		<button type='button' onclick='disable2dBoundingBox()'>Disable 2d bounding box</button>
-		<button type='button' onclick='disable3dBoundingBox()'>Disable 3d bounding box</button>
-		<button type='button' onclick='enableInformation()'>Enable information</button>
+		<button type='button' onclick='subscribeAnnotationsSavedEvent()'>Subscribe annotations saved</button>
+		<button type='button' onclick='unsubscribeAnnotationsSavedEvent()'>Unsubscribe annotations saved</button>
 	</div>
 	<br>
 	<div>
-		<button type='button' onclick='subscribeAnnotationsSavedEvent()'>Subscribe annotations saved</button>
-		<button type='button' onclick='unsubscribeAnnotationsSavedEvent()'>Unsubscribe annotations saved</button>
+		<button type='button' onclick='getSnapshot()'>Get snapshot</button>
+		<button type='button' onclick='setSnapshot()'>Set snapshot</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>

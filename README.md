@@ -1,4 +1,5 @@
-# MedDream WEB DICOM Viewer Communication API
+# MedDream Viewer Communication API
+##### Version 1.0.7 (2022-03-14)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -303,6 +304,10 @@ Available segmentation permissions:
 - `freeDrawView` - Permission to see free draw tab. Default value: **_false_**.
 - `freeDrawEdit` - Permission to edit free draw tab. Default value: **_false_**.
 - `freeDrawInfo` - Permission to see free draw information button and panel. Default value: **_false_**.
+- `smartPaintView` - Permission to see smart paint tab. Default value: **_false_**.
+- `smartPaint2dEdit` - Permission to use 2d smart paint tool. Default value: **_false_**.
+- `smartPaint3dEdit` - Permission to use 3d smart paint tool. Default value: **_false_**.
+- `smartPaintInfo` - Permission to see smart paint information button and panel. Default value: **_false_**.
 
 Usage example:
 
@@ -315,6 +320,10 @@ const permissions = {
     freeDrawView: true,
     freeDrawEdit: true,
     freeDrawInfo: false,
+    smartPaintView: true,
+    smartPaint2dEdit: true,
+    smartPaint3dEdit: true,
+    smartPaintInfo: false
 };
 viewerCommunication.updateSegmentationToolPermissions(permissions);
 ```
@@ -331,6 +340,28 @@ Usage:
 - Register **_subscribeGetOpenedStudiesEvent_** **_callback_** function.
 - Call **_getOpenedStudies_** function to request opened studies data in callback function.
 - Once message is processed, **_callback_** function will be triggered with opened studies array.
+
+#### Get snapshot
+```js
+const callback = (snapshot) => console.log(snapshot);
+viewerCommunication.subscribeGetSnapshotEvent(callback);
+viewerCommunication.getSnapshot();
+```
+
+Usage:
+
+- Register **_subscribeGetSnapshotEvent_** **_callback_** function.
+- Call **_getSnapshot_** function to generate current layout with viewports snapshot and return it to **_callback_** function.
+- Once message is processed, **_callback_** function will be triggered with snapshot data.
+
+#### Set snapshot
+```js
+viewerCommunication.setSnapshot(layoutSnapshot);
+```
+
+Parameter:
+
+- `layoutSnapshot` - layout and viewports snapshot which was requested by **_getSnapshot_** function and returned to **_callback_** function.
 
 ### Events
 
@@ -364,6 +395,21 @@ Parameter:
 viewerCommunication.unsubscribeGetOpenedStudiesEvent();
 ```
 
+#### Subscribe get snapshot event
+```js
+const callback = (snapshot) => console.log(snapshot);
+viewerCommunication.subscribeGetSnapshotEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered with generated snapshot information.
+
+#### Unsubscribe get snapshot event
+```js
+viewerCommunication.unsubscribeGetSnapshotEvent();
+```
+
 #### Subscribe annotations saved event
 ```js
 const callback = (annotations) => console.log(annotations);
@@ -380,6 +426,18 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
 ## Change log
+### 1.0.7 (2022-03-14)
+
+#### Changes
+- Added `getSnapshot` function to generate viewer layout and viewports snapshot.
+- Added `setSnapshot` function to set previously generated snapshot back to the viewer.
+- Added `subscribeGetSnapshotEvent` function to subscribe of get snapshot event callback.
+- Added `unsubscribeGetSnapshotEvent` function to unsubscribe of get snapshot event callback.
+
+### 1.0.6 (2021-12-15)
+
+#### Changes
+- Updated `updateSegmentationToolPermissions` function to support new permissions: `smartPaintView`, `smartPaint2dEdit`, `smartPaint3dEdit`, `smartPaintInfo`.
 
 ### 1.0.4 (2021-11-11)
 

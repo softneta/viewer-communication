@@ -45,8 +45,11 @@
             if (actionType === 'GET_OPENED_STUDIES') {
                 this.performOnGetOpenedStudiesCallback(actionData);
             }
-            if (actionType === 'ANNOTATION_SAVED') {
-                this.performOnAnnotationSavedCallback(actionData);
+            if (actionType === 'GET_SNAPSHOT') {
+                this.performGetSnapshotCallback(actionData);
+            }
+            if (actionType === 'ANNOTATIONS_SAVED') {
+                this.performOnAnnotationsSavedCallback(actionData);
             }
         };
 
@@ -62,9 +65,15 @@
             }
         }
 
-        functions.performOnAnnotationSavedCallback = function (actionData) {
-            if (callbacks.onAnnotationSavedCallback) {
-                callbacks.onAnnotationSavedCallback(actionData);
+        functions.performGetSnapshotCallback = function (actionData) {
+            if (callbacks.onGetSnapshotCallback) {
+                callbacks.onGetSnapshotCallback(actionData);
+            }
+        }
+
+        functions.performOnAnnotationsSavedCallback = function (actionData) {
+            if (callbacks.onAnnotationsSavedCallback) {
+                callbacks.onAnnotationsSavedCallback(actionData);
             }
         }
 
@@ -160,6 +169,14 @@
             this.postActionMessage('GET_OPENED_STUDIES');
         };
 
+        functions.getSnapshot = function () {
+            this.postActionMessage('GET_SNAPSHOT');
+        };
+
+        functions.setSnapshot = function (snapshot) {
+            this.postActionMessage('SET_SNAPSHOT', {snapshot});
+        };
+
         functions.subscribeEvent = function (eventType) {
             this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
         };
@@ -184,14 +201,22 @@
             callbacks.onGetOpenedStudiesCallback = undefined;
         }
 
+        functions.subscribeGetSnapshotEvent = function (callback) {
+            callbacks.onGetSnapshotCallback = callback;
+        };
+
+        functions.unsubscribeGetSnapshotEvent = function () {
+            callbacks.onGetSnapshotCallback = undefined;
+        }
+
         functions.subscribeAnnotationsSavedEvent = function (callback) {
-            callbacks.onAnnotationSavedCallback = callback;
-            this.subscribeEvent('ANNOTATION_SAVED');
+            callbacks.onAnnotationsSavedCallback = callback;
+            this.subscribeEvent('ANNOTATIONS_SAVED');
         };
 
         functions.unsubscribeAnnotationsSavedEvent = function () {
-            callbacks.onAnnotationSavedCallback = undefined;
-            this.unsubscribeEvent('ANNOTATION_SAVED');
+            callbacks.onAnnotationsSavedCallback = undefined;
+            this.unsubscribeEvent('ANNOTATIONS_SAVED');
         };
 
         functions.registerMessageReceivedEvent();
