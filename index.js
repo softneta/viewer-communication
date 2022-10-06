@@ -3,7 +3,7 @@
 
     function ViewerCommunication (targetURL, integration = 'study') {
         let windowReference;
-        const integrationType = integration === 'study' ? 'study' : 'token';
+        let integrationType = integration === 'study' ? 'study' : 'token';
         const callbacks = {};
         const functions = {};
 
@@ -95,7 +95,7 @@
             windowReference = iframe.contentWindow;
         };
 
-        if (integrationType === 'study') {
+        functions.addStudyIntegrationFunctions = function () {
             functions.openStudy = function (study) {
                 this.postActionMessage('OPEN_STUDY', {study});
             };
@@ -119,7 +119,9 @@
             functions.closeStudies = function (studies) {
                 this.postActionMessage('CLOSE_STUDIES', {studies});
             };
-        } else {
+        };
+
+        functions.addTokenIntegrationFunctions = function () {
             functions.openStudies = function (token) {
                 this.postActionMessage('OPEN_STUDIES_WITH_TOKEN', {token});
             };
@@ -139,7 +141,15 @@
             functions.closeStudies = function (token) {
                 this.postActionMessage('CLOSE_STUDIES_WITH_TOKEN', {token});
             };
-        }
+        };
+
+        functions.addIntegrationFunctions = function () {
+            if (integrationType === 'study') {
+                functions.addStudyIntegrationFunctions();
+            } else {
+                functions.addTokenIntegrationFunctions();
+            }
+        };
 
         functions.cacheAllStudies = function () {
             this.postActionMessage('CACHE_ALL_STUDIES');
@@ -219,6 +229,23 @@
             this.unsubscribeEvent('ANNOTATIONS_SAVED');
         };
 
+        functions.getIntegrationType = function () {
+            return integrationType;
+        };
+
+        functions.updateIntegrationType = function (newIntegrationType) {
+            integrationType = newIntegrationType;
+
+            functions.openStudy = undefined;
+            functions.openStudies = undefined;
+            functions.replaceStudies = undefined;
+            functions.preloadStudies = undefined;
+            functions.cacheStudies = undefined;
+            functions.closeStudies = undefined;
+            this.addIntegrationFunctions();
+        };
+
+        functions.addIntegrationFunctions();
         functions.registerMessageReceivedEvent();
 
         return functions;

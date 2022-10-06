@@ -4,8 +4,8 @@
 	<title>Demo Example</title>
 	<script src='js/index.js'></script>
 	<script>
-		const integrationType = 'study';
-		const viewerCommunication = new ViewerCommunication('http://localhost:8080', integrationType);
+		const defaultIntegrationType = 'study';
+		const viewerCommunication = new ViewerCommunication('http://localhost:8080', defaultIntegrationType);
 		viewerCommunication.subscribeCommunicationServiceReadyEvent(onCommunicationServiceReady);
 		viewerCommunication.subscribeGetOpenedStudiesEvent(onGetOpenedStudies);
 		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
@@ -40,6 +40,7 @@
 				studySelectionContainer.style.display = 'none';
 				studyIntegrationContainer.style.display = 'none';
 			}
+			viewerCommunication.updateIntegrationType(integrationType);
 		}
 
 		function getSelectedStudyUid () {
@@ -51,7 +52,7 @@
 		}
 
 		function getSelectedValueByIntegrationType () {
-			return integrationType === 'study' ? getSelectedStudyUid() : getSelectedToken();
+			return viewerCommunication.getIntegrationType() === 'study' ? getSelectedStudyUid() : getSelectedToken();
 		}
 
 		function openInMedDreamWindow () {

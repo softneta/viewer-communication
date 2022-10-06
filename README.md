@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.7 (2022-03-14)
+##### Version 1.0.8 (2022-10-06)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -15,17 +15,17 @@ Parameters:
 
 ## Window reference functions
 
-#### Get available Viewer window reference
+### Get available Viewer window reference
 ```js
 const windowReference = viewerCommunication.getWindowReference();
 ```
 
-#### Focus available window
+### Focus available window
 ```js
 viewerCommunication.focusWindow();
 ```
 
-#### Post action message to MedDream Viewer
+### Post action message to MedDream Viewer
 ```js
 viewerCommunication.postActionMessage(actionType, actionData);
 ```
@@ -37,9 +37,25 @@ Parameters:
 
 For more details about available action messages check: `MedDream communication documentation`.
 
+## Viewer communication integration functions
+
+### Get current integration type
+```js
+const integrationType = viewerCommunication.getIntegrationType();
+```
+
+### Update integration type
+```js
+viewerCommunication.updateIntegrationType(newIntegrationType);
+```
+
+Parameter:
+
+- `newIntegrationType` - Integration type: `study` or `token`.
+
 ## Functions to open MedDream Viewer
 
-#### Open studies in MedDream Viewer window
+### Open studies in MedDream Viewer window
 ```js
 viewerCommunication.openInMedDreamWindow(studies/token);
 ```
@@ -49,7 +65,7 @@ Parameters:
 - `studies` (For `study` integration) - Study uid's list separated with `,`.
 - `token` (For `token` integration) - Token with study information.
 
-#### Add studies to MedDream Viewer window
+### Add studies to MedDream Viewer window
 ```js
 viewerCommunication.addToMedDreamWindow(studies/token);
 ```
@@ -59,7 +75,7 @@ Parameters:
 - `studies` (For `study` integration) - Study uid's list separated with `,`.
 - `token` (For `token` integration) - Token with study information.
 
-#### Replace studies in MedDream Viewer window
+### Replace studies in MedDream Viewer window
 ```js
 viewerCommunication.replaceInMedDreamWindow(studies/token);
 ```
@@ -69,7 +85,7 @@ Parameters:
 - `studies` (For `study` integration) - Study uid's list separated with `,`.
 - `token` (For `token` integration) - Token with study information.
 
-#### Open MedDream with studies to iframe
+### Open MedDream with studies to iframe
 ```js
 viewerCommunication.openMedDreamToIframe(iframeId, studies/token);
 ```
@@ -426,6 +442,13 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
 ## Change log
+### 1.0.8 (2022-10-06)
+
+#### Changes
+- Added `getIntegrationType` function to return current integration type.
+- Added `updateIntegrationType` function to update integration type.
+- Updated integration type dropdown in example to actually update integration type in library when new integration type is selected.
+
 ### 1.0.7 (2022-03-14)
 
 #### Changes
