@@ -14,7 +14,6 @@ Parameters:
 - `integration` (Optional) - Integration type: `study` or `token`. Default value: `study`.
 
 ## Window reference functions
-
 ### Get available Viewer window reference
 ```js
 const windowReference = viewerCommunication.getWindowReference();
@@ -38,7 +37,6 @@ Parameters:
 For more details about available action messages check: `MedDream communication documentation`.
 
 ## Viewer communication integration functions
-
 ### Get current integration type
 ```js
 const integrationType = viewerCommunication.getIntegrationType();
@@ -54,7 +52,6 @@ Parameter:
 - `newIntegrationType` - Integration type: `study` or `token`.
 
 ## Functions to open MedDream Viewer
-
 ### Open studies in MedDream Viewer window
 ```js
 viewerCommunication.openInMedDreamWindow(studies/token);
@@ -97,9 +94,7 @@ Parameters:
 - `token` (For `token` integration) - Token with study information.
 
 ## Communication functions
-
 ### Functions only for Study integration
-
 #### Open study
 ```js
 viewerCommunication.openStudy(study);
@@ -181,7 +176,6 @@ const studies = [
 ```
 
 ### Functions only for Token integration
-
 #### Open studies
 ```js
 viewerCommunication.openStudies(token);
@@ -228,7 +222,6 @@ Parameter:
 - `token` - Generated token with studies information.
 
 ### Common functions
-
 #### Cache all studies
 ```js
 viewerCommunication.cacheAllStudies();
@@ -380,7 +373,6 @@ Parameter:
 - `layoutSnapshot` - layout and viewports snapshot which was requested by **_getSnapshot_** function and returned to **_callback_** function.
 
 ### Events
-
 #### Subscribe communication service ready event
 ```js
 const callback = (annotations) => console.log(annotations);
@@ -426,6 +418,21 @@ Parameter:
 viewerCommunication.unsubscribeGetSnapshotEvent();
 ```
 
+#### Subscribe study loaded event
+```js
+const callback = (study) => console.log(study);
+viewerCommunication.subscribeStudyLoadedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe study loaded event
+```js
+viewerCommunication.unsubscribeStudyLoadedEvent();
+```
+
 #### Subscribe annotations saved event
 ```js
 const callback = (annotations) => console.log(annotations);
@@ -442,15 +449,18 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
 ## Change log
-### 1.0.8 (2022-10-06)
+### 1.0.9 (2022-11-07)
+#### Changes
+- Added `subscribeStudyLoadedEvent` function to subscribe of study loaded event callback.
+- Added `unsubscribeStudyLoadedEvent` function to unsubscribe of study loaded event callback.
 
+### 1.0.8 (2022-10-06)
 #### Changes
 - Added `getIntegrationType` function to return current integration type.
 - Added `updateIntegrationType` function to update integration type.
 - Updated integration type dropdown in example to actually update integration type in library when new integration type is selected.
 
 ### 1.0.7 (2022-03-14)
-
 #### Changes
 - Added `getSnapshot` function to generate viewer layout and viewports snapshot.
 - Added `setSnapshot` function to set previously generated snapshot back to the viewer.
@@ -458,17 +468,14 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 - Added `unsubscribeGetSnapshotEvent` function to unsubscribe of get snapshot event callback.
 
 ### 1.0.6 (2021-12-15)
-
 #### Changes
 - Updated `updateSegmentationToolPermissions` function to support new permissions: `smartPaintView`, `smartPaint2dEdit`, `smartPaint3dEdit`, `smartPaintInfo`.
 
 ### 1.0.4 (2021-11-11)
-
 #### Breaking changes
 - Updated segmentation permission `boundingBoxEdit` to `boundingBox2dEdit` and `boundingBox3dEdit` for 2d and 3d bounding box permissions control.
 
 ### 1.0.3 (2021-09-28)
-
 #### Changes
 - Added `updateSegmentationToolPermissions` function to update segmentation tool permissions.
 - Added `subscribeCommunicationServiceReadyEvent` function to subscribe communication service ready event.
@@ -481,7 +488,6 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 - Renamed `onGetOpenedStudies` function to `subscribeGetOpenedStudiesEvent`.
 
 ### 1.0.2 (2021-09-22)
-
 #### Changes
 - Added `openMedDreamToIframe` function to open studies in iframe.
 
