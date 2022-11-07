@@ -39,17 +39,24 @@
         };
 
         functions.performCallback = function (actionType, actionData) {
-            if (actionType === 'COMMUNICATION_SERVICE_READY') {
-                this.performOnCommunicationServiceReadyCallback();
-            }
-            if (actionType === 'GET_OPENED_STUDIES') {
-                this.performOnGetOpenedStudiesCallback(actionData);
-            }
-            if (actionType === 'GET_SNAPSHOT') {
-                this.performGetSnapshotCallback(actionData);
-            }
-            if (actionType === 'ANNOTATIONS_SAVED') {
-                this.performOnAnnotationsSavedCallback(actionData);
+            switch (actionType) {
+                case 'COMMUNICATION_SERVICE_READY':
+                    this.performOnCommunicationServiceReadyCallback();
+                    break;
+                case 'GET_OPENED_STUDIES':
+                    this.performOnGetOpenedStudiesCallback(actionData);
+                    break;
+                case 'GET_SNAPSHOT':
+                    this.performGetSnapshotCallback(actionData);
+                    break;
+                case 'STUDY_LOADED':
+                    this.performOnStudyLoadedCallback(actionData);
+                    break;
+                case 'ANNOTATIONS_SAVED':
+                    this.performOnAnnotationsSavedCallback(actionData);
+                    break;
+                default:
+                    break;
             }
         };
 
@@ -68,6 +75,12 @@
         functions.performGetSnapshotCallback = function (actionData) {
             if (callbacks.onGetSnapshotCallback) {
                 callbacks.onGetSnapshotCallback(actionData);
+            }
+        }
+
+        functions.performOnStudyLoadedCallback = function (actionData) {
+            if (callbacks.onStudyLoadedCallback) {
+                callbacks.onStudyLoadedCallback(actionData);
             }
         }
 
@@ -218,6 +231,16 @@
         functions.unsubscribeGetSnapshotEvent = function () {
             callbacks.onGetSnapshotCallback = undefined;
         }
+
+        functions.subscribeStudyLoadedEvent = function (callback) {
+            callbacks.onStudyLoadedCallback = callback;
+            this.subscribeEvent('STUDY_LOADED');
+        };
+
+        functions.unsubscribeStudyLoadedEvent = function () {
+            callbacks.onStudyLoadedCallback = undefined;
+            this.unsubscribeEvent('STUDY_LOADED');
+        };
 
         functions.subscribeAnnotationsSavedEvent = function (callback) {
             callbacks.onAnnotationsSavedCallback = callback;
