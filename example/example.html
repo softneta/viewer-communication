@@ -199,8 +199,16 @@
 			console.log(studies);
 		}
 
-		function onCommunicationServiceReady () {
-			console.log('Communication Service Ready');
+		function subscribeStudyLoadedEvent () {
+			viewerCommunication.subscribeStudyLoadedEvent(this.onStudyLoaded);
+		}
+
+		function unsubscribeStudyLoadedEvent () {
+			viewerCommunication.unsubscribeStudyLoadedEvent(this.onStudyLoaded);
+		}
+
+		function onStudyLoaded (study) {
+			console.log(study);
 		}
 
 		function subscribeAnnotationsSavedEvent () {
@@ -213,6 +221,10 @@
 
 		function onAnnotationsSaved (annotationsData) {
 			console.log(annotationsData);
+		}
+
+		function onCommunicationServiceReady () {
+			console.log('Communication Service Ready');
 		}
 
 		function disableSegmentationEditing () {
@@ -373,9 +385,11 @@
 	<br>
 	<div>
 		<button type='button' onclick='openInstance()'>Open instance</button>
-		<button type='button' onclick='getOpenedStudies()'>Get opened studies</button>
 		<button type='button' onclick='exportActiveInstance()'>Export active instance</button>
 		<button type='button' onclick='exportContainerInstance(2, 2)'>Export container 2:2 instance</button>
+		<button type='button' onclick='getOpenedStudies()'>Get opened studies</button>
+		<button type='button' onclick='subscribeStudyLoadedEvent()'>Subscribe study loaded</button>
+		<button type='button' onclick='unsubscribeStudyLoadedEvent()'>Unsubscribe study loaded</button>
 	</div>
 	<br>
 	<div>
