@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.8 (2022-10-06)
+##### Version 1.0.9 (2022-11-08)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -449,7 +449,7 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
 ## Change log
-### 1.0.9 (2022-11-07)
+### 1.0.9 (2022-11-08)
 #### Changes
 - Added `subscribeStudyLoadedEvent` function to subscribe of study loaded event callback.
 - Added `unsubscribeStudyLoadedEvent` function to unsubscribe of study loaded event callback.
