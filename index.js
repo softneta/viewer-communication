@@ -46,6 +46,9 @@
                 case 'GET_OPENED_STUDIES':
                     this.performOnGetOpenedStudiesCallback(actionData);
                     break;
+                case 'GET_VIEWPORT_DATA':
+                    this.performOnGetViewportDataCallback(actionData);
+                    break;
                 case 'GET_SNAPSHOT':
                     this.performGetSnapshotCallback(actionData);
                     break;
@@ -69,6 +72,12 @@
         functions.performOnGetOpenedStudiesCallback = function (actionData) {
             if (callbacks.onGetOpenedStudiesCallback) {
                 callbacks.onGetOpenedStudiesCallback(actionData);
+            }
+        }
+
+        functions.performOnGetViewportDataCallback = function (actionData) {
+            if (callbacks.onGetViewportDataCallback) {
+                callbacks.onGetViewportDataCallback(actionData);
             }
         }
 
@@ -192,6 +201,10 @@
             this.postActionMessage('GET_OPENED_STUDIES');
         };
 
+        functions.getViewportData = function (showLabels) {
+            this.postActionMessage('GET_VIEWPORT_DATA', {showLabels});
+        };
+
         functions.getSnapshot = function () {
             this.postActionMessage('GET_SNAPSHOT');
         };
@@ -222,6 +235,14 @@
 
         functions.unsubscribeGetOpenedStudiesEvent = function () {
             callbacks.onGetOpenedStudiesCallback = undefined;
+        }
+
+        functions.subscribeGetViewportDataEvent = function (callback) {
+            callbacks.onGetViewportDataCallback = callback;
+        };
+
+        functions.unsubscribeGetViewportDataEvent = function () {
+            callbacks.onGetViewportDataCallback = undefined;
         }
 
         functions.subscribeGetSnapshotEvent = function (callback) {

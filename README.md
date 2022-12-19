@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.9 (2022-11-08)
+##### Version 1.0.10 (2022-12-19)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -350,6 +350,19 @@ Usage:
 - Call **_getOpenedStudies_** function to request opened studies data in callback function.
 - Once message is processed, **_callback_** function will be triggered with opened studies array.
 
+#### Get viewport data
+```js
+const callback = (viewportData) => console.log(viewportData);
+viewerCommunication.subscribeGetViewportDataEvent(callback);
+viewerCommunication.getViewportData();
+```
+
+Usage:
+
+- Register **_subscribeGetViewportDataEvent_** **_callback_** function.
+- Call **_getViewportData_** function to request active viewport data in callback function.
+- Once message is processed, **_callback_** function will be triggered with viewport data object.
+
 #### Get snapshot
 ```js
 const callback = (snapshot) => console.log(snapshot);
@@ -403,6 +416,21 @@ Parameter:
 viewerCommunication.unsubscribeGetOpenedStudiesEvent();
 ```
 
+#### Subscribe get viewport data event
+```js
+const callback = (viewportData) => console.log(viewportData);
+viewerCommunication.subscribeGetViewportDataEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe get viewport data event
+```js
+viewerCommunication.unsubscribeGetViewportDataEvent();
+```
+
 #### Subscribe get snapshot event
 ```js
 const callback = (snapshot) => console.log(snapshot);
@@ -449,6 +477,12 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
 ## Change log
+### 1.0.10 (2022-12-19)
+#### Changes
+- Added `getViewportData` function to get active viewport data.
+- Added `subscribeGetViewportDataEvent` function to subscribe of get viewport data event callback.
+- Added `unsubscribeGetViewportDataEvent` function to unsubscribe of get viewport data event callback.
+
 ### 1.0.9 (2022-11-08)
 #### Changes
 - Added `subscribeStudyLoadedEvent` function to subscribe of study loaded event callback.
