@@ -8,6 +8,10 @@
         const functions = {};
 
         functions.getWindowReference = function () {
+            return windowReference;
+        };
+
+        functions.findWindowReference = function () {
             if (!windowReference || windowReference && windowReference.closed) {
                 windowReference = window.open('', 'MedDreamViewer');
             }
@@ -15,14 +19,14 @@
         };
 
         functions.focusWindow = function () {
-            const reference = this.getWindowReference();
+            const reference = this.findWindowReference();
             if (reference) {
                 reference.focus();
             }
         };
 
         functions.postActionMessage = function (actionType, actionData) {
-            const reference = this.getWindowReference();
+            const reference = this.findWindowReference();
             if (reference) {
                 reference.postMessage({actionType, actionData}, targetURL);
             }
