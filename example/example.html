@@ -314,6 +314,10 @@
 		function setSnapshot () {
 			viewerCommunication.setSnapshot(layoutSnapshot);
 		}
+
+		function getWindowReference () {
+			console.log(viewerCommunication.getWindowReference());
+		}
 	</script>
 </head>
 <body>
@@ -411,6 +415,7 @@
 	<div>
 		<button type='button' onclick='getSnapshot()'>Get snapshot</button>
 		<button type='button' onclick='setSnapshot()'>Set snapshot</button>
+		<button type='button' onclick='getWindowReference()'>Get window reference</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
