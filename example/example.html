@@ -245,7 +245,6 @@
 				boundingBoxInfo: true,
 				freeDrawView: true,
 				freeDrawEdit: false,
-				freeDrawInfo: true,
 				smartPaintView: true,
 				smartPaint2dEdit: false,
 				smartPaint3dEdit: false,
@@ -262,7 +261,6 @@
 				boundingBoxInfo: false,
 				freeDrawView: true,
 				freeDrawEdit: true,
-				freeDrawInfo: false,
 				smartPaintView: true,
 				smartPaint2dEdit: true,
 				smartPaint3dEdit: true,
@@ -279,7 +277,6 @@
 				boundingBoxInfo: false,
 				freeDrawView: false,
 				freeDrawEdit: false,
-				freeDrawInfo: false,
 				smartPaintView: false,
 				smartPaint2dEdit: false,
 				smartPaint3dEdit: false,
@@ -296,7 +293,6 @@
 				boundingBoxInfo: true,
 				freeDrawView: true,
 				freeDrawEdit: true,
-				freeDrawInfo: true,
 				smartPaintView: true,
 				smartPaint2dEdit: true,
 				smartPaint3dEdit: true,
@@ -317,6 +313,10 @@
 
 		function setSnapshot () {
 			viewerCommunication.setSnapshot(layoutSnapshot);
+		}
+
+		function getWindowReference () {
+			console.log(viewerCommunication.getWindowReference());
 		}
 	</script>
 </head>
@@ -415,6 +415,7 @@
 	<div>
 		<button type='button' onclick='getSnapshot()'>Get snapshot</button>
 		<button type='button' onclick='setSnapshot()'>Set snapshot</button>
+		<button type='button' onclick='getWindowReference()'>Get window reference</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>

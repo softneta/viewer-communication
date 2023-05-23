@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.10 (2022-12-19)
+##### Version 1.0.12 (2023-03-10)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -14,9 +14,14 @@ Parameters:
 - `integration` (Optional) - Integration type: `study` or `token`. Default value: `study`.
 
 ## Window reference functions
-### Get available Viewer window reference
+### Get current Viewer window reference
 ```js
 const windowReference = viewerCommunication.getWindowReference();
+```
+
+### Find available Viewer window reference
+```js
+const windowReference = viewerCommunication.findWindowReference();
 ```
 
 ### Focus available window
@@ -312,7 +317,6 @@ Available segmentation permissions:
 - `boundingBoxInfo` - Permission to see bounding box information button and panel. Default value: **_false_**.
 - `freeDrawView` - Permission to see free draw tab. Default value: **_false_**.
 - `freeDrawEdit` - Permission to edit free draw tab. Default value: **_false_**.
-- `freeDrawInfo` - Permission to see free draw information button and panel. Default value: **_false_**.
 - `smartPaintView` - Permission to see smart paint tab. Default value: **_false_**.
 - `smartPaint2dEdit` - Permission to use 2d smart paint tool. Default value: **_false_**.
 - `smartPaint3dEdit` - Permission to use 3d smart paint tool. Default value: **_false_**.
@@ -328,7 +332,6 @@ const permissions = {
     boundingBoxInfo: false,
     freeDrawView: true,
     freeDrawEdit: true,
-    freeDrawInfo: false,
     smartPaintView: true,
     smartPaint2dEdit: true,
     smartPaint3dEdit: true,
@@ -475,6 +478,16 @@ Parameter:
 ```js
 viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
+
+## Change log
+### 1.0.12 (2023-03-10)
+#### Changes
+- Updated old `getWindowReference` function name to `findWindowReference`.
+- Added new `getWindowReference` function which returns last received window reference.
+
+### 1.0.11 (2023-03-07)
+#### Changes
+- Removed information about not used `freeDrawInfo` permission from example and `Update segmentation tool permissions` documentation section.
 
 ## Change log
 ### 1.0.10 (2022-12-19)
