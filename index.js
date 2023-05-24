@@ -217,20 +217,20 @@
             this.postActionMessage('SET_SNAPSHOT', {snapshot});
         };
 
-        functions.subscribeEvent = function (eventType) {
-            this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
-        };
-
-        functions.unsubscribeEvent = function (eventType) {
-            this.postActionMessage('UNSUBSCRIBE_EVENT', {eventType});
-        };
-
         functions.showInfoLabels = function (showLabels) {
             this.postActionMessage('SHOW_INFO_LABELS', {showLabels});
         };
 
         functions.setAdditionalInfoLabels = function (labels) {
             this.postActionMessage('SET_ADDITIONAL_INFO_LABELS', {labels});
+        };
+
+        functions.subscribeEvent = function (eventType) {
+            this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
+        };
+
+        functions.unsubscribeEvent = function (eventType) {
+            this.postActionMessage('UNSUBSCRIBE_EVENT', {eventType});
         };
 
         functions.subscribeCommunicationServiceReadyEvent = function (callback) {

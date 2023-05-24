@@ -404,7 +404,7 @@ viewerCommunication.setAdditionalInfoLabels(labels);
 
 Parameter:
 
-- `labels` - Object of top or left additional labels and booleans for show/hide dicom labels.
+- `labels` - Object of top left or right labels and parameters to hide original dicom labels.
 
 Object example:
 
@@ -416,7 +416,6 @@ const labels = {
     hideTopRightDicomLabels: false
 };
 ```
-
 
 ### Events
 #### Subscribe communication service ready event
