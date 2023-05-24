@@ -318,6 +318,23 @@
 		function getWindowReference () {
 			console.log(viewerCommunication.getWindowReference());
 		}
+
+		let showInfoLabelsValue = true;
+		function showInfoLabels () {
+			showInfoLabelsValue = !showInfoLabelsValue;
+			console.log('Show info labels:', showInfoLabelsValue);
+			viewerCommunication.showInfoLabels(showInfoLabelsValue);
+		}
+
+		function setAdditionalTopInfoLabels () {
+			const labelsExample = {
+				topLeftLabels: ['Example: something'],
+				topRightLabels: ['Study: new', 'Patient', 'Example'],
+				hideTopLeftDicomLabels: false,
+				hideTopRightDicomLabels: true
+			}
+			viewerCommunication.setAdditionalInfoLabels(labelsExample);
+		}
 	</script>
 </head>
 <body>
@@ -416,6 +433,11 @@
 		<button type='button' onclick='getSnapshot()'>Get snapshot</button>
 		<button type='button' onclick='setSnapshot()'>Set snapshot</button>
 		<button type='button' onclick='getWindowReference()'>Get window reference</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='showInfoLabels()'>Show/Hide info labels</button>
+		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>

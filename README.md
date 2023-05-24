@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.12 (2023-03-10)
+##### Version 1.0.13 (2023-05-24)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -388,6 +388,35 @@ Parameter:
 
 - `layoutSnapshot` - layout and viewports snapshot which was requested by **_getSnapshot_** function and returned to **_callback_** function.
 
+#### Show info labels
+```js
+viewerCommunication.showInfoLabels(value);
+```
+
+Parameter:
+
+- `value` - boolean to show or hide viewports labels.
+
+#### Set additional info labels
+```js
+viewerCommunication.setAdditionalInfoLabels(labels);
+```
+
+Parameter:
+
+- `labels` - Object of top left or right labels and parameters to hide original dicom labels.
+
+Object example:
+
+```js
+const labels = {
+    topLeftLabels: ['example label', 'new line label'],
+    topRightLabels: ['example label', 'new line label'],
+    hideTopLeftDicomLabels: false,
+    hideTopRightDicomLabels: false
+};
+```
+
 ### Events
 #### Subscribe communication service ready event
 ```js
@@ -480,6 +509,11 @@ viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
 ## Change log
+### 1.0.13 (2023-05-24)
+#### Changes
+- Added `showInfoLabels` function to show/hide viewports info labels.
+- Added `setAdditionalInfoLabels` function to set additional info labels for viewports.
+
 ### 1.0.12 (2023-03-10)
 #### Changes
 - Updated old `getWindowReference` function name to `findWindowReference`.
