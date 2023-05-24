@@ -225,6 +225,14 @@
             this.postActionMessage('UNSUBSCRIBE_EVENT', {eventType});
         };
 
+        functions.showInfoLabels = function (showLabels) {
+            this.postActionMessage('SHOW_INFO_LABELS', {showLabels});
+        };
+
+        functions.setAdditionalInfoLabels = function (labels) {
+            this.postActionMessage('SET_ADDITIONAL_INFO_LABELS', {labels});
+        };
+
         functions.subscribeCommunicationServiceReadyEvent = function (callback) {
             callbacks.onCommunicationServiceReadyCallback = callback;
         }
