@@ -335,6 +335,13 @@
 			}
 			viewerCommunication.setAdditionalInfoLabels(labelsExample);
 		}
+
+		function generateInstanceMpr (containerId) {
+			viewerCommunication.generateInstanceMpr(containerId);
+		}
+		function changeViewportOrientation (orientation, containerId) {
+			viewerCommunication.changeViewportOrientation(orientation, containerId);
+		}
 	</script>
 </head>
 <body>
@@ -438,6 +445,13 @@
 	<div>
 		<button type='button' onclick='showInfoLabels()'>Show/Hide info labels</button>
 		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='generateInstanceMpr()'>Generate active instance MPR</button>
+		<button type='button' onclick='changeViewportOrientation("AXIAL", "viewport-container-1-1")'>Create MPR Axial orientation</button>
+		<button type='button' onclick='changeViewportOrientation("SAGITTAL", "viewport-container-1-1")'>Create MPR Sagittal orientation</button>
+		<button type='button' onclick='changeViewportOrientation("CORONAL")'>Create MPR Coronal orientation</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
