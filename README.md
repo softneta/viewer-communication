@@ -425,7 +425,7 @@ viewerCommunication.generateInstanceMpr(containerId);
 Parameter:
 
 - `containerId` - viewport container id. If no container id is provided then active container is used. 
-- 
+
 #### Change viewport orientation
 ```js
 viewerCommunication.changeViewportOrientation(containerId, orientation);
