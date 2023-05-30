@@ -229,8 +229,8 @@
             this.postActionMessage('GENERATE_INSTANCE_MPR', {containerId});
         };
 
-        functions.changeViewportOrientation = function (orientation, containerId) {
-            this.postActionMessage('CHANGE_VIEWPORT_ORIENTATION', {orientation, containerId});
+        functions.changeViewportOrientation = function (containerId, orientation) {
+            this.postActionMessage('CHANGE_VIEWPORT_ORIENTATION', {containerId, orientation});
         };
 
         functions.subscribeEvent = function (eventType) {

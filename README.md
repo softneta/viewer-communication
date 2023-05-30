@@ -428,13 +428,13 @@ Parameter:
 - 
 #### Change viewport orientation
 ```js
-viewerCommunication.changeViewportOrientation(orientation, containerId);
+viewerCommunication.changeViewportOrientation(containerId, orientation);
 ```
 
 Parameters:
 
-- `containerId` - viewport container id. If no container id is provided then active container is used.
 - `orientation` - orientations: `CORONAL`, `AXIAL`, `SAGITTAL`.
+- `containerId` - viewport container id. If no container id is provided then active container is used.
 
 ### Events
 #### Subscribe communication service ready event
