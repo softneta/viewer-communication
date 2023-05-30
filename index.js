@@ -225,6 +225,14 @@
             this.postActionMessage('SET_ADDITIONAL_INFO_LABELS', {labels});
         };
 
+        functions.generateInstanceMpr = function (containerId) {
+            this.postActionMessage('GENERATE_INSTANCE_MPR', {containerId});
+        };
+
+        functions.changeViewportOrientation = function (containerId, orientation) {
+            this.postActionMessage('CHANGE_VIEWPORT_ORIENTATION', {containerId, orientation});
+        };
+
         functions.subscribeEvent = function (eventType) {
             this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
         };

@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.13 (2023-05-24)
+##### Version 1.0.14 (2023-05-30)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -417,6 +417,25 @@ const labels = {
 };
 ```
 
+#### Generate instance MPR
+```js
+viewerCommunication.generateInstanceMpr(containerId);
+```
+
+Parameter:
+
+- `containerId` - viewport container id. If no container id is provided then active container is used. 
+
+#### Change viewport orientation
+```js
+viewerCommunication.changeViewportOrientation(containerId, orientation);
+```
+
+Parameters:
+
+- `orientation` - orientations: `CORONAL`, `AXIAL`, `SAGITTAL`.
+- `containerId` - viewport container id. If no container id is provided then active container is used.
+
 ### Events
 #### Subscribe communication service ready event
 ```js
@@ -507,6 +526,12 @@ Parameter:
 ```js
 viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
+
+## Change log
+### 1.0.14 (2023-05-20)
+#### Changes
+- Added `generateInstanceMpr` function to generate instance MPR.
+- Added `changeViewportOrientation` function to change viewport orientation.
 
 ## Change log
 ### 1.0.13 (2023-05-24)
