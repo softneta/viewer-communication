@@ -233,6 +233,54 @@
 			console.log(annotationsData);
 		}
 
+		function subscribeInstanceChangedEvent () {
+			viewerCommunication.subscribeInstanceChangedEvent(this.onInstanceChanged);
+		}
+
+		function unsubscribeInstanceChangedEvent () {
+			viewerCommunication.unsubscribeInstanceChangedEvent(this.onInstanceChanged);
+		}
+
+		function onInstanceChanged (data) {
+			console.log(data);
+		}
+
+		function subscribeActiveContainerChangedEvent () {
+			viewerCommunication.subscribeActiveContainerChangedEvent(this.onActiveContainerChanged);
+		}
+
+		function unsubscribeActiveContainerChangedEvent () {
+			viewerCommunication.unsubscribeActiveContainerChangedEvent(this.onActiveContainerChanged);
+		}
+
+		function onActiveContainerChanged (data) {
+			console.log(data);
+		}
+
+		function subscribeMeasurementCreatedEvent () {
+			viewerCommunication.subscribeMeasurementCreatedEvent(this.onMeasurementCreated);
+		}
+
+		function unsubscribeMeasurementCreatedEvent () {
+			viewerCommunication.unsubscribeMeasurementCreatedEvent(this.onMeasurementCreated);
+		}
+
+		function onMeasurementCreated (data) {
+			console.log(data);
+		}
+
+		function subscribeMeasurementUpdatedEvent () {
+			viewerCommunication.subscribeMeasurementUpdatedEvent(this.onMeasurementUpdated);
+		}
+
+		function unsubscribeMeasurementUpdatedEvent () {
+			viewerCommunication.unsubscribeMeasurementUpdatedEvent(this.onMeasurementUpdated);
+		}
+
+		function onMeasurementUpdated (data) {
+			console.log(data);
+		}
+
 		function onCommunicationServiceReady () {
 			console.log('Communication Service Ready');
 		}
@@ -322,7 +370,6 @@
 		let showInfoLabelsValue = true;
 		function showInfoLabels () {
 			showInfoLabelsValue = !showInfoLabelsValue;
-			console.log('Show info labels:', showInfoLabelsValue);
 			viewerCommunication.showInfoLabels(showInfoLabelsValue);
 		}
 
@@ -341,6 +388,38 @@
 		}
 		function changeViewportOrientation (containerId, orientation) {
 			viewerCommunication.changeViewportOrientation(containerId, orientation);
+		}
+
+		function createMeasurement () {
+			const measurementData = {
+				id: 'closed-polygon-1',
+				type: 'closed-polygon',
+				containerId: 'viewport-container-1-1',
+				studyUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__Orthanc',
+				seriesUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__1.2.840.113619.2.55.3.4271045733.996.1449464144.601__Orthanc',
+				instanceUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__1.2.840.113619.2.55.3.4271045733.996.1449464144.601__1.2.840.113619.2.55.3.4271045733.996.1449464144.602.1__Orthanc',
+				colors: {
+					regularColor: '#FFA500',
+					activeColor: '#33CCFF',
+					markedColor: '#009BFF',
+					activeLabelColor: '#FFF'
+				},
+				data: {
+					points: [
+						[-55.168894532260964, 32.4931972896166, 42.5],
+						[12.520785835194232, -6.558543217479382, 42.5],
+						[95.8311612584763, 37.179406120000635, 42.5],
+						[-0.4964600446614611, 118.40702869925087, 42.5],
+						[-55.168894532260964, 32.4931972896166, 42.5]
+					]
+				}
+			}
+			viewerCommunication.createNewMeasurement('viewport-container-1-1', measurementData);
+		}
+
+		function deleteMeasurement () {
+			const measurementId = 'closed-polygon-1';
+			viewerCommunication.deleteMeasurementById(measurementId);
 		}
 	</script>
 </head>
@@ -444,6 +523,19 @@
 		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
 		<button type='button' onclick='generateInstanceMpr("viewport-container-1-1")'>Generate instance MPR</button>
 		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "SAGITTAL")'>Create MPR Sagittal orientation</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='createMeasurement()'>Create measurement</button>
+		<button type='button' onclick='deleteMeasurement()'>Delete measurement</button>
+		<button type='button' onclick='subscribeInstanceChangedEvent()'>Subscribe instance changed</button>
+		<button type='button' onclick='unsubscribeInstanceChangedEvent()'>Unsubscribe instance changed</button>
+		<button type='button' onclick='subscribeActiveContainerChangedEvent()'>Subscribe active container changed</button>
+		<button type='button' onclick='unsubscribeActiveContainerChangedEvent()'>Unsubscribe active container changed</button>
+		<button type='button' onclick='subscribeMeasurementCreatedEvent()'>Subscribe measurement created</button>
+		<button type='button' onclick='unsubscribeMeasurementCreatedEvent()'>Unsubscribe measurement created</button>
+		<button type='button' onclick='subscribeMeasurementUpdatedEvent()'>Subscribe measurement updated</button>
+		<button type='button' onclick='unsubscribeMeasurementUpdatedEvent()'>Unsubscribe measurement updated</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
