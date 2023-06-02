@@ -192,131 +192,6 @@
 			viewerCommunication.exportInstance(viewportColumn, viewportRow);
 		}
 
-		function getOpenedStudies () {
-			viewerCommunication.getOpenedStudies();
-		}
-
-		function onGetOpenedStudies (studies) {
-			console.log(studies);
-		}
-
-		function getViewportData () {
-			const showLabels = false;
-			viewerCommunication.getViewportData(showLabels);
-		}
-
-		function onGetViewportData (data) {
-			console.log(data)
-		}
-
-		function subscribeStudyLoadedEvent () {
-			viewerCommunication.subscribeStudyLoadedEvent(this.onStudyLoaded);
-		}
-
-		function unsubscribeStudyLoadedEvent () {
-			viewerCommunication.unsubscribeStudyLoadedEvent(this.onStudyLoaded);
-		}
-
-		function onStudyLoaded (study) {
-			console.log(study);
-		}
-
-		function subscribeAnnotationsSavedEvent () {
-			viewerCommunication.subscribeAnnotationsSavedEvent(this.onAnnotationsSaved);
-		}
-
-		function unsubscribeAnnotationsSavedEvent () {
-			viewerCommunication.unsubscribeAnnotationsSavedEvent(this.onAnnotationsSaved);
-		}
-
-		function onAnnotationsSaved (annotationsData) {
-			console.log(annotationsData);
-		}
-
-		function subscribeInstanceChangedEvent () {
-			viewerCommunication.subscribeInstanceChangedEvent(this.onInstanceChanged);
-		}
-
-		function unsubscribeInstanceChangedEvent () {
-			viewerCommunication.unsubscribeInstanceChangedEvent(this.onInstanceChanged);
-		}
-
-		function onInstanceChanged (data) {
-			console.log(data);
-		}
-
-		function subscribeActiveContainerChangedEvent () {
-			viewerCommunication.subscribeActiveContainerChangedEvent(this.onActiveContainerChanged);
-		}
-
-		function unsubscribeActiveContainerChangedEvent () {
-			viewerCommunication.unsubscribeActiveContainerChangedEvent(this.onActiveContainerChanged);
-		}
-
-		function onActiveContainerChanged (data) {
-			console.log(data);
-		}
-
-		function subscribeMeasurementCreatedEvent () {
-			viewerCommunication.subscribeMeasurementCreatedEvent(this.onMeasurementCreated);
-		}
-
-		function unsubscribeMeasurementCreatedEvent () {
-			viewerCommunication.unsubscribeMeasurementCreatedEvent(this.onMeasurementCreated);
-		}
-
-		function onMeasurementCreated (data) {
-			console.log(data);
-		}
-
-		function subscribeMeasurementUpdatedEvent () {
-			viewerCommunication.subscribeMeasurementUpdatedEvent(this.onMeasurementUpdated);
-		}
-
-		function unsubscribeMeasurementUpdatedEvent () {
-			viewerCommunication.unsubscribeMeasurementUpdatedEvent(this.onMeasurementUpdated);
-		}
-
-		function onMeasurementUpdated (data) {
-			console.log(data);
-		}
-
-		function onCommunicationServiceReady () {
-			console.log('Communication Service Ready');
-		}
-
-		function disableSegmentationEditing () {
-			const permissions = {
-				boundingBoxView: true,
-				boundingBox2dEdit: false,
-				boundingBox3dEdit: false,
-				boundingBoxInfo: true,
-				freeDrawView: true,
-				freeDrawEdit: false,
-				smartPaintView: true,
-				smartPaint2dEdit: false,
-				smartPaint3dEdit: false,
-				smartPaintInfo: true
-			};
-			viewerCommunication.updateSegmentationToolPermissions(permissions);
-		}
-
-		function disableSegmentationInformation () {
-			const permissions = {
-				boundingBoxView: true,
-				boundingBox2dEdit: true,
-				boundingBox3dEdit: true,
-				boundingBoxInfo: false,
-				freeDrawView: true,
-				freeDrawEdit: true,
-				smartPaintView: true,
-				smartPaint2dEdit: true,
-				smartPaint3dEdit: true,
-				smartPaintInfo: false
-			};
-			viewerCommunication.updateSegmentationToolPermissions(permissions);
-		}
-
 		function disableSegmentation () {
 			const permissions = {
 				boundingBoxView: false,
@@ -421,6 +296,87 @@
 			const measurementId = 'closed-polygon-1';
 			viewerCommunication.deleteMeasurementById(measurementId);
 		}
+
+		function getData () {
+			switch (document.getElementById('dataTypeSelection').value) {
+				case 'openedStudies':
+					viewerCommunication.getOpenedStudies();
+					break;
+				case 'viewportData':
+					const showLabels = false;
+					viewerCommunication.getViewportData(showLabels);
+					break;
+				default:
+					break;
+			}
+		}
+
+		function onGetOpenedStudies (studies) {
+			console.log(studies);
+		}
+
+		function onGetViewportData (data) {
+			console.log(data)
+		}
+
+		function onCommunicationServiceReady () {
+			console.log('Communication Service Ready');
+		}
+
+		function subscribeEvent () {
+			switch (document.getElementById('eventSelection').value) {
+				case 'studyLoaded':
+					viewerCommunication.subscribeStudyLoadedEvent(this.onEventCallback);
+					break;
+				case 'annotationsSaved':
+					viewerCommunication.subscribeAnnotationsSavedEvent(this.onEventCallback);
+					break;
+				case 'instanceChanged':
+					viewerCommunication.subscribeInstanceChangedEvent(this.onEventCallback);
+					break;
+				case 'activeContainerChanged':
+					viewerCommunication.subscribeActiveContainerChangedEvent(this.onEventCallback);
+					break;
+				case 'measurementCreated':
+					viewerCommunication.subscribeMeasurementCreatedEvent(this.onEventCallback);
+					break;
+				case 'measurementUpdated':
+					viewerCommunication.subscribeMeasurementUpdatedEvent(this.onEventCallback);
+					break;
+				default:
+					break;
+			}
+		}
+
+		function unsubscribeEvent () {
+			switch (document.getElementById('eventSelection').value) {
+				case 'studyLoaded':
+					viewerCommunication.unsubscribeStudyLoadedEvent(this.onEventCallback);
+					break;
+				case 'annotationsSaved':
+					viewerCommunication.unsubscribeAnnotationsSavedEvent(this.onEventCallback);
+					break;
+				case 'instanceChanged':
+					viewerCommunication.unsubscribeInstanceChangedEvent(this.onEventCallback);
+					break;
+				case 'activeContainerChanged':
+					viewerCommunication.unsubscribeActiveContainerChangedEvent(this.onEventCallback);
+					break;
+				case 'measurementCreated':
+					viewerCommunication.unsubscribeMeasurementCreatedEvent(this.onEventCallback);
+					break;
+				case 'measurementUpdated':
+					viewerCommunication.unsubscribeMeasurementUpdatedEvent(this.onEventCallback);
+					break;
+				default:
+					break;
+			}
+		}
+
+		function onEventCallback (data) {
+			console.log(data);
+		}
+
 	</script>
 </head>
 <body>
@@ -497,22 +453,8 @@
 		<button type='button' onclick='openInstance()'>Open instance</button>
 		<button type='button' onclick='exportActiveInstance()'>Export active instance</button>
 		<button type='button' onclick='exportContainerInstance(2, 2)'>Export container 2:2 instance</button>
-		<button type='button' onclick='getOpenedStudies()'>Get opened studies</button>
-		<button type='button' onclick='getViewportData()'>Get viewport data</button>
-		<button type='button' onclick='subscribeStudyLoadedEvent()'>Subscribe study loaded</button>
-		<button type='button' onclick='unsubscribeStudyLoadedEvent()'>Unsubscribe study loaded</button>
-	</div>
-	<br>
-	<div>
-		<button type='button' onclick='disableSegmentationEditing()'>Disable segmentation editing</button>
-		<button type='button' onclick='disableSegmentationInformation()'>Disable segmentation information</button>
 		<button type='button' onclick='disableSegmentation()'>Disable segmentation</button>
 		<button type='button' onclick='enableSegmentation()'>Enable segmentation</button>
-		<button type='button' onclick='subscribeAnnotationsSavedEvent()'>Subscribe annotations saved</button>
-		<button type='button' onclick='unsubscribeAnnotationsSavedEvent()'>Unsubscribe annotations saved</button>
-	</div>
-	<br>
-	<div>
 		<button type='button' onclick='getSnapshot()'>Get snapshot</button>
 		<button type='button' onclick='setSnapshot()'>Set snapshot</button>
 		<button type='button' onclick='getWindowReference()'>Get window reference</button>
@@ -522,20 +464,34 @@
 		<button type='button' onclick='showInfoLabels()'>Show/Hide info labels</button>
 		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
 		<button type='button' onclick='generateInstanceMpr("viewport-container-1-1")'>Generate instance MPR</button>
-		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "SAGITTAL")'>Create MPR Sagittal orientation</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "AXIAL")'>Create MPR Axial</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "SAGITTAL")'>Create MPR Sagittal</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "CORONAL")'>Create MPR Coronal</button>
 	</div>
 	<br>
 	<div>
 		<button type='button' onclick='createMeasurement()'>Create measurement</button>
 		<button type='button' onclick='deleteMeasurement()'>Delete measurement</button>
-		<button type='button' onclick='subscribeInstanceChangedEvent()'>Subscribe instance changed</button>
-		<button type='button' onclick='unsubscribeInstanceChangedEvent()'>Unsubscribe instance changed</button>
-		<button type='button' onclick='subscribeActiveContainerChangedEvent()'>Subscribe active container changed</button>
-		<button type='button' onclick='unsubscribeActiveContainerChangedEvent()'>Unsubscribe active container changed</button>
-		<button type='button' onclick='subscribeMeasurementCreatedEvent()'>Subscribe measurement created</button>
-		<button type='button' onclick='unsubscribeMeasurementCreatedEvent()'>Unsubscribe measurement created</button>
-		<button type='button' onclick='subscribeMeasurementUpdatedEvent()'>Subscribe measurement updated</button>
-		<button type='button' onclick='unsubscribeMeasurementUpdatedEvent()'>Unsubscribe measurement updated</button>
+	</div>
+	<br>
+	<div>
+		<label for='dataTypeSelection'>Data type:</label>
+		<select id='dataTypeSelection'>
+			<option value='openedStudies'>Opened studies</option>
+			<option value='viewportData'>Viewport data</option>
+		</select>
+		<button type='button' onclick='getData()'>Get data</button>
+		<label for='eventSelection'>Event:</label>
+		<select id='eventSelection'>
+			<option value='studyLoaded'>Study loaded</option>
+			<option value='annotationsSaved'>Annotations saved</option>
+			<option value='instanceChanged'>Instance changed</option>
+			<option value='activeContainerChanged'>Active container changed</option>
+			<option value='measurementCreated'>Measurement created</option>
+			<option value='measurementUpdated'>Measurement updated</option>
+		</select>
+		<button type='button' onclick='subscribeEvent()'>Subscribe</button>
+		<button type='button' onclick='unsubscribeEvent()'>Unsubscribe</button>
 	</div>
 	<br>
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
