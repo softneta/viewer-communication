@@ -53,6 +53,9 @@
                 case 'GET_VIEWPORT_DATA':
                     this.performOnGetViewportDataCallback(actionData);
                     break;
+                case 'GET_VIEWPORTS_INFORMATION':
+                    this.performOnGetViewportsInformationCallback(actionData);
+                    break;
                 case 'GET_SNAPSHOT':
                     this.performGetSnapshotCallback(actionData);
                     break;
@@ -94,6 +97,12 @@
         functions.performOnGetViewportDataCallback = function (actionData) {
             if (callbacks.onGetViewportDataCallback) {
                 callbacks.onGetViewportDataCallback(actionData);
+            }
+        }
+
+        functions.performOnGetViewportsInformationCallback = function (actionData) {
+            if (callbacks.onGetViewportsInformationCallback) {
+                callbacks.onGetViewportsInformationCallback(actionData);
             }
         }
 
@@ -245,6 +254,10 @@
             this.postActionMessage('GET_VIEWPORT_DATA', {showLabels});
         };
 
+        functions.getViewportsInformation = function () {
+            this.postActionMessage('GET_VIEWPORTS_INFORMATION');
+        };
+
         functions.getSnapshot = function () {
             this.postActionMessage('GET_SNAPSHOT');
         };
@@ -307,6 +320,14 @@
 
         functions.unsubscribeGetViewportDataEvent = function () {
             callbacks.onGetViewportDataCallback = undefined;
+        }
+
+        functions.subscribeGetViewportsInformationEvent = function (callback) {
+            callbacks.onGetViewportsInformationCallback = callback;
+        };
+
+        functions.unsubscribeGetViewportsInformationEvent = function () {
+            callbacks.onGetViewportsInformationCallback = undefined;
         }
 
         functions.subscribeGetSnapshotEvent = function (callback) {

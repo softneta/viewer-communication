@@ -7,8 +7,9 @@
 		const defaultIntegrationType = 'study';
 		const viewerCommunication = new ViewerCommunication('http://localhost:8080', defaultIntegrationType);
 		viewerCommunication.subscribeCommunicationServiceReadyEvent(onCommunicationServiceReady);
-		viewerCommunication.subscribeGetOpenedStudiesEvent(onGetOpenedStudies);
-		viewerCommunication.subscribeGetViewportDataEvent(onGetViewportData);
+		viewerCommunication.subscribeGetOpenedStudiesEvent(onGetDataCallback);
+		viewerCommunication.subscribeGetViewportDataEvent(onGetDataCallback);
+		viewerCommunication.subscribeGetViewportsInformationEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
 
 		function onOpeningTypeChange () {
@@ -306,17 +307,16 @@
 					const showLabels = false;
 					viewerCommunication.getViewportData(showLabels);
 					break;
+				case 'viewportsInformation':
+					viewerCommunication.getViewportsInformation();
+					break;
 				default:
 					break;
 			}
 		}
 
-		function onGetOpenedStudies (studies) {
+		function onGetDataCallback (studies) {
 			console.log(studies);
-		}
-
-		function onGetViewportData (data) {
-			console.log(data)
 		}
 
 		function onCommunicationServiceReady () {
@@ -479,6 +479,7 @@
 		<select id='dataTypeSelection'>
 			<option value='openedStudies'>Opened studies</option>
 			<option value='viewportData'>Viewport data</option>
+			<option value='viewportsInformation'>Viewports information</option>
 		</select>
 		<button type='button' onclick='getData()'>Get data</button>
 		<label for='eventSelection'>Event:</label>
