@@ -53,6 +53,9 @@
                 case 'GET_VIEWPORT_DATA':
                     this.performOnGetViewportDataCallback(actionData);
                     break;
+                case 'GET_VIEWPORTS_INFORMATION':
+                    this.performOnGetViewportsInformationCallback(actionData);
+                    break;
                 case 'GET_SNAPSHOT':
                     this.performGetSnapshotCallback(actionData);
                     break;
@@ -61,6 +64,18 @@
                     break;
                 case 'ANNOTATIONS_SAVED':
                     this.performOnAnnotationsSavedCallback(actionData);
+                    break;
+                case 'INSTANCE_CHANGED':
+                    this.performOnInstanceChangedCallback(actionData);
+                    break;
+                case 'ACTIVE_CONTAINER_CHANGED':
+                    this.performOnActiveContainerChangedCallback(actionData);
+                    break;
+                case 'MEASUREMENT_CREATED':
+                    this.performOnMeasurementCreatedCallback(actionData);
+                    break;
+                case 'MEASUREMENT_UPDATED':
+                    this.performOnMeasurementUpdatedCallback(actionData);
                     break;
                 default:
                     break;
@@ -85,6 +100,12 @@
             }
         }
 
+        functions.performOnGetViewportsInformationCallback = function (actionData) {
+            if (callbacks.onGetViewportsInformationCallback) {
+                callbacks.onGetViewportsInformationCallback(actionData);
+            }
+        }
+
         functions.performGetSnapshotCallback = function (actionData) {
             if (callbacks.onGetSnapshotCallback) {
                 callbacks.onGetSnapshotCallback(actionData);
@@ -100,6 +121,30 @@
         functions.performOnAnnotationsSavedCallback = function (actionData) {
             if (callbacks.onAnnotationsSavedCallback) {
                 callbacks.onAnnotationsSavedCallback(actionData);
+            }
+        }
+
+        functions.performOnInstanceChangedCallback = function (actionData) {
+            if (callbacks.onInstanceChangedCallback) {
+                callbacks.onInstanceChangedCallback(actionData);
+            }
+        }
+
+        functions.performOnActiveContainerChangedCallback = function (actionData) {
+            if (callbacks.onActiveContainerChangedCallback) {
+                callbacks.onActiveContainerChangedCallback(actionData);
+            }
+        }
+
+        functions.performOnMeasurementCreatedCallback = function (actionData) {
+            if (callbacks.onMeasurementCreatedCallback) {
+                callbacks.onMeasurementCreatedCallback(actionData);
+            }
+        }
+
+        functions.performOnMeasurementUpdatedCallback = function (actionData) {
+            if (callbacks.onMeasurementUpdatedCallback) {
+                callbacks.onMeasurementUpdatedCallback(actionData);
             }
         }
 
@@ -209,6 +254,10 @@
             this.postActionMessage('GET_VIEWPORT_DATA', {showLabels});
         };
 
+        functions.getViewportsInformation = function () {
+            this.postActionMessage('GET_VIEWPORTS_INFORMATION');
+        };
+
         functions.getSnapshot = function () {
             this.postActionMessage('GET_SNAPSHOT');
         };
@@ -231,6 +280,14 @@
 
         functions.changeViewportOrientation = function (containerId, orientation) {
             this.postActionMessage('CHANGE_VIEWPORT_ORIENTATION', {containerId, orientation});
+        };
+
+        functions.createNewMeasurement = function (containerId, measurementData) {
+            this.postActionMessage('CREATE_NEW_MEASUREMENT', {containerId, measurementData});
+        };
+
+        functions.deleteMeasurementById = function (measurementId) {
+            this.postActionMessage('DELETE_MEASUREMENT_BY_ID', {measurementId});
         };
 
         functions.subscribeEvent = function (eventType) {
@@ -265,6 +322,14 @@
             callbacks.onGetViewportDataCallback = undefined;
         }
 
+        functions.subscribeGetViewportsInformationEvent = function (callback) {
+            callbacks.onGetViewportsInformationCallback = callback;
+        };
+
+        functions.unsubscribeGetViewportsInformationEvent = function () {
+            callbacks.onGetViewportsInformationCallback = undefined;
+        }
+
         functions.subscribeGetSnapshotEvent = function (callback) {
             callbacks.onGetSnapshotCallback = callback;
         };
@@ -291,6 +356,46 @@
         functions.unsubscribeAnnotationsSavedEvent = function () {
             callbacks.onAnnotationsSavedCallback = undefined;
             this.unsubscribeEvent('ANNOTATIONS_SAVED');
+        };
+
+        functions.subscribeInstanceChangedEvent = function (callback) {
+            callbacks.onInstanceChangedCallback = callback;
+            this.subscribeEvent('INSTANCE_CHANGED');
+        };
+
+        functions.unsubscribeInstanceChangedEvent = function () {
+            callbacks.onInstanceChangedCallback = undefined;
+            this.unsubscribeEvent('INSTANCE_CHANGED');
+        };
+
+        functions.subscribeActiveContainerChangedEvent = function (callback) {
+            callbacks.onActiveContainerChangedCallback = callback;
+            this.subscribeEvent('ACTIVE_CONTAINER_CHANGED');
+        };
+
+        functions.unsubscribeActiveContainerChangedEvent = function () {
+            callbacks.onActiveContainerChangedCallback = undefined;
+            this.unsubscribeEvent('ACTIVE_CONTAINER_CHANGED');
+        };
+
+        functions.subscribeMeasurementCreatedEvent = function (callback) {
+            callbacks.onMeasurementCreatedCallback = callback;
+            this.subscribeEvent('MEASUREMENT_CREATED');
+        };
+
+        functions.unsubscribeMeasurementCreatedEvent = function () {
+            callbacks.onMeasurementCreatedCallback = undefined;
+            this.unsubscribeEvent('MEASUREMENT_CREATED');
+        };
+
+        functions.subscribeMeasurementUpdatedEvent = function (callback) {
+            callbacks.onMeasurementUpdatedCallback = callback;
+            this.subscribeEvent('MEASUREMENT_UPDATED');
+        };
+
+        functions.unsubscribeMeasurementUpdatedEvent = function () {
+            callbacks.onMeasurementUpdatedCallback = undefined;
+            this.unsubscribeEvent('MEASUREMENT_UPDATED');
         };
 
         functions.getIntegrationType = function () {

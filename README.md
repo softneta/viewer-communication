@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.14 (2023-05-30)
+##### Version 1.0.15 (2023-06-05)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -366,6 +366,19 @@ Usage:
 - Call **_getViewportData_** function to request active viewport data in callback function.
 - Once message is processed, **_callback_** function will be triggered with viewport data object.
 
+#### Get viewports information
+```js
+const callback = (viewportsInformation) => console.log(viewportsInformation);
+viewerCommunication.subscribeGetViewportsInformationEvent(callback);
+viewerCommunication.getViewportsInformation();
+```
+
+Usage:
+
+- Register **_subscribeGetViewportsInformationEvent_** **_callback_** function.
+- Call **_getViewportsInformation_** function to request viewports information in callback function.
+- Once message is processed, **_callback_** function will be triggered with viewports information array.
+
 #### Get snapshot
 ```js
 const callback = (snapshot) => console.log(snapshot);
@@ -436,6 +449,53 @@ Parameters:
 - `orientation` - orientations: `CORONAL`, `AXIAL`, `SAGITTAL`.
 - `containerId` - viewport container id. If no container id is provided then active container is used.
 
+#### Create new measurement
+```js
+viewerCommunication.createNewMeasurement(containerId, measurementData);
+```
+
+Parameters:
+
+- `containerId` - Viewport container id in which measurement will be created.
+- `measurementData` - Object with measurement data which will be created in viewport.
+
+Measurement data object example:
+
+```js
+const measurementData = {
+    id: 'closed-polygon-id-1',
+    type: 'closed-polygon',
+    containerId: 'viewport-container-1-1',
+    studyUid: 'study-uid-1',
+    seriesUid: 'series-uid-1',
+    instanceUid: 'instance-uid-1',
+    colors: {
+        regularColor: '#FFA500',
+        activeColor: '#33CCFF',
+        markedColor: '#009BFF',
+        activeLabelColor: '#FFF'
+    },
+    data: {
+        points: [
+            [80, 113, 42],
+            [221, 1, 42],
+            [335, 132, 42],
+            [178, 224, 42],
+            [80, 113, 42]
+        ]
+    }
+};
+```
+
+#### Delete measurement by id
+```js
+viewerCommunication.deleteMeasurementById(measurementId);
+```
+
+Parameter:
+
+- `measurementId` - Measurement id that has to be deleted.
+
 ### Events
 #### Subscribe communication service ready event
 ```js
@@ -480,6 +540,21 @@ Parameter:
 #### Unsubscribe get viewport data event
 ```js
 viewerCommunication.unsubscribeGetViewportDataEvent();
+```
+
+#### Subscribe get viewports information event
+```js
+const callback = (viewportsInformation) => console.log(viewportsInformation);
+viewerCommunication.subscribeGetViewportsInformationEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe get viewports information event
+```js
+viewerCommunication.unsubscribeGetViewportsInformationEvent();
 ```
 
 #### Subscribe get snapshot event
@@ -527,7 +602,114 @@ Parameter:
 viewerCommunication.unsubscribeAnnotationsSavedEvent();
 ```
 
+#### Subscribe instance changed event
+```js
+const callback = (viewportsInformation) => console.log(viewportsInformation);
+viewerCommunication.subscribeInstanceChangedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe instance changed event
+```js
+viewerCommunication.unsubscribeInstanceChangedEvent();
+```
+
+#### Subscribe active container changed event
+```js
+const callback = (activeContainerInformation) => console.log(activeContainerInformation);
+viewerCommunication.subscribeActiveContainerChangedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe active container changed event
+```js
+viewerCommunication.unsubscribeActiveContainerChangedEvent();
+```
+
+#### Subscribe measurement created event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeMeasurementCreatedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe measurement created event
+```js
+viewerCommunication.unsubscribeMeasurementCreatedEvent();
+```
+
+#### Subscribe measurement updated event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeMeasurementUpdatedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe measurement updated event
+```js
+viewerCommunication.unsubscribeMeasurementUpdatedEvent();
+```
+
+## Measurement coordinates conversion
+To ensure correct measurement recreation from data, all our measurement related functions and events work or provide 3D coordinates in patient coordinate system.
+If you need to convert received 3D coordinate to instance 2D coordinate, you can use following function:
+```js
+function get2DImagePositionFrom3D (position3d) {
+    const imagePosition = this.getImagePosition();
+    const imageOrientation = this.getImageOrientation();
+    const pixelSpacing = this.getPixelSpacing();
+    const x = ((position3d[0] - imagePosition[0]) * imageOrientation[0] + (position3d[1] - imagePosition[1]) * imageOrientation[1]
+        + (position3d[2] - imagePosition[2]) * imageOrientation[2]) / pixelSpacing.x;
+    const y = ((position3d[0] - imagePosition[0]) * imageOrientation[3] + (position3d[1] - imagePosition[1]) * imageOrientation[4]
+        + (position3d[2] - imagePosition[2]) * imageOrientation[5]) / pixelSpacing.y;
+    return {x, y};
+}
+```
+
+If you need to convert 2D coordinate back to 3D coordinate, then you can use this function:
+```js
+function get3DImagePositionFrom2D (position2d) {
+    const imagePosition = this.getImagePosition();
+    const imageOrientation = this.getImageOrientation();
+    const pixelSpacing = this.getPixelSpacing();
+    const x = imagePosition[0] + imageOrientation[0] * position2d.x * pixelSpacing.x + imageOrientation[3] * position2d.y * pixelSpacing.y;
+    const y = imagePosition[1] + imageOrientation[1] * position2d.x * pixelSpacing.x + imageOrientation[4] * position2d.y * pixelSpacing.y;
+    const z = imagePosition[2] + imageOrientation[2] * position2d.x * pixelSpacing.x + imageOrientation[5] * position2d.y * pixelSpacing.y;
+
+    return [x, y, z];
+}
+```
+
 ## Change log
+### 1.0.15 (2023-06-05)
+#### Changes
+- Added `createNewMeasurement` function to create new measurement in to viewport container.
+- Added `deleteMeasurementById` function to delete requested measurement by container id.
+- Added `subscribeInstanceChangedEvent` function to subscribe of instance changed event callback.
+- Added `unsubscribeInstanceChangedEvent` function to unsubscribe of instance changed event callback.
+- Added `subscribeActiveContainerChangedEvent` function to subscribe of active container changed event callback.
+- Added `unsubscribeActiveContainerChangedEvent` function to unsubscribe of active container changed event callback.
+- Added `subscribeMeasurementCreatedEvent` function to subscribe of measurement created event callback.
+- Added `unsubscribeMeasurementCreatedEvent` function to unsubscribe of measurement created event callback.
+- Added `subscribeMeasurementUpdatedEvent` function to subscribe of measurement updated event callback.
+- Added `unsubscribeMeasurementUpdatedEvent` function to unsubscribe of measurement updated event callback.
+- Added `getViewportsInformation` function to get available viewport's information.
+- Added `subscribeGetViewportsInformationEvent` function to subscribe of get viewports information event callback.
+- Added `unsubscribeGetViewportsInformationEvent` function to unsubscribe of get viewports information event callback.
+- Added new `Measurement coordinates conversion` documentation section with information about coordinates conversion.
+
 ### 1.0.14 (2023-05-20)
 #### Changes
 - Added `generateInstanceMpr` function to generate instance MPR.
