@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.14 (2023-05-30)
+##### Version 1.0.15 (2023-06-05)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -693,6 +693,23 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.15 (2023-06-05)
+#### Changes
+- Added new `createNewMeasurement` function to create new measurement in to viewport container.
+- Added new `deleteMeasurementById` function to delete requested measurement by container id.
+- Added `subscribeInstanceChangedEvent` function to subscribe of instance changed event callback.
+- Added `unsubscribeInstanceChangedEvent` function to unsubscribe of instance changed event callback.
+- Added `subscribeActiveContainerChangedEvent` function to subscribe of active container changed event callback.
+- Added `unsubscribeActiveContainerChangedEvent` function to unsubscribe of active container changed event callback.
+- Added `subscribeMeasurementCreatedEvent` function to subscribe of measurement created event callback.
+- Added `unsubscribeMeasurementCreatedEvent` function to unsubscribe of measurement created event callback.
+- Added `subscribeMeasurementUpdatedEvent` function to subscribe of measurement updated event callback.
+- Added `unsubscribeMeasurementUpdatedEvent` function to unsubscribe of measurement updated event callback.
+- Added `getViewportsInformation` function to get available viewport's information.
+- Added `subscribeGetViewportsInformationEvent` function to subscribe of get viewports information event callback.
+- Added `unsubscribeGetViewportsInformationEvent` function to unsubscribe of get viewports information event callback.
+- Added new `Measurement coordinates conversion` documentation section with information about coordinates conversion.
+
 ### 1.0.14 (2023-05-20)
 #### Changes
 - Added `generateInstanceMpr` function to generate instance MPR.
