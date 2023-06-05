@@ -695,8 +695,8 @@ function get3DImagePositionFrom2D (position2d) {
 ## Change log
 ### 1.0.15 (2023-06-05)
 #### Changes
-- Added new `createNewMeasurement` function to create new measurement in to viewport container.
-- Added new `deleteMeasurementById` function to delete requested measurement by container id.
+- Added `createNewMeasurement` function to create new measurement in to viewport container.
+- Added `deleteMeasurementById` function to delete requested measurement by container id.
 - Added `subscribeInstanceChangedEvent` function to subscribe of instance changed event callback.
 - Added `unsubscribeInstanceChangedEvent` function to unsubscribe of instance changed event callback.
 - Added `subscribeActiveContainerChangedEvent` function to subscribe of active container changed event callback.
