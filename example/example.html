@@ -251,7 +251,7 @@
 
 		function setAdditionalTopInfoLabels () {
 			const labelsExample = {
-				// Study labels will be ignored because series have higher priority
+				// Study labels will be ignored for series that have series labels defined.
 				topLeftLabels: [
 					{
 						level: 'study',
@@ -267,7 +267,7 @@
 					}
 				],
 				topRightLabels: [
-					// Study labels will be ignored because series have higher priority
+					// Study labels will be ignored for series that have series labels defined.
 					{
 						level: 'study',
 						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',

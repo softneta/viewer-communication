@@ -709,7 +709,7 @@ function get3DImagePositionFrom2D (position2d) {
 ## Change log
 ### 1.0.16 (2023-06-06)
 #### Changes
-- Change `setAdditionalInfoLabels` function to set additional info labels for study or series level.
+- Updated `setAdditionalInfoLabels` function to set additional info labels for study or series level.
 
 ### 1.0.15 (2023-06-05)
 #### Changes
