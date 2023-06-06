@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.15 (2023-06-05)
+##### Version 1.0.16 (2023-06-06)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -423,11 +423,23 @@ Object example:
 
 ```js
 const labels = {
-    topLeftLabels: ['example label', 'new line label'],
-    topRightLabels: ['example label', 'new line label'],
-    hideTopLeftDicomLabels: false,
-    hideTopRightDicomLabels: false
-};
+    topLeftLabels: [
+        {
+            level: 'series', // At which level labels are displayed. Level can be 'series' or 'study'. If both are provided then series will be displayed.
+            uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601', // Series uid because it is series level.
+            labels: ['series', 'label'],
+            hideDicomLabels: false
+        }
+    ],
+    topRightLabels: [
+        {
+            level: 'study',
+            uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601', // Study uid because it is study level.
+            labels: ['patient', 'right'],
+            hideDicomLabels: false
+        }
+    ]
+}
 ```
 
 #### Generate instance MPR
@@ -695,6 +707,10 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.16 (2023-06-06)
+#### Changes
+- Updated `setAdditionalInfoLabels` function to set additional info labels for study or series level.
+
 ### 1.0.15 (2023-06-05)
 #### Changes
 - Added `createNewMeasurement` function to create new measurement in to viewport container.
