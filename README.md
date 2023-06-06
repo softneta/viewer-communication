@@ -446,8 +446,8 @@ viewerCommunication.changeViewportOrientation(containerId, orientation);
 
 Parameters:
 
-- `orientation` - orientations: `CORONAL`, `AXIAL`, `SAGITTAL`.
 - `containerId` - viewport container id. If no container id is provided then active container is used.
+- `orientation` - orientations: `CORONAL`, `AXIAL`, `SAGITTAL`.
 
 #### Create new measurement
 ```js
@@ -684,10 +684,12 @@ function get3DImagePositionFrom2D (position2d) {
     const imagePosition = this.getImagePosition();
     const imageOrientation = this.getImageOrientation();
     const pixelSpacing = this.getPixelSpacing();
-    const x = imagePosition[0] + imageOrientation[0] * position2d.x * pixelSpacing.x + imageOrientation[3] * position2d.y * pixelSpacing.y;
-    const y = imagePosition[1] + imageOrientation[1] * position2d.x * pixelSpacing.x + imageOrientation[4] * position2d.y * pixelSpacing.y;
-    const z = imagePosition[2] + imageOrientation[2] * position2d.x * pixelSpacing.x + imageOrientation[5] * position2d.y * pixelSpacing.y;
-
+    const x = imagePosition[0] + imageOrientation[0] * position2d.x * pixelSpacing.x
+        + imageOrientation[3] * position2d.y * pixelSpacing.y;
+    const y = imagePosition[1] + imageOrientation[1] * position2d.x * pixelSpacing.x
+        + imageOrientation[4] * position2d.y * pixelSpacing.y;
+    const z = imagePosition[2] + imageOrientation[2] * position2d.x * pixelSpacing.x
+        + imageOrientation[5] * position2d.y * pixelSpacing.y;
     return [x, y, z];
 }
 ```
