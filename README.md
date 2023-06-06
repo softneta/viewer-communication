@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.16 (2023-06-06)
+##### Version 1.0.17 (2023-06-06)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -599,6 +599,21 @@ Parameter:
 viewerCommunication.unsubscribeStudyLoadedEvent();
 ```
 
+#### Subscribe annotations save started event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeAnnotationsSaveStartedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe annotations save started event
+```js
+viewerCommunication.unsubscribeAnnotationsSaveStartedEvent();
+```
+
 #### Subscribe annotations saved event
 ```js
 const callback = (annotations) => console.log(annotations);
@@ -612,6 +627,21 @@ Parameter:
 #### Unsubscribe annotations saved event
 ```js
 viewerCommunication.unsubscribeAnnotationsSavedEvent();
+```
+
+#### Subscribe structure set edited event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeStructureSetEditedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe structure set edited event
+```js
+viewerCommunication.unsubscribeStructureSetEditedEvent();
 ```
 
 #### Subscribe instance changed event
@@ -707,6 +737,13 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.17 (2023-06-06)
+#### Changes
+- Added `subscribeAnnotationsSaveStartedEvent` function to subscribe of annotations save started event callback.
+- Added `unsubscribeAnnotationsSaveStartedEvent` function to unsubscribe of annotations save started event callback.
+- Added `subscribeStructureSetEditedEvent` function to subscribe of structure set edited event callback.
+- Added `unsubscribeStructureSetEditedEvent` function to unsubscribe of structure set edited event callback.
+
 ### 1.0.16 (2023-06-06)
 #### Changes
 - Updated `setAdditionalInfoLabels` function to set additional info labels for study or series level.

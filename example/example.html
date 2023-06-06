@@ -354,8 +354,14 @@
 				case 'studyLoaded':
 					viewerCommunication.subscribeStudyLoadedEvent(this.onEventCallback);
 					break;
+				case 'annotationsSaveStarted':
+					viewerCommunication.subscribeAnnotationsSaveStartedEvent(this.onEventCallback);
+					break;
 				case 'annotationsSaved':
 					viewerCommunication.subscribeAnnotationsSavedEvent(this.onEventCallback);
+					break;
+				case 'structureSetEdited':
+					viewerCommunication.subscribeStructureSetEditedEvent(this.onEventCallback);
 					break;
 				case 'instanceChanged':
 					viewerCommunication.subscribeInstanceChangedEvent(this.onEventCallback);
@@ -379,8 +385,14 @@
 				case 'studyLoaded':
 					viewerCommunication.unsubscribeStudyLoadedEvent(this.onEventCallback);
 					break;
+				case 'annotationsSaveStarted':
+					viewerCommunication.unsubscribeAnnotationsSaveStartedEvent(this.onEventCallback);
+					break;
 				case 'annotationsSaved':
 					viewerCommunication.unsubscribeAnnotationsSavedEvent(this.onEventCallback);
+					break;
+				case 'structureSetEdited':
+					viewerCommunication.unsubscribeStructureSetEditedEvent(this.onEventCallback);
 					break;
 				case 'instanceChanged':
 					viewerCommunication.unsubscribeInstanceChangedEvent(this.onEventCallback);
@@ -511,7 +523,9 @@
 		<label for='eventSelection'>Event:</label>
 		<select id='eventSelection'>
 			<option value='studyLoaded'>Study loaded</option>
+			<option value='annotationsSaveStarted'>Annotations save started</option>
 			<option value='annotationsSaved'>Annotations saved</option>
+			<option value='structureSetEdited'>Structure set edited</option>
 			<option value='instanceChanged'>Instance changed</option>
 			<option value='activeContainerChanged'>Active container changed</option>
 			<option value='measurementCreated'>Measurement created</option>

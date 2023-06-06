@@ -62,8 +62,14 @@
                 case 'STUDY_LOADED':
                     this.performOnStudyLoadedCallback(actionData);
                     break;
+                case 'ANNOTATIONS_SAVE_STARTED':
+                    this.performOnAnnotationsSaveStartedCallback(actionData);
+                    break;
                 case 'ANNOTATIONS_SAVED':
                     this.performOnAnnotationsSavedCallback(actionData);
+                    break;
+                case 'STRUCTURE_SET_EDITED':
+                    this.performOnStructureSetEditedCallback(actionData);
                     break;
                 case 'INSTANCE_CHANGED':
                     this.performOnInstanceChangedCallback(actionData);
@@ -118,9 +124,21 @@
             }
         }
 
+        functions.performOnAnnotationsSaveStartedCallback = function (actionData) {
+            if (callbacks.onAnnotationsSaveStartedCallback) {
+                callbacks.onAnnotationsSaveStartedCallback(actionData);
+            }
+        }
+
         functions.performOnAnnotationsSavedCallback = function (actionData) {
             if (callbacks.onAnnotationsSavedCallback) {
                 callbacks.onAnnotationsSavedCallback(actionData);
+            }
+        }
+
+        functions.performOnStructureSetEditedCallback = function (actionData) {
+            if (callbacks.onStructureSetEditedCallback) {
+                callbacks.onStructureSetEditedCallback(actionData);
             }
         }
 
@@ -348,6 +366,16 @@
             this.unsubscribeEvent('STUDY_LOADED');
         };
 
+        functions.subscribeAnnotationsSaveStartedEvent = function (callback) {
+            callbacks.onAnnotationsSaveStartedCallback = callback;
+            this.subscribeEvent('ANNOTATIONS_SAVE_STARTED');
+        };
+
+        functions.unsubscribeAnnotationsSaveStartedEvent = function () {
+            callbacks.onAnnotationsSaveStartedCallback = undefined;
+            this.unsubscribeEvent('ANNOTATIONS_SAVE_STARTED');
+        };
+
         functions.subscribeAnnotationsSavedEvent = function (callback) {
             callbacks.onAnnotationsSavedCallback = callback;
             this.subscribeEvent('ANNOTATIONS_SAVED');
@@ -356,6 +384,16 @@
         functions.unsubscribeAnnotationsSavedEvent = function () {
             callbacks.onAnnotationsSavedCallback = undefined;
             this.unsubscribeEvent('ANNOTATIONS_SAVED');
+        };
+
+        functions.subscribeStructureSetEditedEvent = function (callback) {
+            callbacks.onStructureSetEditedCallback = callback;
+            this.subscribeEvent('STRUCTURE_SET_EDITED');
+        };
+
+        functions.unsubscribeStructureSetEditedEvent = function () {
+            callbacks.onStructureSetEditedCallback = undefined;
+            this.unsubscribeEvent('STRUCTURE_SET_EDITED');
         };
 
         functions.subscribeInstanceChangedEvent = function (callback) {
