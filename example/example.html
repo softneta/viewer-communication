@@ -251,10 +251,36 @@
 
 		function setAdditionalTopInfoLabels () {
 			const labelsExample = {
-				topLeftLabels: ['Example: something'],
-				topRightLabels: ['Study: new', 'Patient', 'Example'],
-				hideTopLeftDicomLabels: false,
-				hideTopRightDicomLabels: true
+				// Study labels will be ignored because series have higher priority
+				topLeftLabels: [
+					{
+						level: 'study',
+						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
+						labels: ['example', 'left'],
+						hideDicomLabels: false
+					},
+					{
+						level: 'series',
+						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
+						labels: ['series', 'label'],
+						hideDicomLabels: false
+					}
+				],
+				topRightLabels: [
+					// Study labels will be ignored because series have higher priority
+					{
+						level: 'study',
+						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
+						labels: ['right', 'label'],
+						hideDicomLabels: true
+					},
+					{
+						level: 'series',
+						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
+						labels: ['patient', 'right'],
+						hideDicomLabels: false
+					}
+				]
 			}
 			viewerCommunication.setAdditionalInfoLabels(labelsExample);
 		}
