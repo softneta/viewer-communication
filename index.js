@@ -56,6 +56,9 @@
                 case 'GET_VIEWPORTS_INFORMATION':
                     this.performOnGetViewportsInformationCallback(actionData);
                     break;
+                case 'GET_INSTANCE_METADATA':
+                    this.performOnGetInstanceMetadataCallback(actionData);
+                    break;
                 case 'GET_SNAPSHOT':
                     this.performGetSnapshotCallback(actionData);
                     break;
@@ -109,6 +112,12 @@
         functions.performOnGetViewportsInformationCallback = function (actionData) {
             if (callbacks.onGetViewportsInformationCallback) {
                 callbacks.onGetViewportsInformationCallback(actionData);
+            }
+        }
+
+        functions.performOnGetInstanceMetadataCallback = function (actionData) {
+            if (callbacks.onGetInstanceMetadataCallback) {
+                callbacks.onGetInstanceMetadataCallback(actionData);
             }
         }
 
@@ -276,6 +285,10 @@
             this.postActionMessage('GET_VIEWPORTS_INFORMATION');
         };
 
+        functions.getInstanceMetadata = function (instanceUid) {
+            this.postActionMessage('GET_INSTANCE_METADATA', {instanceUid});
+        };
+
         functions.getSnapshot = function () {
             this.postActionMessage('GET_SNAPSHOT');
         };
@@ -346,6 +359,14 @@
 
         functions.unsubscribeGetViewportsInformationEvent = function () {
             callbacks.onGetViewportsInformationCallback = undefined;
+        }
+
+        functions.subscribeGetInstanceMetadataEvent = function (callback) {
+            callbacks.onGetInstanceMetadataCallback = callback;
+        };
+
+        functions.unsubscribeGetInstanceMetadataEvent = function () {
+            callbacks.onGetInstanceMetadataCallback = undefined;
         }
 
         functions.subscribeGetSnapshotEvent = function (callback) {

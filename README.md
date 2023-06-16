@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.17 (2023-06-06)
+##### Version 1.0.18 (2023-06-16)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -379,6 +379,23 @@ Usage:
 - Call **_getViewportsInformation_** function to request viewports information in callback function.
 - Once message is processed, **_callback_** function will be triggered with viewports information array.
 
+#### Get instance metadata
+```js
+const callback = (instanceMetadata) => console.log(instanceMetadata);
+viewerCommunication.subscribeGetInstanceMetadataEvent(callback);
+viewerCommunication.getInstanceMetadata(instanceUid);
+```
+
+Parameter:
+
+- `instanceUid` - Unique instance uid which metadata you want.
+
+Usage:
+
+- Register **_subscribeGetInstanceMetadataEvent_** **_callback_** function.
+- Call **_getInstanceMetadata_** function with instanceUid to request instance metadata in callback function.
+- Once message is processed, **_callback_** function will be triggered with instance metadata object.
+
 #### Get snapshot
 ```js
 const callback = (snapshot) => console.log(snapshot);
@@ -569,6 +586,21 @@ Parameter:
 viewerCommunication.unsubscribeGetViewportsInformationEvent();
 ```
 
+#### Subscribe get instance metadata event
+```js
+const callback = (viewportsInformation) => console.log(viewportsInformation);
+viewerCommunication.subscribeGetInstanceMetadataEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe get instance metadata event
+```js
+viewerCommunication.unsubscribeGetInstanceMetadataEvent();
+```
+
 #### Subscribe get snapshot event
 ```js
 const callback = (snapshot) => console.log(snapshot);
@@ -737,6 +769,12 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.18 (2023-06-16)
+#### Changes
+- Added `getInstanceMetadata` function to get available instance metadata.
+- Added `subscribeGetInstanceMetadataEvent` function to subscribe of get instance metadata event callback.
+- Added `unsubscribeGetInstanceMetadataEvent` function to unsubscribe of get instance metadata event callback.
+
 ### 1.0.17 (2023-06-06)
 #### Changes
 - Added `subscribeAnnotationsSaveStartedEvent` function to subscribe of annotations save started event callback.

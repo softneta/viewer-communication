@@ -10,6 +10,7 @@
 		viewerCommunication.subscribeGetOpenedStudiesEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetViewportDataEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetViewportsInformationEvent(onGetDataCallback);
+		viewerCommunication.subscribeGetInstanceMetadataEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
 
 		function onOpeningTypeChange () {
@@ -336,6 +337,9 @@
 				case 'viewportsInformation':
 					viewerCommunication.getViewportsInformation();
 					break;
+				case 'instanceMetadata':
+					viewerCommunication.getInstanceMetadata('1.2.840.113619.2.55.3.4271045733.996.1449464144.595__1.2.840.113619.2.55.3.4271045733.996.1449464144.601__1.2.840.113619.2.55.3.4271045733.996.1449464144.602.1__Orthanc');
+					break;
 				default:
 					break;
 			}
@@ -518,6 +522,7 @@
 			<option value='openedStudies'>Opened studies</option>
 			<option value='viewportData'>Viewport data</option>
 			<option value='viewportsInformation'>Viewports information</option>
+			<option value='instanceMetadata'>Instance metadata</option>
 		</select>
 		<button type='button' onclick='getData()'>Get data</button>
 		<label for='eventSelection'>Event:</label>
