@@ -86,6 +86,9 @@
                 case 'MEASUREMENT_UPDATED':
                     this.performOnMeasurementUpdatedCallback(actionData);
                     break;
+                case 'MEASUREMENT_DELETED':
+                    this.performOnMeasurementDeletedCallback(actionData);
+                    break;
                 default:
                     break;
             }
@@ -172,6 +175,12 @@
         functions.performOnMeasurementUpdatedCallback = function (actionData) {
             if (callbacks.onMeasurementUpdatedCallback) {
                 callbacks.onMeasurementUpdatedCallback(actionData);
+            }
+        }
+
+        functions.performOnMeasurementDeletedCallback = function (actionData) {
+            if (callbacks.onMeasurementDeletedCallback) {
+                callbacks.onMeasurementDeletedCallback(actionData);
             }
         }
 
@@ -455,6 +464,16 @@
         functions.unsubscribeMeasurementUpdatedEvent = function () {
             callbacks.onMeasurementUpdatedCallback = undefined;
             this.unsubscribeEvent('MEASUREMENT_UPDATED');
+        };
+
+        functions.subscribeMeasurementDeletedEvent = function (callback) {
+            callbacks.onMeasurementDeletedCallback = callback;
+            this.subscribeEvent('MEASUREMENT_DELETED');
+        };
+
+        functions.unsubscribeMeasurementDeletedEvent = function () {
+            callbacks.onMeasurementDeletedCallback = undefined;
+            this.unsubscribeEvent('MEASUREMENT_DELETED');
         };
 
         functions.getIntegrationType = function () {
