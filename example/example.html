@@ -379,6 +379,9 @@
 				case 'measurementUpdated':
 					viewerCommunication.subscribeMeasurementUpdatedEvent(this.onEventCallback);
 					break;
+				case 'measurementDeleted':
+					viewerCommunication.subscribeMeasurementDeletedEvent(this.onEventCallback);
+					break;
 				default:
 					break;
 			}
@@ -409,6 +412,9 @@
 					break;
 				case 'measurementUpdated':
 					viewerCommunication.unsubscribeMeasurementUpdatedEvent(this.onEventCallback);
+					break;
+				case 'measurementDeleted':
+					viewerCommunication.unsubscribeMeasurementDeletedEvent(this.onEventCallback);
 					break;
 				default:
 					break;
@@ -535,6 +541,7 @@
 			<option value='activeContainerChanged'>Active container changed</option>
 			<option value='measurementCreated'>Measurement created</option>
 			<option value='measurementUpdated'>Measurement updated</option>
+			<option value='measurementDeleted'>Measurement deleted</option>
 		</select>
 		<button type='button' onclick='subscribeEvent()'>Subscribe</button>
 		<button type='button' onclick='unsubscribeEvent()'>Unsubscribe</button>

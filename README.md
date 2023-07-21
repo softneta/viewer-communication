@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.18 (2023-06-16)
+##### Version 1.0.19 (2023-07-21)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -442,8 +442,11 @@ Object example:
 const labels = {
     topLeftLabels: [
         {
-            level: 'series', // At which level labels are displayed. Level can be 'series' or 'study'. If both are provided then series will be displayed.
-            uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601', // Series uid because it is series level.
+            // At which level labels are displayed. Level can be 'series' or 'study'.
+            // If both are provided then series will be displayed.
+            level: 'series',
+            // Series uid because it is series level.
+            uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
             labels: ['series', 'label'],
             hideDicomLabels: false
         }
@@ -451,7 +454,8 @@ const labels = {
     topRightLabels: [
         {
             level: 'study',
-            uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601', // Study uid because it is study level.
+            // Study uid because it is study level.
+            uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
             labels: ['patient', 'right'],
             hideDicomLabels: false
         }
@@ -736,6 +740,21 @@ Parameter:
 viewerCommunication.unsubscribeMeasurementUpdatedEvent();
 ```
 
+#### Subscribe measurement deleted event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeMeasurementDeletedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe measurement deleted event
+```js
+viewerCommunication.unsubscribeMeasurementDeletedEvent();
+```
+
 ## Measurement coordinates conversion
 To ensure correct measurement recreation from data, all our measurement related functions and events work or provide 3D coordinates in patient coordinate system.
 If you need to convert received 3D coordinate to instance 2D coordinate, you can use following function:
@@ -769,6 +788,11 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.19 (2023-07-21)
+#### Changes
+- Added `subscribeMeasurementDeletedEvent` function to subscribe of measurement deleted event callback.
+- Added `unsubscribeMeasurementDeletedEvent` function to unsubscribe of measurement deleted event callback.
+
 ### 1.0.18 (2023-06-16)
 #### Changes
 - Added `getInstanceMetadata` function to get available instance metadata.
