@@ -443,6 +443,7 @@ const labels = {
     topLeftLabels: [
         {
             // At which level labels are displayed. Level can be 'series' or 'study'.
+            // If both are provided then series will be displayed.
             level: 'series',
             // Series uid because it is series level.
             uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
