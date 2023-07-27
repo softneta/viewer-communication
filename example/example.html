@@ -286,6 +286,12 @@
 			viewerCommunication.setAdditionalInfoLabels(labelsExample);
 		}
 
+		function setCustomStudyLabel () {
+			const selectedStudyId = '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__BUNNY';
+			const label = "this is a custom label";
+			viewerCommunication.setCustomStudyLabel(selectedStudyId, label)
+		}
+
 		function generateInstanceMpr (containerId) {
 			viewerCommunication.generateInstanceMpr(containerId);
 		}
@@ -511,6 +517,7 @@
 	<div>
 		<button type='button' onclick='showInfoLabels()'>Show/Hide info labels</button>
 		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
+		<button type='button' onclick='setCustomStudyLabel()'>Set custom study label</button>
 		<button type='button' onclick='generateInstanceMpr("viewport-container-1-1")'>Generate instance MPR</button>
 		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "AXIAL")'>Create MPR Axial</button>
 		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "SAGITTAL")'>Create MPR Sagittal</button>
