@@ -314,6 +314,10 @@
             this.postActionMessage('SET_ADDITIONAL_INFO_LABELS', {labels});
         };
 
+        functions.setCustomStudyLabel = function (studyUid, label) {
+            this.postActionMessage('SET_CUSTOM_STUDY_LABEL', {studyUid, label})
+        }
+
         functions.generateInstanceMpr = function (containerId) {
             this.postActionMessage('GENERATE_INSTANCE_MPR', {containerId});
         };
