@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.19 (2023-07-21)
+##### Version 1.0.20 (2023-07-27)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -473,7 +473,6 @@ Parameters:
 - `studyUid` - Study UID for which the label should be applied to.
 - `label` - String to show in study header.
 
-
 #### Generate instance MPR
 ```js
 viewerCommunication.generateInstanceMpr(containerId);
@@ -802,6 +801,7 @@ function get3DImagePositionFrom2D (position2d) {
 ### 1.0.20 (2023-07-27)
 #### Changes
 - Added `setCustomStudyLabel` function to set additional custom label for study side panel by selected study uid.
+
 ### 1.0.19 (2023-07-21)
 #### Changes
 - Added `subscribeMeasurementDeletedEvent` function to subscribe of measurement deleted event callback.

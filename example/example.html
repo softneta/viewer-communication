@@ -287,8 +287,8 @@
 		}
 
 		function setCustomStudyLabel () {
-			const selectedStudyId = document.getElementById('studySelectionForLabel').value;
-			const label = document.getElementById('customLabelInput').value;
+			const selectedStudyId = '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__BUNNY';
+			const label = "this is a custom label";
 			viewerCommunication.setCustomStudyLabel(selectedStudyId, label)
 		}
 
@@ -530,15 +530,6 @@
 	<br>
 	<div>
 		<div id='studySelectionForLabelContainer'>
-			<label for='studySelectionForLabel'>Choose a Study to set label:</label>
-			<select id='studySelectionForLabel'>
-				<option value='1.2.826.0.1.3680043.8.1055.1.20190219152017841.651455468.5334909__BUNNY'>1.2.826.0.1.3680043.8.1055.1.20190219152017841.651455468.5334909__BUNNY</option>
-				<option value='1.2.840.113619.2.66.2158408118.16050010109105933.20000__BUNNY'>1.2.840.113619.2.66.2158408118.16050010109105933.20000__BUNNY</option>
-				<option value='1.2.840.113619.2.55.3.4271045733.996.1449464144.595__BUNNY'>1.2.840.113619.2.55.3.4271045733.996.1449464144.595__BUNNY</option>
-				<option value='1.2.826.0.1.3680043.8.1055.1.20161012115812848.450575715.8637545__BUNNY'>1.2.826.0.1.3680043.8.1055.1.20161012115812848.450575715.8637545__BUNNY</option>
-			</select>
-			<label for='customLabelInput'>Custom label:</label>
-			<input type='text' id='customLabelInput'>
 			<button type='button' onclick='setCustomStudyLabel()'>Set custom study label</button>
 		</div>
 	</div>
