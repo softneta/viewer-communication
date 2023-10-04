@@ -297,7 +297,7 @@
 				{
 					level: 'study',
 					uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
-					tags: [{text: 'Leg', color: '#f6ff00'}, {text: 'Right knee', color: '#0d00ff'}, {text: 'Leg', color: '#d000ff'}, {text: 'Leg', color: '#f6ff00'}, {text: 'Abdomen', color: '#40f616'}, {text: 'Leg', color: '#f6ff00'}]
+					tags: [{text: 'Leg', color: '#f6ff00'}, {text: 'Right knee', color: '#0d00ff'}, {text: 'Leg', color: '#d000ff'}, {text: 'Leg', color: '#f6ff00'}, {text: 'Abdomen', color: '#40f616'}]
 				},
 				{
 					level: 'series',
@@ -460,127 +460,127 @@
 	</script>
 </head>
 <body>
-<div>
-	<label for='openingType'>MedDream opening type:</label>
-	<select id='openingType' onchange='onOpeningTypeChange()'>
-		<option value='window'>Window</option>
-		<option value='iframe'>Iframe</option>
-	</select>
-	<label for='integrationType'>MedDream integration type:</label>
-	<select id='integrationType' onchange='onIntegrationTypeChange()'>
-		<option value='study'>Study</option>
-		<option value='token'>Token</option>
-	</select>
-</div>
-<br>
-<div id='studySelectionContainer'>
-	<label for='studySelection'>Choose a Study:</label>
-	<select id='studySelection'>
-		<option value='1.2.826.0.1.3680043.8.1055.1.20190219152017841.651455468.5334909'>1.2.826.0.1.3680043.8.1055.1.20190219152017841.651455468.5334909</option>
-		<option value='1.2.840.113619.2.66.2158408118.16050010109105933.20000'>1.2.840.113619.2.66.2158408118.16050010109105933.20000</option>
-		<option value='1.2.840.113619.2.55.3.4271045733.996.1449464144.595'>1.2.840.113619.2.55.3.4271045733.996.1449464144.595</option>
-		<option value='1.2.826.0.1.3680043.8.1055.1.20161012115812848.450575715.8637545'>1.2.826.0.1.3680043.8.1055.1.20161012115812848.450575715.8637545</option>
-	</select>
-</div>
-<div id='tokenSelectionContainer' style='display: none;'>
-	<label for='tokenSelection'>Choose a Token:</label>
-	<select id='tokenSelection'>
-		<option value='PA2kdugjw3kQ9Mndbfoo1xfyou59xQAzK_H6GI9pvjjttdD0w460KTK2pR-Kg-W_XK3n6HcKpcS_fDn_DoQv8KPFynvPwAVULnWLYsuWN3hKrm8DBpI='>Token1</option>
-		<option value='PA2kdugjw3kQ9Mndbfoo1xfyou55xQUyK_X_F49pvjjttdSlmNK0L2SypUeA2L2_XPHhundTpMS4fGupX4Et9a-UnSvMnnd-MUaFtW5PT3fzqkrgr14='>Token2</option>
-		<option value='XNH8WmSy5Qwl430OgdXfBGeK4GfTOQZZAbflH4xzU8K6fkFaCNaNL0GQMFTQ7sNXlDPVPU9nhCxyAxwE9wUX1AiEtecydDhaTvjHbE1bOQo='>Token3</option>
-	</select>
-</div>
-<br>
-<div id='windowIntegrationContainer'>
-	<label>Window:</label>
-	<button type='button' onclick='openInMedDreamWindow()'>Open in MedDream</button>
-	<button type='button' onclick='addToMedDreamWindow()'>Add to MedDream</button>
-	<button type='button' onclick='replaceInMedDreamWindow()'>Replace in MedDream</button>
-	<button type='button' onclick='focusWindow()'>Focus MedDream</button>
-</div>
-<div id='iframeIntegrationContainer' style='display: none;'>
-	<label>Iframe:</label>
-	<button type='button' onclick='openMedDreamToIframe()'>Open MedDream to Iframe</button>
-</div>
-<br>
-<div id='studyIntegrationContainer'>
-	<label>Study integration:</label>
-	<button type='button' onclick='openStudy()'>Open study</button>
-	<button type='button' onclick='openStudies()'>Open studies</button>
-	<button type='button' onclick='replaceOpenedStudies()'>Replace opened studies</button>
-	<button type='button' onclick='preloadStudies()'>Preload studies</button>
-	<button type='button' onclick='cacheStudies()'>Cache studies</button>
-	<button type='button' onclick='closeStudies()'>Close studies</button>
-</div>
-<div id='tokenIntegrationContainer' style='display: none;'>
-	<label>Token integration:</label>
-	<button type='button' onclick='openStudiesWithToken()'>Open studies</button>
-	<button type='button' onclick='replaceOpenedStudiesWithToken()'>Replace opened studies</button>
-	<button type='button' onclick='preloadStudiesWithToken()'>Preload studies</button>
-	<button type='button' onclick='cacheStudiesWithToken()'>Cache studies</button>
-	<button type='button' onclick='closeStudiesWithToken()'>Close studies</button>
-</div>
-<br>
-<div>
-	<button type='button' onclick='cacheAllStudies()'>Cache all studies</button>
-	<button type='button' onclick='closeAllStudies()'>Close all studies</button>
-	<button type='button' onclick='setLayout(3, 3)'>Set layout 3x3</button>
-	<button type='button' onclick='setLayout(2, 1)'>Set layout 2x1</button>
-	<button type='button' onclick='setLayout(1, 2)'>Set layout 1x2</button>
-</div>
-<br>
-<div>
-	<button type='button' onclick='openInstance()'>Open instance</button>
-	<button type='button' onclick='exportActiveInstance()'>Export active instance</button>
-	<button type='button' onclick='exportContainerInstance(2, 2)'>Export container 2:2 instance</button>
-	<button type='button' onclick='disableSegmentation()'>Disable segmentation</button>
-	<button type='button' onclick='enableSegmentation()'>Enable segmentation</button>
-	<button type='button' onclick='getSnapshot()'>Get snapshot</button>
-	<button type='button' onclick='setSnapshot()'>Set snapshot</button>
-	<button type='button' onclick='getWindowReference()'>Get window reference</button>
-</div>
-<br>
-<div>
-	<button type='button' onclick='showInfoLabels()'>Show/Hide info labels</button>
-	<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
-	<button type='button' onclick='setCustomStudyLabel()'>Set custom study label</button>
-	<button type='button' onclick='setCustomTags()'>Set custom study and series tags</button>
-	<button type='button' onclick='generateInstanceMpr("viewport-container-1-1")'>Generate instance MPR</button>
-	<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "AXIAL")'>Create MPR Axial</button>
-	<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "SAGITTAL")'>Create MPR Sagittal</button>
-	<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "CORONAL")'>Create MPR Coronal</button>
-</div>
-<br>
-<div>
-	<button type='button' onclick='createMeasurement()'>Create measurement</button>
-	<button type='button' onclick='deleteMeasurement()'>Delete measurement</button>
-</div>
-<br>
-<div>
-	<label for='dataTypeSelection'>Data type:</label>
-	<select id='dataTypeSelection'>
-		<option value='openedStudies'>Opened studies</option>
-		<option value='viewportData'>Viewport data</option>
-		<option value='viewportsInformation'>Viewports information</option>
-		<option value='instanceMetadata'>Instance metadata</option>
-	</select>
-	<button type='button' onclick='getData()'>Get data</button>
-	<label for='eventSelection'>Event:</label>
-	<select id='eventSelection'>
-		<option value='studyLoaded'>Study loaded</option>
-		<option value='annotationsSaveStarted'>Annotations save started</option>
-		<option value='annotationsSaved'>Annotations saved</option>
-		<option value='structureSetEdited'>Structure set edited</option>
-		<option value='instanceChanged'>Instance changed</option>
-		<option value='activeContainerChanged'>Active container changed</option>
-		<option value='measurementCreated'>Measurement created</option>
-		<option value='measurementUpdated'>Measurement updated</option>
-		<option value='measurementDeleted'>Measurement deleted</option>
-	</select>
-	<button type='button' onclick='subscribeEvent()'>Subscribe</button>
-	<button type='button' onclick='unsubscribeEvent()'>Unsubscribe</button>
-</div>
-<br>
-<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
+	<div>
+		<label for='openingType'>MedDream opening type:</label>
+		<select id='openingType' onchange='onOpeningTypeChange()'>
+			<option value='window'>Window</option>
+			<option value='iframe'>Iframe</option>
+		</select>
+		<label for='integrationType'>MedDream integration type:</label>
+		<select id='integrationType' onchange='onIntegrationTypeChange()'>
+			<option value='study'>Study</option>
+			<option value='token'>Token</option>
+		</select>
+	</div>
+	<br>
+	<div id='studySelectionContainer'>
+		<label for='studySelection'>Choose a Study:</label>
+		<select id='studySelection'>
+			<option value='1.2.826.0.1.3680043.8.1055.1.20190219152017841.651455468.5334909'>1.2.826.0.1.3680043.8.1055.1.20190219152017841.651455468.5334909</option>
+			<option value='1.2.840.113619.2.66.2158408118.16050010109105933.20000'>1.2.840.113619.2.66.2158408118.16050010109105933.20000</option>
+			<option value='1.2.840.113619.2.55.3.4271045733.996.1449464144.595'>1.2.840.113619.2.55.3.4271045733.996.1449464144.595</option>
+			<option value='1.2.826.0.1.3680043.8.1055.1.20161012115812848.450575715.8637545'>1.2.826.0.1.3680043.8.1055.1.20161012115812848.450575715.8637545</option>
+		</select>
+	</div>
+	<div id='tokenSelectionContainer' style='display: none;'>
+		<label for='tokenSelection'>Choose a Token:</label>
+		<select id='tokenSelection'>
+			<option value='PA2kdugjw3kQ9Mndbfoo1xfyou59xQAzK_H6GI9pvjjttdD0w460KTK2pR-Kg-W_XK3n6HcKpcS_fDn_DoQv8KPFynvPwAVULnWLYsuWN3hKrm8DBpI='>Token1</option>
+			<option value='PA2kdugjw3kQ9Mndbfoo1xfyou55xQUyK_X_F49pvjjttdSlmNK0L2SypUeA2L2_XPHhundTpMS4fGupX4Et9a-UnSvMnnd-MUaFtW5PT3fzqkrgr14='>Token2</option>
+			<option value='XNH8WmSy5Qwl430OgdXfBGeK4GfTOQZZAbflH4xzU8K6fkFaCNaNL0GQMFTQ7sNXlDPVPU9nhCxyAxwE9wUX1AiEtecydDhaTvjHbE1bOQo='>Token3</option>
+		</select>
+	</div>
+	<br>
+	<div id='windowIntegrationContainer'>
+		<label>Window:</label>
+		<button type='button' onclick='openInMedDreamWindow()'>Open in MedDream</button>
+		<button type='button' onclick='addToMedDreamWindow()'>Add to MedDream</button>
+		<button type='button' onclick='replaceInMedDreamWindow()'>Replace in MedDream</button>
+		<button type='button' onclick='focusWindow()'>Focus MedDream</button>
+	</div>
+	<div id='iframeIntegrationContainer' style='display: none;'>
+		<label>Iframe:</label>
+		<button type='button' onclick='openMedDreamToIframe()'>Open MedDream to Iframe</button>
+	</div>
+	<br>
+	<div id='studyIntegrationContainer'>
+		<label>Study integration:</label>
+		<button type='button' onclick='openStudy()'>Open study</button>
+		<button type='button' onclick='openStudies()'>Open studies</button>
+		<button type='button' onclick='replaceOpenedStudies()'>Replace opened studies</button>
+		<button type='button' onclick='preloadStudies()'>Preload studies</button>
+		<button type='button' onclick='cacheStudies()'>Cache studies</button>
+		<button type='button' onclick='closeStudies()'>Close studies</button>
+	</div>
+	<div id='tokenIntegrationContainer' style='display: none;'>
+		<label>Token integration:</label>
+		<button type='button' onclick='openStudiesWithToken()'>Open studies</button>
+		<button type='button' onclick='replaceOpenedStudiesWithToken()'>Replace opened studies</button>
+		<button type='button' onclick='preloadStudiesWithToken()'>Preload studies</button>
+		<button type='button' onclick='cacheStudiesWithToken()'>Cache studies</button>
+		<button type='button' onclick='closeStudiesWithToken()'>Close studies</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='cacheAllStudies()'>Cache all studies</button>
+		<button type='button' onclick='closeAllStudies()'>Close all studies</button>
+		<button type='button' onclick='setLayout(3, 3)'>Set layout 3x3</button>
+		<button type='button' onclick='setLayout(2, 1)'>Set layout 2x1</button>
+		<button type='button' onclick='setLayout(1, 2)'>Set layout 1x2</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='openInstance()'>Open instance</button>
+		<button type='button' onclick='exportActiveInstance()'>Export active instance</button>
+		<button type='button' onclick='exportContainerInstance(2, 2)'>Export container 2:2 instance</button>
+		<button type='button' onclick='disableSegmentation()'>Disable segmentation</button>
+		<button type='button' onclick='enableSegmentation()'>Enable segmentation</button>
+		<button type='button' onclick='getSnapshot()'>Get snapshot</button>
+		<button type='button' onclick='setSnapshot()'>Set snapshot</button>
+		<button type='button' onclick='getWindowReference()'>Get window reference</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='showInfoLabels()'>Show/Hide info labels</button>
+		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
+		<button type='button' onclick='setCustomStudyLabel()'>Set custom study label</button>
+		<button type='button' onclick='setCustomTags()'>Set custom study and series tags</button>
+		<button type='button' onclick='generateInstanceMpr("viewport-container-1-1")'>Generate instance MPR</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "AXIAL")'>Create MPR Axial</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "SAGITTAL")'>Create MPR Sagittal</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "CORONAL")'>Create MPR Coronal</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='createMeasurement()'>Create measurement</button>
+		<button type='button' onclick='deleteMeasurement()'>Delete measurement</button>
+	</div>
+	<br>
+	<div>
+		<label for='dataTypeSelection'>Data type:</label>
+		<select id='dataTypeSelection'>
+			<option value='openedStudies'>Opened studies</option>
+			<option value='viewportData'>Viewport data</option>
+			<option value='viewportsInformation'>Viewports information</option>
+			<option value='instanceMetadata'>Instance metadata</option>
+		</select>
+		<button type='button' onclick='getData()'>Get data</button>
+		<label for='eventSelection'>Event:</label>
+		<select id='eventSelection'>
+			<option value='studyLoaded'>Study loaded</option>
+			<option value='annotationsSaveStarted'>Annotations save started</option>
+			<option value='annotationsSaved'>Annotations saved</option>
+			<option value='structureSetEdited'>Structure set edited</option>
+			<option value='instanceChanged'>Instance changed</option>
+			<option value='activeContainerChanged'>Active container changed</option>
+			<option value='measurementCreated'>Measurement created</option>
+			<option value='measurementUpdated'>Measurement updated</option>
+			<option value='measurementDeleted'>Measurement deleted</option>
+		</select>
+		<button type='button' onclick='subscribeEvent()'>Subscribe</button>
+		<button type='button' onclick='unsubscribeEvent()'>Unsubscribe</button>
+	</div>
+	<br>
+	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
 </body>
 </html>
