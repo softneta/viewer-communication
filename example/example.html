@@ -292,6 +292,32 @@
 			viewerCommunication.setCustomStudyLabel(studyUid, label)
 		}
 
+		function setCustomTags () {
+			const exampleTags = [
+				{
+					level: 'study',
+					uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
+					tags: [{text: 'Leg', color: '#f6ff00'}, {text: 'Right knee', color: '#0d00ff'}, {text: 'Leg', color: '#d000ff'}, {text: 'Leg', color: '#f6ff00'}, {text: 'Abdomen', color: '#40f616'}]
+				},
+				{
+					level: 'series',
+					uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.598',
+					tags: [{text: 'Abdomen', color: '#40f616'}, {text: 'Right knee', color: '#0d00ff'}, {text: 'Abdomen', color: '#ff0019'}, {text: 'Leg', color: '#1f7aab'}, {text: 'Leg', color: '#f6ff00'}, {text: 'Abdomen', color: '#ff0019'}]
+				},
+				{
+					level: 'series',
+					uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
+					tags: [{text: 'Right knee', color: '#0d00ff'}, {text: 'Abdomen', color: '#ff0019'}, {text: 'Leg', color: '#1f7aab'}, {text: 'Leg', color: '#f6ff00'}]
+				},
+				{
+					level: 'study',
+					uid: '1.2.826.0.1.3680043.8.1055.1.20161012115812848.450575715.8637545',
+					tags: [{text: 'Abdomen', color: '#40f616'}, {text: 'Right knee', color: '#0d00ff'}, {text: 'Abdomen', color: '#ff0019'}, {text: 'Leg', color: '#1f7aab'}, {text: 'Leg', color: '#f6ff00'}, {text: 'Abdomen', color: '#ff0019'},{text: 'Abdomen', color: '#ff0019'}]
+				},
+			]
+			viewerCommunication.setCustomTags(exampleTags);
+		}
+
 		function generateInstanceMpr (containerId) {
 			viewerCommunication.generateInstanceMpr(containerId);
 		}
@@ -518,6 +544,7 @@
 		<button type='button' onclick='showInfoLabels()'>Show/Hide info labels</button>
 		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
 		<button type='button' onclick='setCustomStudyLabel()'>Set custom study label</button>
+		<button type='button' onclick='setCustomTags()'>Set custom study and series tags</button>
 		<button type='button' onclick='generateInstanceMpr("viewport-container-1-1")'>Generate instance MPR</button>
 		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "AXIAL")'>Create MPR Axial</button>
 		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "SAGITTAL")'>Create MPR Sagittal</button>

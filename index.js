@@ -318,6 +318,10 @@
             this.postActionMessage('SET_CUSTOM_STUDY_LABEL', {studyUid, label})
         }
 
+        functions.setCustomTags = function (tags) {
+            this.postActionMessage('SET_CUSTOM_TAGS', {tags})
+        }
+
         functions.generateInstanceMpr = function (containerId) {
             this.postActionMessage('GENERATE_INSTANCE_MPR', {containerId});
         };

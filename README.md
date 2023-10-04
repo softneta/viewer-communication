@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.20 (2023-07-27)
+##### Version 1.0.21 (2023-10-04)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -473,6 +473,36 @@ Parameters:
 - `studyUid` - Study UID for which the label should be applied to.
 - `label` - String to show in study header.
 
+#### Set additional custom study and series tags
+```js
+viewerCommunication.setCustomTags(tags);
+```
+
+Parameter:
+
+- `tags` - Array of objects of tags to add to study and series. Each object has level, uid and tags.
+
+Object example:
+
+```js
+const tags = [
+    {
+        // At which level labels are displayed. Level can be 'series' or 'study'.
+        level: 'study',
+        // Study uid because it is study level.
+        uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
+        // Tags to add to study. Each tag has text and color properties
+        tags: [{text: 'Leg', color: '#f6ff00'}, {text: 'Right knee', color: '#0d00ff'}, {text: 'Leg', color: '#d000ff'}]
+    },
+    {
+        level: 'series',
+        // Series uid because it is series level.
+        uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.598',
+        tags: [{text: 'Abdomen', color: '#40f616'}, {text: 'Right knee', color: '#0d00ff'}]
+    }
+]
+```
+
 #### Generate instance MPR
 ```js
 viewerCommunication.generateInstanceMpr(containerId);
@@ -798,6 +828,10 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.21 (2023-10-04) 
+#### Changes
+- Added `setCustomTags` function to set custom tags with tag text and color for study or series.
+
 ### 1.0.20 (2023-07-27)
 #### Changes
 - Added `setCustomStudyLabel` function to set additional custom label for study side panel by selected study uid.
