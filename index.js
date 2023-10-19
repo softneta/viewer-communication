@@ -310,6 +310,10 @@
             this.postActionMessage('SHOW_INFO_LABELS', {showLabels});
         };
 
+        functions.updateButtonVisibility = function (buttonVisibility) {
+            this.postActionMessage('UPDATE_BUTTON_VISIBILITY', {buttonVisibility});
+        };
+
         functions.setAdditionalInfoLabels = function (labels) {
             this.postActionMessage('SET_ADDITIONAL_INFO_LABELS', {labels});
         };
