@@ -250,6 +250,12 @@
 			viewerCommunication.showInfoLabels(showInfoLabelsValue);
 		}
 
+		let dicomButtonVisible = true;
+		function updateButtonVisibility () {
+			dicomButtonVisible = !dicomButtonVisible;
+			viewerCommunication.updateButtonVisibility({'dicom-tag-list': dicomButtonVisible});
+		}
+
 		function setAdditionalTopInfoLabels () {
 			const labelsExample = {
 				// Study labels will be ignored for series that have series labels defined.
@@ -542,6 +548,7 @@
 	<br>
 	<div>
 		<button type='button' onclick='showInfoLabels()'>Show/Hide info labels</button>
+		<button type='button' onclick='updateButtonVisibility()'>Show/Hide dicom button</button>
 		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
 		<button type='button' onclick='setCustomStudyLabel()'>Set custom study label</button>
 		<button type='button' onclick='setCustomTags()'>Set custom study and series tags</button>
