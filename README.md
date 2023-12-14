@@ -847,10 +847,14 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.23 (2023-12-14)
+#### Changes
+- updated `updateButtonVisibility` example to include mpr mist oblique and key objects buttons
+
 ### 1.0.22 (2023-10-19) 
 #### Changes
 - Added `updateButtonVisibility` function to set which toolbar buttons are hidden.
-- 
+
 ### 1.0.21 (2023-10-04) 
 #### Changes
 - Added `setCustomTags` function to set custom tags with tag text and color for study or series.
