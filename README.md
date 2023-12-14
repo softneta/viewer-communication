@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.22 (2023-10-19)
+##### Version 1.0.23 (2023-12-14)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -425,13 +425,15 @@ viewerCommunication.updateButtonVisibility(buttonsVisibility);
 
 Parameter:
 
-- `buttonsVisibility` - Object consistent of toolbar button names(keys) and their visibility value - true(shown), false(hidden).
+- `buttonsVisibility` - Object consistent of toolbar button names(keys) and their visibility value - true(hidden), false(shown).
 
 Object example:
 
 ```js
 const buttonsVisibility = {
-    'dicom-tag-list': true
+    'dicom-tag-list': true,
+    'mpr-mist-oblique': true,
+    'key-object-selection': true
 }
 ```
 
