@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.23 (2023-12-14)
+##### Version 1.0.24 (2023-12-19)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -574,7 +574,8 @@ const measurementData = {
             [335, 132, 42],
             [178, 224, 42],
             [80, 113, 42]
-        ]
+        ],
+        disabled: false
     }
 };
 ```
@@ -847,9 +848,13 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.24 (2023-12-19)
+#### Changes
+- Updated `measurementData` object with `disabled` parameter which allows to disable measurement from editing.
+
 ### 1.0.23 (2023-12-14)
 #### Changes
-- updated `updateButtonVisibility` example to include mpr mist oblique and key objects buttons
+- Updated `updateButtonVisibility` example to include mpr mist oblique and key objects buttons.
 
 ### 1.0.22 (2023-10-19) 
 #### Changes
