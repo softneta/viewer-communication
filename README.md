@@ -848,7 +848,7 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
-### 1.0.24 (2023-12-14)
+### 1.0.24 (2023-12-19)
 #### Changes
 - Updated `measurementData` object with `disabled` parameter which allows to disable measurement from editing.
 
