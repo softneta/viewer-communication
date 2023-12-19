@@ -250,10 +250,10 @@
 			viewerCommunication.showInfoLabels(showInfoLabelsValue);
 		}
 
-		let dicomButtonVisible = true;
+		let dicomButtonVisible = false;
 		function updateButtonVisibility () {
 			dicomButtonVisible = !dicomButtonVisible;
-			viewerCommunication.updateButtonVisibility({'dicom-tag-list': dicomButtonVisible});
+			viewerCommunication.updateButtonVisibility({'dicom-tag-list': dicomButtonVisible, 'mpr-mist-oblique': dicomButtonVisible, 'key-object-selection': dicomButtonVisible});
 		}
 
 		function setAdditionalTopInfoLabels () {
@@ -548,7 +548,7 @@
 	<br>
 	<div>
 		<button type='button' onclick='showInfoLabels()'>Show/Hide info labels</button>
-		<button type='button' onclick='updateButtonVisibility()'>Show/Hide dicom button</button>
+		<button type='button' onclick='updateButtonVisibility()'>Show/Hide multiple buttons</button>
 		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
 		<button type='button' onclick='setCustomStudyLabel()'>Set custom study label</button>
 		<button type='button' onclick='setCustomTags()'>Set custom study and series tags</button>

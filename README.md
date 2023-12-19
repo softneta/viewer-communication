@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.22 (2023-10-19)
+##### Version 1.0.23 (2023-12-14)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -425,13 +425,15 @@ viewerCommunication.updateButtonVisibility(buttonsVisibility);
 
 Parameter:
 
-- `buttonsVisibility` - Object consistent of toolbar button names(keys) and their visibility value - true(shown), false(hidden).
+- `buttonsVisibility` - Object consistent of toolbar button names(keys) and their visibility value - true(hidden), false(shown).
 
 Object example:
 
 ```js
 const buttonsVisibility = {
-    'dicom-tag-list': true
+    'dicom-tag-list': true,
+    'mpr-mist-oblique': true,
+    'key-object-selection': true
 }
 ```
 
@@ -845,10 +847,14 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.23 (2023-12-14)
+#### Changes
+- updated `updateButtonVisibility` example to include mpr mist oblique and key objects buttons
+
 ### 1.0.22 (2023-10-19) 
 #### Changes
 - Added `updateButtonVisibility` function to set which toolbar buttons are hidden.
-- 
+
 ### 1.0.21 (2023-10-04) 
 #### Changes
 - Added `setCustomTags` function to set custom tags with tag text and color for study or series.
