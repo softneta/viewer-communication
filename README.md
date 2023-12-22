@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.24 (2023-12-19)
+##### Version 1.0.25 (2023-12-19)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -848,9 +848,13 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
-### 1.0.24 (2023-12-19)
+### 1.0.25 (2023-12-19)
 #### Changes
 - Updated `measurementData` object with `disabled` parameter which allows to disable measurement from editing.
+
+### 1.0.24 (2023-12-15)
+#### Changes
+- Change log update.
 
 ### 1.0.23 (2023-12-14)
 #### Changes
@@ -912,7 +916,6 @@ function get3DImagePositionFrom2D (position2d) {
 - Added `generateInstanceMpr` function to generate instance MPR.
 - Added `changeViewportOrientation` function to change viewport orientation.
 
-## Change log
 ### 1.0.13 (2023-05-24)
 #### Changes
 - Added `showInfoLabels` function to show/hide viewports info labels.
@@ -927,7 +930,6 @@ function get3DImagePositionFrom2D (position2d) {
 #### Changes
 - Removed information about not used `freeDrawInfo` permission from example and `Update segmentation tool permissions` documentation section.
 
-## Change log
 ### 1.0.10 (2022-12-19)
 #### Changes
 - Added `getViewportData` function to get active viewport data.
