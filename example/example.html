@@ -264,13 +264,15 @@
 						level: 'study',
 						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
 						labels: ['example', 'left'],
-						hideDicomLabels: false
+						dicomTagLabels: ['00080005'],
+						hideOriginalLabels: false
 					},
 					{
 						level: 'series',
 						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
 						labels: ['series', 'label'],
-						hideDicomLabels: false
+						dicomTagLabels: ['00080013', '00450010'],
+						hideOriginalLabels: false
 					}
 				],
 				topRightLabels: [
@@ -279,13 +281,15 @@
 						level: 'study',
 						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
 						labels: ['right', 'label'],
-						hideDicomLabels: true
+						dicomTagLabels: ['00080016'],
+						hideOriginalLabels: false
 					},
 					{
 						level: 'series',
 						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
 						labels: ['patient', 'right'],
-						hideDicomLabels: false
+						dicomTagLabels: [],
+						hideOriginalLabels: true
 					}
 				]
 			}

@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.25 (2023-12-19)
+##### Version 1.0.26 (2024-01-23)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -846,6 +846,15 @@ function get3DImagePositionFrom2D (position2d) {
     return [x, y, z];
 }
 ```
+
+## Change log
+### 1.0.26 (2024-01-23)
+#### Changes
+- Updated `setCustomStudyLabel` function to set additional dicom tag labels for study or series level.
+- Added `dicomTagLabels` argument to array of dicom tags.
+
+#### Breaking changes
+- Renamed `hideDicomLabels` argument to `hideOriginalLabels`.
 
 ## Change log
 ### 1.0.25 (2023-12-19)
