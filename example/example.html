@@ -12,6 +12,7 @@
 		viewerCommunication.subscribeGetViewportsInformationEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetInstanceMetadataEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
+		viewerCommunication.subscribeGetListOfAvailableHpForStudy(onGetHpList)
 
 		function onOpeningTypeChange () {
 			const openingType = document.getElementById('openingType').value;
@@ -368,6 +369,26 @@
 			viewerCommunication.deleteMeasurementById(measurementId);
 		}
 
+		function getListOfAvailableHpForStudy () {
+			viewerCommunication.getListOfAvailableHpForStudy();
+		}
+
+		function onGetHpList (hpList) {
+			console.log(hpList);
+		}
+
+		function applyPreviousHangingProtocolCategory () {
+			viewerCommunication.applyPreviousHangingProtocolCategory();
+		}
+
+		function applyNextHangingProtocolCategory () {
+			viewerCommunication.applyNextHangingProtocolCategory();
+		}
+
+		function applyNextHangingProtocolCP () {
+			viewerCommunication.applyNextHangingProtocolCP();
+		}
+
 		function getData () {
 			switch (document.getElementById('dataTypeSelection').value) {
 				case 'openedStudies':
@@ -566,6 +587,13 @@
 	<div>
 		<button type='button' onclick='createMeasurement()'>Create measurement</button>
 		<button type='button' onclick='deleteMeasurement()'>Delete measurement</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='getListOfAvailableHpForStudy()'>Get HP list of study</button>
+		<button type='button' onclick='applyPreviousHangingProtocolCategory()'>Apply previous HP category</button>
+		<button type='button' onclick='applyNextHangingProtocolCategory()'>Apply next HP category</button>
+		<button type='button' onclick='applyNextHangingProtocolCP()'>Apply next CP</button>
 	</div>
 	<br>
 	<div>
