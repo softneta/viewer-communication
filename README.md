@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.26 (2024-01-23)
+##### Version 1.0.27 (2024-03-06)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -589,6 +589,26 @@ Parameter:
 
 - `measurementId` - Measurement id that has to be deleted.
 
+#### Get list of available HP for study
+```js
+viewerCommunication.getListOfAvailableHpForStudy();
+```
+
+#### Apply previous hanging protocol category
+```js
+viewerCommunication.applyPreviousHangingProtocolCategory();
+```
+
+#### Apply next hanging protocol category
+```js
+viewerCommunication.applyNextHangingProtocolCategory();
+```
+
+#### Apply next hanging protocol comparison study (CP)
+```js
+viewerCommunication.applyNextHangingProtocolCP();
+```
+
 ### Events
 #### Subscribe communication service ready event
 ```js
@@ -815,6 +835,21 @@ Parameter:
 viewerCommunication.unsubscribeMeasurementDeletedEvent();
 ```
 
+#### Subscribe get list of available HP for study event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeGetListOfAvailableHpForStudy(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe get list of available HP for study event
+```js
+viewerCommunication.subscribeGetListOfAvailableHpForStudy();
+```
+
 ## Measurement coordinates conversion
 To ensure correct measurement recreation from data, all our measurement related functions and events work or provide 3D coordinates in patient coordinate system.
 If you need to convert received 3D coordinate to instance 2D coordinate, you can use following function:
@@ -848,6 +883,13 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.27 (2024-03-06)
+#### Changes
+- Added `getListOfAvailableHpForStudy` function to get available hanging protocol list for active study.
+- Added `applyPreviousHangingProtocolCategory` function to apply previous available hanging protocol category.
+- Added `applyNextHangingProtocolCategory` function to apply next available hanging protocol category.
+- Added `applyNextHangingProtocolCP` function to apply next available hanging protocol comparison study (CP).
+
 ### 1.0.26 (2024-01-23)
 #### Changes
 - Updated `setCustomStudyLabel` function to set additional dicom tag labels for study or series level.

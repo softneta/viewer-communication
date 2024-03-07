@@ -89,6 +89,9 @@
                 case 'MEASUREMENT_DELETED':
                     this.performOnMeasurementDeletedCallback(actionData);
                     break;
+                case 'GET_LIST_OF_AVAILABLE_HP_FOR_STUDY':
+                    this.performOnGetListOfAvailableHpForStudyCallback(actionData);
+                    break;
                 default:
                     break;
             }
@@ -181,6 +184,12 @@
         functions.performOnMeasurementDeletedCallback = function (actionData) {
             if (callbacks.onMeasurementDeletedCallback) {
                 callbacks.onMeasurementDeletedCallback(actionData);
+            }
+        }
+
+        functions.performOnGetListOfAvailableHpForStudyCallback = function (actionData) {
+            if (callbacks.onGetListOfAvailableHpForStudyCallback) {
+                callbacks.onGetListOfAvailableHpForStudyCallback(actionData);
             }
         }
 
@@ -342,6 +351,22 @@
             this.postActionMessage('DELETE_MEASUREMENT_BY_ID', {measurementId});
         };
 
+        functions.getListOfAvailableHpForStudy = function () {
+            this.postActionMessage('GET_LIST_OF_AVAILABLE_HP_FOR_STUDY');
+        };
+
+        functions.applyPreviousHangingProtocolCategory = function () {
+            this.postActionMessage('APPLY_PREVIOUS_HANGING_PROTOCOL_CATEGORY');
+        };
+
+        functions.applyNextHangingProtocolCategory = function () {
+            this.postActionMessage('APPLY_NEXT_HANGING_PROTOCOL_CATEGORY');
+        };
+
+        functions.applyNextHangingProtocolCP = function () {
+            this.postActionMessage('APPLY_NEXT_HANGING_PROTOCOL_CP');
+        };
+
         functions.subscribeEvent = function (eventType) {
             this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
         };
@@ -486,6 +511,16 @@
         functions.unsubscribeMeasurementDeletedEvent = function () {
             callbacks.onMeasurementDeletedCallback = undefined;
             this.unsubscribeEvent('MEASUREMENT_DELETED');
+        };
+
+        functions.subscribeGetListOfAvailableHpForStudy = function (callback) {
+            callbacks.onGetListOfAvailableHpForStudyCallback = callback;
+            this.subscribeEvent('GET_LIST_OF_AVAILABLE_HP_FOR_STUDY');
+        };
+
+        functions.unsubscribeGetListOfAvailableHpForStudy = function () {
+            callbacks.onGetListOfAvailableHpForStudyCallback = undefined;
+            this.unsubscribeEvent('GET_LIST_OF_AVAILABLE_HP_FOR_STUDY');
         };
 
         functions.getIntegrationType = function () {
