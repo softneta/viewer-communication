@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.27 (2024-03-06)
+##### Version 1.0.28 (2024-03-15)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -847,7 +847,7 @@ Parameter:
 
 #### Unsubscribe get list of available HP for study event
 ```js
-viewerCommunication.subscribeGetListOfAvailableHpForStudy();
+viewerCommunication.unsubscribeGetListOfAvailableHpForStudy();
 ```
 
 ## Measurement coordinates conversion
@@ -881,6 +881,11 @@ function get3DImagePositionFrom2D (position2d) {
     return [x, y, z];
 }
 ```
+
+## Change log
+### 1.0.28 (2024-03-15)
+#### Changes
+- Fix unsubscribe get list of available HP for study event description.
 
 ## Change log
 ### 1.0.27 (2024-03-06)
