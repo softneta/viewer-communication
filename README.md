@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.28 (2024-03-15)
+##### Version 1.0.29 (2024-03-20)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -594,6 +594,16 @@ Parameter:
 viewerCommunication.getListOfAvailableHpForStudy();
 ```
 
+#### Apply hanging protocol
+```js
+viewerCommunication.applyHangingProtocol(groupId, categoryId);
+```
+
+Parameters:
+
+- `groupId` - HP group id.
+- `categoryId` - HP category id from selected group.
+
 #### Apply previous hanging protocol category
 ```js
 viewerCommunication.applyPreviousHangingProtocolCategory();
@@ -883,6 +893,10 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.27 (2024-03-06)
+#### Changes
+- Added `applyHangingProtocol` function to set hanging protocol by group and category ids.
+
 ### 1.0.28 (2024-03-15)
 #### Changes
 - Fix unsubscribe get list of available HP for study event description.
