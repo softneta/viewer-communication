@@ -375,6 +375,26 @@
 
 		function onGetHpList (hpList) {
 			console.log(hpList);
+
+			const selectElement = document.getElementById('hangingProtocolSelection');
+
+			hpList.forEach((protocol) => {
+				const option = document.createElement('option');
+				option.value = protocol.groupId + '|' + protocol.categoryId;
+				option.text = protocol.label;
+				selectElement.appendChild(option);
+			});
+		}
+
+		function applyHangingProtocol () {
+			const selectElement = document.getElementById('hangingProtocolSelection');
+			const selectedValue = selectElement.value;
+			const selectedValues = selectedValue.split('|');
+			const groupId = selectedValues[0];
+			const categoryId = selectedValues[1];
+
+			console.log(groupId, categoryId);
+			viewerCommunication.applyHangingProtocol(groupId, categoryId);
 		}
 
 		function applyPreviousHangingProtocolCategory () {
@@ -591,6 +611,9 @@
 	<br>
 	<div>
 		<button type='button' onclick='getListOfAvailableHpForStudy()'>Get HP list of study</button>
+		<label for='hangingProtocolSelection'>Select HP:</label>
+		<select id='hangingProtocolSelection'></select>
+		<button type='button' onclick='applyHangingProtocol()'>Apply hanging protocol</button>
 		<button type='button' onclick='applyPreviousHangingProtocolCategory()'>Apply previous HP category</button>
 		<button type='button' onclick='applyNextHangingProtocolCategory()'>Apply next HP category</button>
 		<button type='button' onclick='applyNextHangingProtocolCP()'>Apply next CP</button>

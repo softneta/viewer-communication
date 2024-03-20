@@ -355,6 +355,10 @@
             this.postActionMessage('GET_LIST_OF_AVAILABLE_HP_FOR_STUDY');
         };
 
+        functions.applyHangingProtocol = function (groupId, categoryId) {
+            this.postActionMessage('APPLY_HANGING_PROTOCOL', {groupId, categoryId});
+        };
+
         functions.applyPreviousHangingProtocolCategory = function () {
             this.postActionMessage('APPLY_PREVIOUS_HANGING_PROTOCOL_CATEGORY');
         };
