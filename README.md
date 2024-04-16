@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.29 (2024-03-20)
+##### Version 1.0.30 (2024-04-16)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -893,7 +893,11 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
-### 1.0.27 (2024-03-06)
+### 1.0.30 (2024-04-16)
+#### Changes
+- Fixed integration example issues related to latest MedDream Viewer changes.
+
+### 1.0.29 (2024-03-06)
 #### Changes
 - Added `applyHangingProtocol` function to set hanging protocol by group and category ids.
 

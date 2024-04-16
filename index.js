@@ -62,6 +62,9 @@
                 case 'GET_SNAPSHOT':
                     this.performGetSnapshotCallback(actionData);
                     break;
+                case 'GET_LIST_OF_AVAILABLE_HP_FOR_STUDY':
+                    this.performOnGetListOfAvailableHpForStudyCallback(actionData);
+                    break;
                 case 'STUDY_LOADED':
                     this.performOnStudyLoadedCallback(actionData);
                     break;
@@ -88,9 +91,6 @@
                     break;
                 case 'MEASUREMENT_DELETED':
                     this.performOnMeasurementDeletedCallback(actionData);
-                    break;
-                case 'GET_LIST_OF_AVAILABLE_HP_FOR_STUDY':
-                    this.performOnGetListOfAvailableHpForStudyCallback(actionData);
                     break;
                 default:
                     break;
@@ -130,6 +130,12 @@
         functions.performGetSnapshotCallback = function (actionData) {
             if (callbacks.onGetSnapshotCallback) {
                 callbacks.onGetSnapshotCallback(actionData);
+            }
+        }
+
+        functions.performOnGetListOfAvailableHpForStudyCallback = function (actionData) {
+            if (callbacks.onGetListOfAvailableHpForStudyCallback) {
+                callbacks.onGetListOfAvailableHpForStudyCallback(actionData);
             }
         }
 
@@ -184,12 +190,6 @@
         functions.performOnMeasurementDeletedCallback = function (actionData) {
             if (callbacks.onMeasurementDeletedCallback) {
                 callbacks.onMeasurementDeletedCallback(actionData);
-            }
-        }
-
-        functions.performOnGetListOfAvailableHpForStudyCallback = function (actionData) {
-            if (callbacks.onGetListOfAvailableHpForStudyCallback) {
-                callbacks.onGetListOfAvailableHpForStudyCallback(actionData);
             }
         }
 
@@ -427,6 +427,14 @@
             callbacks.onGetSnapshotCallback = undefined;
         }
 
+        functions.subscribeGetListOfAvailableHpForStudy = function (callback) {
+            callbacks.onGetListOfAvailableHpForStudyCallback = callback;
+        };
+
+        functions.unsubscribeGetListOfAvailableHpForStudy = function () {
+            callbacks.onGetListOfAvailableHpForStudyCallback = undefined;
+        };
+
         functions.subscribeStudyLoadedEvent = function (callback) {
             callbacks.onStudyLoadedCallback = callback;
             this.subscribeEvent('STUDY_LOADED');
@@ -515,16 +523,6 @@
         functions.unsubscribeMeasurementDeletedEvent = function () {
             callbacks.onMeasurementDeletedCallback = undefined;
             this.unsubscribeEvent('MEASUREMENT_DELETED');
-        };
-
-        functions.subscribeGetListOfAvailableHpForStudy = function (callback) {
-            callbacks.onGetListOfAvailableHpForStudyCallback = callback;
-            this.subscribeEvent('GET_LIST_OF_AVAILABLE_HP_FOR_STUDY');
-        };
-
-        functions.unsubscribeGetListOfAvailableHpForStudy = function () {
-            callbacks.onGetListOfAvailableHpForStudyCallback = undefined;
-            this.unsubscribeEvent('GET_LIST_OF_AVAILABLE_HP_FOR_STUDY');
         };
 
         functions.getIntegrationType = function () {

@@ -12,7 +12,7 @@
 		viewerCommunication.subscribeGetViewportsInformationEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetInstanceMetadataEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
-		viewerCommunication.subscribeGetListOfAvailableHpForStudy(onGetHpList)
+		viewerCommunication.subscribeGetListOfAvailableHpForStudy(onGetHpList);
 
 		function onOpeningTypeChange () {
 			const openingType = document.getElementById('openingType').value;
@@ -340,7 +340,7 @@
 			const measurementData = {
 				id: 'closed-polygon-1',
 				type: 'closed-polygon',
-				containerId: 'viewport-container-1-1',
+				containerId: 'viewport-container-1-1-1-1',
 				studyUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__Orthanc',
 				seriesUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__1.2.840.113619.2.55.3.4271045733.996.1449464144.601__Orthanc',
 				instanceUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__1.2.840.113619.2.55.3.4271045733.996.1449464144.601__1.2.840.113619.2.55.3.4271045733.996.1449464144.602.1__Orthanc',
@@ -361,7 +361,7 @@
 					disabled: false
 				}
 			}
-			viewerCommunication.createNewMeasurement('viewport-container-1-1', measurementData);
+			viewerCommunication.createNewMeasurement('viewport-container-1-1-1-1', measurementData);
 		}
 
 		function deleteMeasurement () {
@@ -598,10 +598,10 @@
 		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
 		<button type='button' onclick='setCustomStudyLabel()'>Set custom study label</button>
 		<button type='button' onclick='setCustomTags()'>Set custom study and series tags</button>
-		<button type='button' onclick='generateInstanceMpr("viewport-container-1-1")'>Generate instance MPR</button>
-		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "AXIAL")'>Create MPR Axial</button>
-		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "SAGITTAL")'>Create MPR Sagittal</button>
-		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "CORONAL")'>Create MPR Coronal</button>
+		<button type='button' onclick='generateInstanceMpr("viewport-container-1-1-1-1")'>Generate instance MPR</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1-1-1", "AXIAL")'>Create MPR Axial</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1-1-1", "SAGITTAL")'>Create MPR Sagittal</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1-1-1", "CORONAL")'>Create MPR Coronal</button>
 	</div>
 	<br>
 	<div>
