@@ -62,6 +62,9 @@
                 case 'GET_SNAPSHOT':
                     this.performGetSnapshotCallback(actionData);
                     break;
+                case 'GET_LIST_OF_AVAILABLE_HP_FOR_STUDY':
+                    this.performOnGetListOfAvailableHpForStudyCallback(actionData);
+                    break;
                 case 'STUDY_LOADED':
                     this.performOnStudyLoadedCallback(actionData);
                     break;
@@ -127,6 +130,12 @@
         functions.performGetSnapshotCallback = function (actionData) {
             if (callbacks.onGetSnapshotCallback) {
                 callbacks.onGetSnapshotCallback(actionData);
+            }
+        }
+
+        functions.performOnGetListOfAvailableHpForStudyCallback = function (actionData) {
+            if (callbacks.onGetListOfAvailableHpForStudyCallback) {
+                callbacks.onGetListOfAvailableHpForStudyCallback(actionData);
             }
         }
 
@@ -342,6 +351,26 @@
             this.postActionMessage('DELETE_MEASUREMENT_BY_ID', {measurementId});
         };
 
+        functions.getListOfAvailableHpForStudy = function () {
+            this.postActionMessage('GET_LIST_OF_AVAILABLE_HP_FOR_STUDY');
+        };
+
+        functions.applyHangingProtocol = function (groupId, categoryId) {
+            this.postActionMessage('APPLY_HANGING_PROTOCOL', {groupId, categoryId});
+        };
+
+        functions.applyPreviousHangingProtocolCategory = function () {
+            this.postActionMessage('APPLY_PREVIOUS_HANGING_PROTOCOL_CATEGORY');
+        };
+
+        functions.applyNextHangingProtocolCategory = function () {
+            this.postActionMessage('APPLY_NEXT_HANGING_PROTOCOL_CATEGORY');
+        };
+
+        functions.applyNextHangingProtocolCP = function () {
+            this.postActionMessage('APPLY_NEXT_HANGING_PROTOCOL_CP');
+        };
+
         functions.subscribeEvent = function (eventType) {
             this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
         };
@@ -397,6 +426,14 @@
         functions.unsubscribeGetSnapshotEvent = function () {
             callbacks.onGetSnapshotCallback = undefined;
         }
+
+        functions.subscribeGetListOfAvailableHpForStudy = function (callback) {
+            callbacks.onGetListOfAvailableHpForStudyCallback = callback;
+        };
+
+        functions.unsubscribeGetListOfAvailableHpForStudy = function () {
+            callbacks.onGetListOfAvailableHpForStudyCallback = undefined;
+        };
 
         functions.subscribeStudyLoadedEvent = function (callback) {
             callbacks.onStudyLoadedCallback = callback;

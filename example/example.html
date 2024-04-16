@@ -12,6 +12,7 @@
 		viewerCommunication.subscribeGetViewportsInformationEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetInstanceMetadataEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
+		viewerCommunication.subscribeGetListOfAvailableHpForStudy(onGetHpList);
 
 		function onOpeningTypeChange () {
 			const openingType = document.getElementById('openingType').value;
@@ -264,13 +265,15 @@
 						level: 'study',
 						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
 						labels: ['example', 'left'],
-						hideDicomLabels: false
+						dicomTagLabels: ['00080005'],
+						hideOriginalLabels: false
 					},
 					{
 						level: 'series',
 						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
 						labels: ['series', 'label'],
-						hideDicomLabels: false
+						dicomTagLabels: ['00080013', '00450010'],
+						hideOriginalLabels: false
 					}
 				],
 				topRightLabels: [
@@ -279,13 +282,15 @@
 						level: 'study',
 						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595',
 						labels: ['right', 'label'],
-						hideDicomLabels: true
+						dicomTagLabels: ['00080016'],
+						hideOriginalLabels: false
 					},
 					{
 						level: 'series',
 						uid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.601',
 						labels: ['patient', 'right'],
-						hideDicomLabels: false
+						dicomTagLabels: [],
+						hideOriginalLabels: true
 					}
 				]
 			}
@@ -335,7 +340,7 @@
 			const measurementData = {
 				id: 'closed-polygon-1',
 				type: 'closed-polygon',
-				containerId: 'viewport-container-1-1',
+				containerId: 'viewport-container-1-1-1-1',
 				studyUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__Orthanc',
 				seriesUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__1.2.840.113619.2.55.3.4271045733.996.1449464144.601__Orthanc',
 				instanceUid: '1.2.840.113619.2.55.3.4271045733.996.1449464144.595__1.2.840.113619.2.55.3.4271045733.996.1449464144.601__1.2.840.113619.2.55.3.4271045733.996.1449464144.602.1__Orthanc',
@@ -352,15 +357,56 @@
 						[95.8311612584763, 37.179406120000635, 42.5],
 						[-0.4964600446614611, 118.40702869925087, 42.5],
 						[-55.168894532260964, 32.4931972896166, 42.5]
-					]
+					],
+					disabled: false
 				}
 			}
-			viewerCommunication.createNewMeasurement('viewport-container-1-1', measurementData);
+			viewerCommunication.createNewMeasurement('viewport-container-1-1-1-1', measurementData);
 		}
 
 		function deleteMeasurement () {
 			const measurementId = 'closed-polygon-1';
 			viewerCommunication.deleteMeasurementById(measurementId);
+		}
+
+		function getListOfAvailableHpForStudy () {
+			viewerCommunication.getListOfAvailableHpForStudy();
+		}
+
+		function onGetHpList (hpList) {
+			console.log(hpList);
+
+			const selectElement = document.getElementById('hangingProtocolSelection');
+
+			hpList.forEach((protocol) => {
+				const option = document.createElement('option');
+				option.value = protocol.groupId + '|' + protocol.categoryId;
+				option.text = protocol.label;
+				selectElement.appendChild(option);
+			});
+		}
+
+		function applyHangingProtocol () {
+			const selectElement = document.getElementById('hangingProtocolSelection');
+			const selectedValue = selectElement.value;
+			const selectedValues = selectedValue.split('|');
+			const groupId = selectedValues[0];
+			const categoryId = selectedValues[1];
+
+			console.log(groupId, categoryId);
+			viewerCommunication.applyHangingProtocol(groupId, categoryId);
+		}
+
+		function applyPreviousHangingProtocolCategory () {
+			viewerCommunication.applyPreviousHangingProtocolCategory();
+		}
+
+		function applyNextHangingProtocolCategory () {
+			viewerCommunication.applyNextHangingProtocolCategory();
+		}
+
+		function applyNextHangingProtocolCP () {
+			viewerCommunication.applyNextHangingProtocolCP();
 		}
 
 		function getData () {
@@ -552,15 +598,25 @@
 		<button type='button' onclick='setAdditionalTopInfoLabels()'>Set additional top info labels</button>
 		<button type='button' onclick='setCustomStudyLabel()'>Set custom study label</button>
 		<button type='button' onclick='setCustomTags()'>Set custom study and series tags</button>
-		<button type='button' onclick='generateInstanceMpr("viewport-container-1-1")'>Generate instance MPR</button>
-		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "AXIAL")'>Create MPR Axial</button>
-		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "SAGITTAL")'>Create MPR Sagittal</button>
-		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1", "CORONAL")'>Create MPR Coronal</button>
+		<button type='button' onclick='generateInstanceMpr("viewport-container-1-1-1-1")'>Generate instance MPR</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1-1-1", "AXIAL")'>Create MPR Axial</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1-1-1", "SAGITTAL")'>Create MPR Sagittal</button>
+		<button type='button' onclick='changeViewportOrientation("viewport-container-1-1-1-1", "CORONAL")'>Create MPR Coronal</button>
 	</div>
 	<br>
 	<div>
 		<button type='button' onclick='createMeasurement()'>Create measurement</button>
 		<button type='button' onclick='deleteMeasurement()'>Delete measurement</button>
+	</div>
+	<br>
+	<div>
+		<button type='button' onclick='getListOfAvailableHpForStudy()'>Get HP list of study</button>
+		<label for='hangingProtocolSelection'>Select HP:</label>
+		<select id='hangingProtocolSelection'></select>
+		<button type='button' onclick='applyHangingProtocol()'>Apply hanging protocol</button>
+		<button type='button' onclick='applyPreviousHangingProtocolCategory()'>Apply previous HP category</button>
+		<button type='button' onclick='applyNextHangingProtocolCategory()'>Apply next HP category</button>
+		<button type='button' onclick='applyNextHangingProtocolCP()'>Apply next CP</button>
 	</div>
 	<br>
 	<div>

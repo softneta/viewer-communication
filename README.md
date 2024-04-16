@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.24 (2023-12-15)
+##### Version 1.0.30 (2024-04-16)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -574,7 +574,8 @@ const measurementData = {
             [335, 132, 42],
             [178, 224, 42],
             [80, 113, 42]
-        ]
+        ],
+        disabled: false
     }
 };
 ```
@@ -587,6 +588,36 @@ viewerCommunication.deleteMeasurementById(measurementId);
 Parameter:
 
 - `measurementId` - Measurement id that has to be deleted.
+
+#### Get list of available HP for study
+```js
+viewerCommunication.getListOfAvailableHpForStudy();
+```
+
+#### Apply hanging protocol
+```js
+viewerCommunication.applyHangingProtocol(groupId, categoryId);
+```
+
+Parameters:
+
+- `groupId` - HP group id.
+- `categoryId` - HP category id from selected group.
+
+#### Apply previous hanging protocol category
+```js
+viewerCommunication.applyPreviousHangingProtocolCategory();
+```
+
+#### Apply next hanging protocol category
+```js
+viewerCommunication.applyNextHangingProtocolCategory();
+```
+
+#### Apply next hanging protocol comparison study (CP)
+```js
+viewerCommunication.applyNextHangingProtocolCP();
+```
 
 ### Events
 #### Subscribe communication service ready event
@@ -814,6 +845,21 @@ Parameter:
 viewerCommunication.unsubscribeMeasurementDeletedEvent();
 ```
 
+#### Subscribe get list of available HP for study event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeGetListOfAvailableHpForStudy(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe get list of available HP for study event
+```js
+viewerCommunication.unsubscribeGetListOfAvailableHpForStudy();
+```
+
 ## Measurement coordinates conversion
 To ensure correct measurement recreation from data, all our measurement related functions and events work or provide 3D coordinates in patient coordinate system.
 If you need to convert received 3D coordinate to instance 2D coordinate, you can use following function:
@@ -847,6 +893,39 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.30 (2024-04-16)
+#### Changes
+- Fixed integration example issues related to latest MedDream Viewer changes.
+
+### 1.0.29 (2024-03-06)
+#### Changes
+- Added `applyHangingProtocol` function to set hanging protocol by group and category ids.
+
+### 1.0.28 (2024-03-15)
+#### Changes
+- Fix unsubscribe get list of available HP for study event description.
+
+## Change log
+### 1.0.27 (2024-03-06)
+#### Changes
+- Added `getListOfAvailableHpForStudy` function to get available hanging protocol list for active study.
+- Added `applyPreviousHangingProtocolCategory` function to apply previous available hanging protocol category.
+- Added `applyNextHangingProtocolCategory` function to apply next available hanging protocol category.
+- Added `applyNextHangingProtocolCP` function to apply next available hanging protocol comparison study (CP).
+
+### 1.0.26 (2024-01-23)
+#### Changes
+- Updated `setCustomStudyLabel` function to set additional dicom tag labels for study or series level.
+- Added `dicomTagLabels` argument to array of dicom tags.
+
+#### Breaking changes
+- Renamed `hideDicomLabels` argument to `hideOriginalLabels`.
+
+## Change log
+### 1.0.25 (2023-12-19)
+#### Changes
+- Updated `measurementData` object with `disabled` parameter which allows to disable measurement from editing.
+
 ### 1.0.24 (2023-12-15)
 #### Changes
 - Change log update.
