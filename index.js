@@ -92,6 +92,15 @@
                 case 'MEASUREMENT_DELETED':
                     this.performOnMeasurementDeletedCallback(actionData);
                     break;
+                case 'VIRTUAL_SERIES_CREATED':
+                    this.performOnVirtualSeriesCreatedCallback(actionData);
+                    break;
+                case 'MEASUREMENT_MARKED':
+                    this.performOnMeasurementMarkedCallback(actionData);
+                    break;
+                case 'MEASUREMENT_UNMARKED':
+                    this.performOnMeasurementUnmarkedCallback(actionData);
+                    break;
                 default:
                     break;
             }
@@ -190,6 +199,24 @@
         functions.performOnMeasurementDeletedCallback = function (actionData) {
             if (callbacks.onMeasurementDeletedCallback) {
                 callbacks.onMeasurementDeletedCallback(actionData);
+            }
+        }
+
+        functions.performOnVirtualSeriesCreatedCallback = function (actionData) {
+            if (callbacks.onVirtualSeriesCreatedCallback) {
+                callbacks.onVirtualSeriesCreatedCallback(actionData);
+            }
+        }
+
+        functions.performOnMeasurementMarkedCallback = function (actionData) {
+            if (callbacks.onMeasurementMarkedCallback) {
+                callbacks.onMeasurementMarkedCallback(actionData);
+            }
+        }
+
+        functions.performOnMeasurementUnmarkedCallback = function (actionData) {
+            if (callbacks.onMeasurementUnmarkedCallback) {
+                callbacks.onMeasurementUnmarkedCallback(actionData);
             }
         }
 
@@ -371,6 +398,22 @@
             this.postActionMessage('APPLY_NEXT_HANGING_PROTOCOL_CP');
         };
 
+        functions.updateMeasurement = function (containerId, measurementData) {
+            this.postActionMessage('UPDATE_MEASUREMENT_BY_ID', {containerId, measurementData});
+        }
+
+        functions.initiateCreateMeasurement = function (containerId, measurementType) {
+            this.postActionMessage('INITIATE_CREATE_MEASUREMENT', {containerId, measurementType});
+        };
+
+        functions.selectMeasurementToEdit = function (containerId, measurementId, opts={}) {
+            this.postActionMessage('SELECT_MEASUREMENT_TO_EDIT', {containerId, measurementId, opts});
+        };
+
+        functions.changeMeasurementDisplayById = function (containerId, measurementId, opts={}) {
+            this.postActionMessage('CHANGE_MEASUREMENT_DISPLAY_BY_ID', {containerId, measurementId, opts});
+        };
+
         functions.subscribeEvent = function (eventType) {
             this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
         };
@@ -523,6 +566,36 @@
         functions.unsubscribeMeasurementDeletedEvent = function () {
             callbacks.onMeasurementDeletedCallback = undefined;
             this.unsubscribeEvent('MEASUREMENT_DELETED');
+        };
+
+        functions.subscribeVirtualSeriesCreatedEvent = function (callback) {
+            callbacks.onVirtualSeriesCreatedCallback = callback;
+            this.subscribeEvent('VIRTUAL_SERIES_CREATED');
+        };
+
+        functions.unsubscribeVirtualSeriesCreatedEvent = function () {
+            callbacks.onVirtualSeriesCreatedCallback = undefined;
+            this.unsubscribeEvent('VIRTUAL_SERIES_CREATED');
+        };
+
+        functions.subscribeMeasurementMarkedEvent = function (callback) {
+            callbacks.onMeasurementMarkedCallback = callback;
+            this.subscribeEvent('MEASUREMENT_MARKED');
+        };
+
+        functions.unsubscribeMeasurementMarkedEvent = function () {
+            callbacks.onMeasurementMarkedCallback = undefined;
+            this.unsubscribeEvent('MEASUREMENT_MARKED');
+        };
+
+        functions.subscribeMeasurementUnmarkedEvent = function (callback) {
+            callbacks.onMeasurementUnmarkedCallback = callback;
+            this.subscribeEvent('MEASUREMENT_UNMARKED');
+        };
+
+        functions.unsubscribeMeasurementUnmarkedEvent = function () {
+            callbacks.onMeasurementUnmarkedCallback = undefined;
+            this.unsubscribeEvent('MEASUREMENT_UNMARKED');
         };
 
         functions.getIntegrationType = function () {
