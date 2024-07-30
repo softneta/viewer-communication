@@ -406,11 +406,11 @@
             this.postActionMessage('INITIATE_CREATE_MEASUREMENT', {containerId, measurementType});
         };
 
-        functions.selectMeasurementToEdit = function (containerId, measurementId, opts={}) {
+        functions.selectMeasurementToEdit = function (containerId, measurementId, opts = {}) {
             this.postActionMessage('SELECT_MEASUREMENT_TO_EDIT', {containerId, measurementId, opts});
         };
 
-        functions.changeMeasurementDisplayById = function (containerId, measurementId, opts={}) {
+        functions.changeMeasurementDisplayById = function (containerId, measurementId, opts = {}) {
             this.postActionMessage('CHANGE_MEASUREMENT_DISPLAY_BY_ID', {containerId, measurementId, opts});
         };
 

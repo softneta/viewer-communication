@@ -369,7 +369,7 @@
 			const measurementId = 'closed-polygon-1';
 			viewerCommunication.deleteMeasurementById(measurementId);
 		}
-		
+
 		function getListOfAvailableHpForStudy () {
 			viewerCommunication.getListOfAvailableHpForStudy();
 		}
@@ -483,10 +483,6 @@
 
 		function subscribeEvent () {
 			const eventName = document.getElementById('eventSelection').value;
-			if (subscriptions[eventName]) {
-				console.log('already subscribed!', eventName);
-				return;
-			}
 			switch (eventName) {
 				case 'studyLoaded':
 					viewerCommunication.subscribeStudyLoadedEvent(this.eventCallbackWrapper(eventName));

@@ -594,7 +594,7 @@ Parameter:
 viewerCommunication.updateMeasurement(containerId, measurementData);
 ```
 
-Parameter:
+Parameters:
 
 - `containerId` - Viewport container id in which measurement will be created.
 - `measurementData` - Object with measurement data to use updating existing measurement.
@@ -604,7 +604,7 @@ Parameter:
 viewerCommunication.selectMeasurementToEdit(containerId, measurementId, opts);
 ```
 
-Parameter:
+Parameters:
 
 - `containerId` - Viewport container id in which measurement should be edited.
 - `measurementId` - An ID of measurement to be selected.
@@ -627,7 +627,7 @@ viewerCommunication.changeMeasurementDisplayById(containerId, measurementId, opt
 ```
 
 Allows to alter the way how myocardium ROI is displayed (changing display properties for other measurement types is not supported).
-Parameter:
+Parameters:
 
 - `containerId` - Viewport container id in which measurement is visible.
 - `measurementId` - An ID of measurement to be updated.
@@ -650,7 +650,7 @@ Parameter `sendToFront` is optional. If provided and its value is true, then res
 viewerCommunication.initiateCreateMeasurement(containerId, measurementType);
 ```
 
-Parameter:
+Parameters:
 
 - `containerId` - Viewport container id in which measurement will be created.
 - `measurementType` - Identifies the type of measurement to initiate via this method. Currently is limited to `myocardium-roi-annotation` type only.
