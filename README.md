@@ -529,7 +529,7 @@ viewerCommunication.generateInstanceMpr(containerId);
 
 Parameter:
 
-- `containerId` - viewport container id. If no container id is provided then active container is used. 
+- `containerId` - viewport container id. If no container id is provided then active container is used.
 
 #### Change viewport orientation
 ```js
@@ -588,6 +588,72 @@ viewerCommunication.deleteMeasurementById(measurementId);
 Parameter:
 
 - `measurementId` - Measurement id that has to be deleted.
+
+#### Update measurement by id
+```js
+viewerCommunication.updateMeasurement(containerId, measurementData);
+```
+
+Parameters:
+
+- `containerId` - Viewport container id in which measurement will be created.
+- `measurementData` - Object with measurement data to use updating existing measurement.
+
+#### Select measurement to edit
+```js
+viewerCommunication.selectMeasurementToEdit(containerId, measurementId, opts);
+```
+
+Parameters:
+
+- `containerId` - Viewport container id in which measurement should be edited.
+- `measurementId` - An ID of measurement to be selected.
+- `opts` - Additional parameters depending on type of measurement being selected.
+
+Opts data object example for `myocardium-roi-annotation`:
+
+```js
+const opts = {
+    toolId: 'repulsor',
+    hoveredRegionIndex: 1
+};
+```
+Parameter `toolId` can be one of three possible values: `repulsor`, `draw-region`, `fill-brush`.
+Parameter `hoveredRegionIndex` indicates which region from myocardium ROI is intended to be edited with repulsor. Parameter is ignored if other tools are activated.
+
+#### Change measurement display by id
+```js
+viewerCommunication.changeMeasurementDisplayById(containerId, measurementId, opts);
+```
+
+Allows to alter the way how myocardium ROI is displayed (changing display properties for other measurement types is not supported).
+Parameters:
+
+- `containerId` - Viewport container id in which measurement is visible.
+- `measurementId` - An ID of measurement to be updated.
+- `opts` - Additional parameters depending on type of measurement being updated.
+
+Opts data object example for `myocardium-roi-annotation`:
+
+```js
+const opts = {
+    show: false,
+    sendToFront: false
+};
+```
+Parameter `show` is of boolean type. If true - respective myocardium ROI should be made visible.
+If false - it should be hidden.
+Parameter `sendToFront` is optional. If provided and its value is true, then respective myocardium ROI should be brought to top in Z-order.
+
+#### Initiate create measurement
+```js
+viewerCommunication.initiateCreateMeasurement(containerId, measurementType);
+```
+
+Parameters:
+
+- `containerId` - Viewport container id in which measurement will be created.
+- `measurementType` - Identifies the type of measurement to initiate via this method. Currently is limited to `myocardium-roi-annotation` type only.
 
 #### Get list of available HP for study
 ```js
@@ -845,6 +911,51 @@ Parameter:
 viewerCommunication.unsubscribeMeasurementDeletedEvent();
 ```
 
+#### Subscribe virtual series create event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeVirtualSeriesCreatedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe virtual series create event
+```js
+viewerCommunication.unsubscribeVirtualSeriesCreatedEvent();
+```
+
+#### Subscribe measurement marked event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeMeasurementMarkedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe measurement marked event
+```js
+viewerCommunication.unsubscribeMeasurementMarkedEvent();
+```
+
+#### Subscribe measurement unmarked event
+```js
+const callback = (data) => console.log(data);
+viewerCommunication.subscribeMeasurementUnmarkedEvent(callback);
+```
+
+Parameter:
+
+- `callback` - Callback function which is called when event is triggered.
+
+#### Unsubscribe measurement unmarked event
+```js
+viewerCommunication.unsubscribeMeasurementUnmarkedEvent();
+```
+
 #### Subscribe get list of available HP for study event
 ```js
 const callback = (data) => console.log(data);
@@ -893,6 +1004,15 @@ function get3DImagePositionFrom2D (position2d) {
 ```
 
 ## Change log
+### 1.0.31 (2024-07-29)
+#### Changes
+- Added functions `subscribeMeasurementMarkedEvent`, `subscribeMeasurementUnmarkedEvent` to listen on measurement mark events.
+- Added function `subscribeVirtualSeriesCreatedEvent` to listen when virtual series are created.
+- Added function `updateMeasurement` to enable update of existing measurement without destroying underlying object.
+- Added function `initiateCreateMeasurement` to support creating myocardium ROI and activate default editing tool.
+- Added function `selectMeasurementToEdit` to support either selecting closed_polygon or myocardium ROI objects for editing.
+- Added function `changeMeasurementDisplayById` to allow show/hide myocardium ROI or rearrange myocardium ROIs on Z-axis.
+
 ### 1.0.30 (2024-04-16)
 #### Changes
 - Fixed integration example issues related to latest MedDream Viewer changes.
@@ -934,11 +1054,11 @@ function get3DImagePositionFrom2D (position2d) {
 #### Changes
 - Updated `updateButtonVisibility` example to include mpr mist oblique and key objects buttons.
 
-### 1.0.22 (2023-10-19) 
+### 1.0.22 (2023-10-19)
 #### Changes
 - Added `updateButtonVisibility` function to set which toolbar buttons are hidden.
 
-### 1.0.21 (2023-10-04) 
+### 1.0.21 (2023-10-04)
 #### Changes
 - Added `setCustomTags` function to set custom tags with tag text and color for study or series.
 
