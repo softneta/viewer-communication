@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.30 (2024-04-16)
+##### Version 1.0.31 (2024-07-29)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
