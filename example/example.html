@@ -13,6 +13,7 @@
 		viewerCommunication.subscribeGetInstanceMetadataEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
 		viewerCommunication.subscribeGetListOfAvailableHpForStudy(onGetHpList);
+		const subscriptions = {};
 
 		function onOpeningTypeChange () {
 			const openingType = document.getElementById('openingType').value;
@@ -409,6 +410,41 @@
 			viewerCommunication.applyNextHangingProtocolCP();
 		}
 
+		function createMeasurementFromInput () {
+			const eventBodyInput = document.getElementById('eventBodyInput').value;
+			const measurementData = JSON.parse(eventBodyInput);
+			viewerCommunication.createNewMeasurement('viewport-container-1-1-1-1', measurementData);
+		}
+
+		function updateMeasurementFromInput () {
+			const eventBodyInput = document.getElementById('eventBodyInput').value;
+			const measurementData = JSON.parse(eventBodyInput);
+			viewerCommunication.updateMeasurement('viewport-container-1-1-1-1', measurementData);
+		}
+
+		function deleteMeasurementFromInput () {
+			const measurementId = document.getElementById('eventBodyInput').value;
+			viewerCommunication.deleteMeasurementById(measurementId.trim());
+		}
+
+		function initiateCreateMeasurement () {
+			const eventBodyInput = document.getElementById('eventBodyInput').value;
+			const methodArguments = JSON.parse(eventBodyInput);
+			viewerCommunication.initiateCreateMeasurement('viewport-container-1-1-1-1', ...methodArguments);
+		}
+
+		function selectMeasurementToEdit () {
+			const eventBodyInput = document.getElementById('eventBodyInput').value;
+			const methodArguments = JSON.parse(eventBodyInput);
+			viewerCommunication.selectMeasurementToEdit('viewport-container-1-1-1-1', ...methodArguments);
+		}
+
+		function changeMeasurementDisplayById () {
+			const eventBodyInput = document.getElementById('eventBodyInput').value;
+			const methodArguments = JSON.parse(eventBodyInput);
+			viewerCommunication.changeMeasurementDisplayById('viewport-container-1-1-1-1', ...methodArguments);
+		}
+
 		function getData () {
 			switch (document.getElementById('dataTypeSelection').value) {
 				case 'openedStudies':
@@ -437,34 +473,52 @@
 			console.log('Communication Service Ready');
 		}
 
+		function eventCallbackWrapper (eventName) {
+			const wrappedFunction = (data) => {
+				this.onEventCallback(eventName, data);
+			}
+			subscriptions[eventName] = wrappedFunction;
+			return wrappedFunction;
+		}
+
 		function subscribeEvent () {
-			switch (document.getElementById('eventSelection').value) {
+			const eventName = document.getElementById('eventSelection').value;
+			switch (eventName) {
 				case 'studyLoaded':
-					viewerCommunication.subscribeStudyLoadedEvent(this.onEventCallback);
+					viewerCommunication.subscribeStudyLoadedEvent(this.eventCallbackWrapper(eventName));
 					break;
 				case 'annotationsSaveStarted':
-					viewerCommunication.subscribeAnnotationsSaveStartedEvent(this.onEventCallback);
+					viewerCommunication.subscribeAnnotationsSaveStartedEvent(this.eventCallbackWrapper(eventName));
 					break;
 				case 'annotationsSaved':
-					viewerCommunication.subscribeAnnotationsSavedEvent(this.onEventCallback);
+					viewerCommunication.subscribeAnnotationsSavedEvent(this.eventCallbackWrapper(eventName));
 					break;
 				case 'structureSetEdited':
-					viewerCommunication.subscribeStructureSetEditedEvent(this.onEventCallback);
+					viewerCommunication.subscribeStructureSetEditedEvent(this.eventCallbackWrapper(eventName));
 					break;
 				case 'instanceChanged':
-					viewerCommunication.subscribeInstanceChangedEvent(this.onEventCallback);
+					viewerCommunication.subscribeInstanceChangedEvent(this.eventCallbackWrapper(eventName));
 					break;
 				case 'activeContainerChanged':
-					viewerCommunication.subscribeActiveContainerChangedEvent(this.onEventCallback);
+					viewerCommunication.subscribeActiveContainerChangedEvent(this.eventCallbackWrapper(eventName));
 					break;
 				case 'measurementCreated':
-					viewerCommunication.subscribeMeasurementCreatedEvent(this.onEventCallback);
+					viewerCommunication.subscribeMeasurementCreatedEvent(this.eventCallbackWrapper(eventName));
 					break;
 				case 'measurementUpdated':
-					viewerCommunication.subscribeMeasurementUpdatedEvent(this.onEventCallback);
+					viewerCommunication.subscribeMeasurementUpdatedEvent(this.eventCallbackWrapper(eventName));
 					break;
 				case 'measurementDeleted':
-					viewerCommunication.subscribeMeasurementDeletedEvent(this.onEventCallback);
+					viewerCommunication.subscribeMeasurementDeletedEvent(this.eventCallbackWrapper(eventName));
+					break;
+				case 'virtualSeriesCreated':
+					viewerCommunication.subscribeVirtualSeriesCreatedEvent(this.eventCallbackWrapper(eventName));
+					break;
+				case 'measurementMarked':
+					viewerCommunication.subscribeMeasurementMarkedEvent(this.eventCallbackWrapper(eventName));
+					break;
+				case 'measurementUnmarked':
+					viewerCommunication.subscribeMeasurementUnmarkedEvent(this.eventCallbackWrapper(eventName));
 					break;
 				default:
 					break;
@@ -472,42 +526,70 @@
 		}
 
 		function unsubscribeEvent () {
-			switch (document.getElementById('eventSelection').value) {
+			const eventName = document.getElementById('eventSelection').value;
+			const registeredListener = subscriptions[eventName];
+			delete subscriptions[eventName];
+
+			switch (eventName) {
 				case 'studyLoaded':
-					viewerCommunication.unsubscribeStudyLoadedEvent(this.onEventCallback);
+					viewerCommunication.unsubscribeStudyLoadedEvent(registeredListener);
 					break;
 				case 'annotationsSaveStarted':
-					viewerCommunication.unsubscribeAnnotationsSaveStartedEvent(this.onEventCallback);
+					viewerCommunication.unsubscribeAnnotationsSaveStartedEvent(registeredListener);
 					break;
 				case 'annotationsSaved':
-					viewerCommunication.unsubscribeAnnotationsSavedEvent(this.onEventCallback);
+					viewerCommunication.unsubscribeAnnotationsSavedEvent(registeredListener);
 					break;
 				case 'structureSetEdited':
-					viewerCommunication.unsubscribeStructureSetEditedEvent(this.onEventCallback);
+					viewerCommunication.unsubscribeStructureSetEditedEvent(registeredListener);
 					break;
 				case 'instanceChanged':
-					viewerCommunication.unsubscribeInstanceChangedEvent(this.onEventCallback);
+					viewerCommunication.unsubscribeInstanceChangedEvent(registeredListener);
 					break;
 				case 'activeContainerChanged':
-					viewerCommunication.unsubscribeActiveContainerChangedEvent(this.onEventCallback);
+					viewerCommunication.unsubscribeActiveContainerChangedEvent(registeredListener);
 					break;
 				case 'measurementCreated':
-					viewerCommunication.unsubscribeMeasurementCreatedEvent(this.onEventCallback);
+					viewerCommunication.unsubscribeMeasurementCreatedEvent(registeredListener);
 					break;
 				case 'measurementUpdated':
-					viewerCommunication.unsubscribeMeasurementUpdatedEvent(this.onEventCallback);
+					viewerCommunication.unsubscribeMeasurementUpdatedEvent(registeredListener);
 					break;
 				case 'measurementDeleted':
-					viewerCommunication.unsubscribeMeasurementDeletedEvent(this.onEventCallback);
+					viewerCommunication.unsubscribeMeasurementDeletedEvent(registeredListener);
+					break;
+				case 'virtualSeriesCreated':
+					viewerCommunication.unsubscribeVirtualSeriesCreatedEvent(registeredListener);
+					break;
+				case 'measurementMarked':
+					viewerCommunication.unsubscribeMeasurementMarkedEvent(registeredListener);
+					break;
+				case 'measurementUnmarked':
+					viewerCommunication.unsubscribeMeasurementUnmarkedEvent(registeredListener);
 					break;
 				default:
 					break;
 			}
 		}
 
-		function onEventCallback (data) {
+		function onEventCallback (eventName, data) {
 			console.log(data);
+			const eventsListener = document.getElementById('eventsReceived');
+			const option = document.createElement('option');
+			const uniqueId = eventName + ' ' + new Date().toISOString();
+			option.innerHTML = uniqueId;
+			option.dataset.eventBody = JSON.stringify(data, undefined, 2);
+			eventsListener.appendChild(option);
 		}
+
+		document.addEventListener('DOMContentLoaded', () => {
+			const eventsListener = document.getElementById('eventsReceived');
+			const eventBodyOutput = document.getElementById('eventBodyOutput');
+			eventsListener.addEventListener('change', function () {
+				const eventBody =  this.querySelector(':checked').getAttribute('data-event-body');
+				eventBodyOutput.value = eventBody;
+			});
+		}, false);
 
 	</script>
 </head>
@@ -639,11 +721,42 @@
 			<option value='measurementCreated'>Measurement created</option>
 			<option value='measurementUpdated'>Measurement updated</option>
 			<option value='measurementDeleted'>Measurement deleted</option>
+			<option value='virtualSeriesCreated'>Virtual series created</option>
+			<option value='measurementMarked'>Measurement marked</option>
+			<option value='measurementUnmarked'>Measurement unmarked</option>
 		</select>
 		<button type='button' onclick='subscribeEvent()'>Subscribe</button>
 		<button type='button' onclick='unsubscribeEvent()'>Unsubscribe</button>
 	</div>
 	<br>
+	<div>
+		<label for='eventsReceived'>Events received:</label>
+		<div  style="display:flex; flex-direction: row;">
+			<select id='eventsReceived' size = 10 style="flex-basis:100%;">
+
+			</select>
+			<textarea id='eventBodyOutput' rows=10 style="flex-basis:100%;"></textarea>
+		</div>
+
+	</div>
+	<br>
+	<div>
+		<label for='eventBodyInput'>Inject method arguments</label>
+		<div style="display:flex; flex-direction: row;">
+			<textarea id='eventBodyInput' rows=10 style="flex-basis:100%;"></textarea>
+		</div>
+		<button type='button' onClick='initiateCreateMeasurement()'>Initiate new measurement</button>
+		<button type='button' onClick='selectMeasurementToEdit()'>Select measurement to edit</button>
+		<button type='button' onClick='changeMeasurementDisplayById()'>Change measurement display by ID</button>
+		<button type='button' onclick='createMeasurementFromInput()'>Create measurement from data</button>
+		<button type='button' onclick='updateMeasurementFromInput()'>Update measurement by ID</button>
+		<button type='button' onclick='deleteMeasurementFromInput()'>Delete measurement by ID</button>
+	</div>
+	<br>
+	<div>
+		<label for='dataTypeSelection'>:</label>
+	</div>
+
 	<iframe id='medDreamIframe' title='medDreamIframe' width='100%' height='550px' style='display: none;'></iframe>
 </body>
 </html>
