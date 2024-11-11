@@ -8,10 +8,12 @@
 		const viewerCommunication = new ViewerCommunication('http://localhost:8080', defaultIntegrationType);
 		viewerCommunication.subscribeCommunicationServiceReadyEvent(onCommunicationServiceReady);
 		viewerCommunication.subscribeGetOpenedStudiesEvent(onGetDataCallback);
+		viewerCommunication.subscribeGetOpenedSeriesEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetViewportDataEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetViewportsInformationEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetInstanceMetadataEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetSnapshotEvent(onGetSnapshot);
+		viewerCommunication.subscribeCreateVirtualSeriesCompletedEvent(onGetDataCallback);
 		viewerCommunication.subscribeGetListOfAvailableHpForStudy(onGetHpList);
 		const subscriptions = {};
 
@@ -427,6 +429,24 @@
 			viewerCommunication.deleteMeasurementById(measurementId.trim());
 		}
 
+		function openInstanceExtFromInput () {
+			const eventBodyInput = document.getElementById('eventBodyInput').value;
+			const eventArgs = JSON.parse(eventBodyInput);
+			viewerCommunication.openInstanceExt(eventArgs);
+		}
+
+		function createVirtualSeriesFromInput () {
+			const eventBodyInput = document.getElementById('eventBodyInput').value;
+			const eventArgs = JSON.parse(eventBodyInput);
+			viewerCommunication.createVirtualSeries(eventArgs);
+		}
+
+		function toggleVirtualSeriesDialogFromInput () {
+			const eventBodyInput = document.getElementById('eventBodyInput').value;
+			const eventArgs = JSON.parse(eventBodyInput);
+			viewerCommunication.toggleVirtualSeriesDialog(eventArgs);
+		}
+
 		function initiateCreateMeasurement () {
 			const eventBodyInput = document.getElementById('eventBodyInput').value;
 			const methodArguments = JSON.parse(eventBodyInput);
@@ -449,6 +469,9 @@
 			switch (document.getElementById('dataTypeSelection').value) {
 				case 'openedStudies':
 					viewerCommunication.getOpenedStudies();
+					break;
+				case 'openedSeries':
+					viewerCommunication.getOpenedSeries();
 					break;
 				case 'viewportData':
 					const showLabels = false;
@@ -705,6 +728,7 @@
 		<label for='dataTypeSelection'>Data type:</label>
 		<select id='dataTypeSelection'>
 			<option value='openedStudies'>Opened studies</option>
+			<option value='openedSeries'>Opened series</option>
 			<option value='viewportData'>Viewport data</option>
 			<option value='viewportsInformation'>Viewports information</option>
 			<option value='instanceMetadata'>Instance metadata</option>
@@ -751,6 +775,9 @@
 		<button type='button' onclick='createMeasurementFromInput()'>Create measurement from data</button>
 		<button type='button' onclick='updateMeasurementFromInput()'>Update measurement by ID</button>
 		<button type='button' onclick='deleteMeasurementFromInput()'>Delete measurement by ID</button>
+		<button type='button' onClick='openInstanceExtFromInput()'>Open instance</button>
+		<button type='button' onClick='createVirtualSeriesFromInput()'>Create virtual series</button>
+		<button type='button' onClick='toggleVirtualSeriesDialogFromInput()'>Toggle virtual series create dialog</button>
 	</div>
 	<br>
 	<div>

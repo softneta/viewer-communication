@@ -254,7 +254,7 @@ viewerCommunication.openInstance(instanceUid, viewportColumn, viewportRow, viewp
 
 Parameters:
 
-- `instanceUid` - Unique instance uid which has to be opened to viewport.
+- `instanceUid` - Unique instance db uid which has to be opened to viewport.
 - `viewportColumn` - Column number of desired viewport.
 - `viewportRow` - Row number of desired viewport.
 - `viewportActions` - Object of actions which have to be performed on viewport after instance is loaded.
@@ -287,6 +287,23 @@ const viewportActions = {
     alignment: 'CENTER'                     //RIGHT, LEFT, CENTER
 };
 ```
+
+#### Open instance Ext
+```js
+viewerCommunication.openInstanceExt(instanceUid, panelId, viewportColumn, viewportRow, viewportActions);
+```
+
+Parameters:
+
+- `instanceUid` - Unique instance uid which has to be opened to viewport. Contrary to `openInstance` method, this is an UID,
+that uniquely identifies an instance among all open studies.
+- `panelId` - If provided, identifies the target panel, where this instance is intended to be opened up. If not provided,
+shall default to the first panel.
+- `viewportColumn` - Column number of desired viewport.
+- `viewportRow` - Row number of desired viewport.
+- `viewportActions` - Object of actions which have to be performed on viewport after instance is loaded.
+
+For detailed explanation of available viewportActions, please check description of `openIntance` method.
 
 #### Export instance
 ```js
@@ -352,6 +369,19 @@ Usage:
 - Register **_subscribeGetOpenedStudiesEvent_** **_callback_** function.
 - Call **_getOpenedStudies_** function to request opened studies data in callback function.
 - Once message is processed, **_callback_** function will be triggered with opened studies array.
+
+#### Get opened series
+```js
+const callback = (openSeries) => console.log(openSeries);
+viewerCommunication.subscribeGetOpenedSeriesEvent(callback);
+viewerCommunication.getOpenedSeries();
+```
+
+Usage:
+
+- Register **subscribeGetOpenedSeriesEvent** **_callback_** function.
+- Call **_getOpenedSeries_** function to request opened series data in callback function.
+- Once message is processed, **_callback_** function will be triggered with opened series array.
 
 #### Get viewport data
 ```js
@@ -1003,7 +1033,91 @@ function get3DImagePositionFrom2D (position2d) {
 }
 ```
 
+#### Create virtual series
+```js
+const callback = ({status, details}) => console.log(status, details);
+viewerCommunication.subscribeCreateVirtualSeriesCompletedEvent(callback);
+viewerCommunication.createVirtualSeries(operationArgs);
+```
+
+The function requests creating virtual series from provided arguments.
+Parameters:
+
+- `operationArgs` - Arguments to pass over to virtual series builder.
+
+operationArgs data object example:
+
+```js
+const operationArgs = {
+    studyUid: '1.3.12.2.1107__STORAGE_ID1',
+    fromSeries: [
+        '1.3.12.2.1107__5064.0.0.0__STORAGE_ID1',
+        '1.3.12.2.1107__5064.0.0.1__STORAGE_ID1'
+    ],
+    postActions: {
+        openIn: 'viewport-container-1-1-1-2'
+    }
+};
+```
+Parameter `studyUid` is an UID of the study, where new virtual series have to be added.
+Parameter `fromSeries` is an array of strings. Each string represents an UID of a series from target study.
+Parameter `postActions` is optional. If provided, it is a JSON structure with a field, named `openIn`. The field is a container ID,
+where newly created series should be opened up right after creating the series. If parameter is not provided, created series will not be
+opened up in any viewport.
+
+The callback will receive an object with two fields:
+- `status`. This is a string, identifying whether an operation to create virtual series succeeded or failed. There are two possible values here:
+'success' or 'error'.
+- `details`. In case the operation has failed, it contains a string, describing a reason of failure.
+In case an operation was successfull, a JSON object will be returned, containing two fields:
+- `studyUid` (the UID of the study, where new series have been added)
+- `seriesUid` (the UID of new series)
+
+Usage:
+
+- Register **subscribeCreateVirtualSeriesCompletedEvent** **_callback_** function.
+- Call **_createVirtualSeries_** function to request creating new virtual series.
+- Once message is processed, **_callback_** function will be triggered with result of operation.
+
+#### Toggle Create Virtual Series modal dialog
+```js
+viewerCommunication.toggleVirtualSeriesDialog(actionArgs);
+```
+
+Submits a request to show (or hide) a Create Virtual Series dialog.
+Parameters:
+- `actionArgs`. An arguments to be passed over to the dialog.
+
+actionArgs data object example:
+
+```js
+const actionArgs = {
+    action: 'show',
+    studyUid: '1.3.12.2.1107__STORAGE_ID1',
+    fromSeries: [
+        '1.3.12.2.1107__5064.0.0.0__STORAGE_ID1',
+        '1.3.12.2.1107__5064.0.0.1__STORAGE_ID1'
+    ]
+};
+```
+All parameters are optional. If no parameters have been provided, the application will check if there is any open instance in active viewport,
+and will open a Create Virtual Series dialog, linked to that instance and that viewport.
+Parameter `action` can have two values: 'show' or 'hide'. If parameter is omitted, this is treated as request to show the dialog.
+Parameter `studyUid` goes together with parameter `fromSeries`. Either none of them is provided, or both must be present.
+The `studyUid` indicates the study, where new virtual series should be added. The `fromSeries` indicates what series must be displayed in
+Create Virtual Series dialog (and all of them will be displayed as pre-selected).
+
 ## Change log
+### 1.0.32 (2024-11-08)
+#### Changes
+- Added function `getOpenedSeries` to request obtaining a list of currently opened series from all opened studies
+- Added functions `subscribeGetOpenedSeriesEvent` and `unsubscribeGetOpenedSeriesEvent` to subscribe/unsubscribe to `getOpenedSeries` request callback.
+- Added function `openInstanceExt` to open specified instance in specified viewport (lookup by UID instead of db UID and supports panel layout)
+- Added function `createVirtualSeries` to initiate an operation to create virtual series from provided parameters
+- Added functions `subscribeCreateVirtualSeriesCompletedEvent` and `unsubscribeCreateVirtualSeriesCompletedEvent` to subscribe/unsubscribe to
+`createVirtualSeries` request callback.
+- Added function `toggleVirtualSeriesDialog` to show/hide Create Virtual Series dialog with (optional) provided parameters.
+
 ### 1.0.31 (2024-07-29)
 #### Changes
 - Added functions `subscribeMeasurementMarkedEvent`, `subscribeMeasurementUnmarkedEvent` to listen on measurement mark events.

@@ -50,6 +50,9 @@
                 case 'GET_OPENED_STUDIES':
                     this.performOnGetOpenedStudiesCallback(actionData);
                     break;
+                case 'GET_OPENED_SERIES':
+                    this.performOnGetOpenedSeriesCallback(actionData);
+                    break;
                 case 'GET_VIEWPORT_DATA':
                     this.performOnGetViewportDataCallback(actionData);
                     break;
@@ -101,6 +104,9 @@
                 case 'MEASUREMENT_UNMARKED':
                     this.performOnMeasurementUnmarkedCallback(actionData);
                     break;
+                case 'CREATE_VIRTUAL_SERIES_COMPLETED':
+                    this.performOnCreateVirtualSeriesCompletedCallback(actionData);
+                    break;
                 default:
                     break;
             }
@@ -115,6 +121,12 @@
         functions.performOnGetOpenedStudiesCallback = function (actionData) {
             if (callbacks.onGetOpenedStudiesCallback) {
                 callbacks.onGetOpenedStudiesCallback(actionData);
+            }
+        }
+
+        functions.performOnGetOpenedSeriesCallback = function (actionData) {
+            if (callbacks.onGetOpenedSeriesCallback) {
+                callbacks.onGetOpenedSeriesCallback(actionData);
             }
         }
 
@@ -220,6 +232,12 @@
             }
         }
 
+        functions.performOnCreateVirtualSeriesCompletedCallback = function (actionData) {
+            if (callbacks.onCreateVirtualSeriesCompletedCallback) {
+                callbacks.onCreateVirtualSeriesCompletedCallback(actionData);
+            }
+        }
+
         functions.openInMedDreamWindow = function (value) {
             windowReference = window.open(`${targetURL}?${integrationType}=${value}`, '_blank');
         };
@@ -310,6 +328,10 @@
             this.postActionMessage('OPEN_INSTANCE', {instanceUid, viewportColumn, viewportRow, viewportActions});
         };
 
+        functions.openInstanceExt = function (openArgs) {
+            this.postActionMessage('OPEN_INSTANCE_EXT', openArgs);
+        };
+
         functions.exportInstance = function (viewportColumn, viewportRow) {
             this.postActionMessage('EXPORT_INSTANCE', {viewportColumn, viewportRow});
         };
@@ -320,6 +342,10 @@
 
         functions.getOpenedStudies = function () {
             this.postActionMessage('GET_OPENED_STUDIES');
+        };
+
+        functions.getOpenedSeries = function () {
+            this.postActionMessage('GET_OPENED_SERIES');
         };
 
         functions.getViewportData = function (showLabels) {
@@ -436,6 +462,14 @@
 
         functions.unsubscribeGetOpenedStudiesEvent = function () {
             callbacks.onGetOpenedStudiesCallback = undefined;
+        }
+
+        functions.subscribeGetOpenedSeriesEvent = function (callback) {
+            callbacks.onGetOpenedSeriesCallback = callback;
+        };
+
+        functions.unsubscribeGetOpenedSeriesEvent = function () {
+            callbacks.onGetOpenedSeriesCallback = undefined;
         }
 
         functions.subscribeGetViewportDataEvent = function (callback) {
@@ -597,6 +631,22 @@
             callbacks.onMeasurementUnmarkedCallback = undefined;
             this.unsubscribeEvent('MEASUREMENT_UNMARKED');
         };
+
+        functions.createVirtualSeries = function (actionArgs) {
+            this.postActionMessage('CREATE_VIRTUAL_SERIES', actionArgs);
+        };
+
+        functions.subscribeCreateVirtualSeriesCompletedEvent = function (callback) {
+            callbacks.onCreateVirtualSeriesCompletedCallback = callback;
+        };
+
+        functions.unsubscribeCreateVirtualSeriesCompletedEvent = function () {
+            callbacks.onCreateVirtualSeriesCompletedCallback = undefined;
+        }
+
+        functions.toggleVirtualSeriesDialog = function (actionArgs) {
+            this.postActionMessage('TOGGLE_VIRTUAL_SERIES_DIALOG', actionArgs);
+        }
 
         functions.getIntegrationType = function () {
             return integrationType;
