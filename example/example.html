@@ -447,6 +447,12 @@
 			viewerCommunication.toggleVirtualSeriesDialog(eventArgs);
 		}
 
+		function clickMeasurementTool () {
+			const eventBodyInput = document.getElementById('eventBodyInput').value;
+			const methodArguments = JSON.parse(eventBodyInput);
+			viewerCommunication.clickMeasurementTool(methodArguments);
+		}
+
 		function initiateCreateMeasurement () {
 			const eventBodyInput = document.getElementById('eventBodyInput').value;
 			const methodArguments = JSON.parse(eventBodyInput);
@@ -543,6 +549,14 @@
 				case 'measurementUnmarked':
 					viewerCommunication.subscribeMeasurementUnmarkedEvent(this.eventCallbackWrapper(eventName));
 					break;
+				case 'eventByName':
+					const eventByName = String(document.getElementById('eventName').value).trim();
+					if (eventByName === '') {
+						document.getElementById('eventName').focus();
+						return;
+					}
+					viewerCommunication.subscribeEventByName(eventByName, this.eventCallbackWrapper(eventByName));
+					break;
 				default:
 					break;
 			}
@@ -590,6 +604,16 @@
 				case 'measurementUnmarked':
 					viewerCommunication.unsubscribeMeasurementUnmarkedEvent(registeredListener);
 					break;
+				case 'eventByName':
+					const eventByName = String(document.getElementById('eventName').value).trim();
+					if (eventByName === '') {
+						document.getElementById('eventName').focus();
+						return;
+					}
+					const eventListener = subscriptions[eventByName];
+					delete subscriptions[eventByName];
+					viewerCommunication.unsubscribeEventByName(eventByName, eventListener);
+					break;
 				default:
 					break;
 			}
@@ -608,10 +632,21 @@
 		document.addEventListener('DOMContentLoaded', () => {
 			const eventsListener = document.getElementById('eventsReceived');
 			const eventBodyOutput = document.getElementById('eventBodyOutput');
+			const eventNameInput = document.getElementById('eventName');
+			const eventOptions = document.getElementById('eventSelection');
+			eventOptions.addEventListener('change', function () {
+				if (eventOptions.value === 'eventByName') {
+					eventNameInput.style.display = '';
+					eventNameInput.focus();
+				} else {
+					eventNameInput.style.display = 'none';
+				}
+			});
 			eventsListener.addEventListener('change', function () {
 				const eventBody =  this.querySelector(':checked').getAttribute('data-event-body');
 				eventBodyOutput.value = eventBody;
 			});
+			eventNameInput.style.display = 'none';
 		}, false);
 
 	</script>
@@ -748,7 +783,9 @@
 			<option value='virtualSeriesCreated'>Virtual series created</option>
 			<option value='measurementMarked'>Measurement marked</option>
 			<option value='measurementUnmarked'>Measurement unmarked</option>
+			<option value='eventByName'>Event by name</option>
 		</select>
+		<input placeholder='Enter event name' id="eventName" />
 		<button type='button' onclick='subscribeEvent()'>Subscribe</button>
 		<button type='button' onclick='unsubscribeEvent()'>Unsubscribe</button>
 	</div>
@@ -778,6 +815,7 @@
 		<button type='button' onClick='openInstanceExtFromInput()'>Open instance</button>
 		<button type='button' onClick='createVirtualSeriesFromInput()'>Create virtual series</button>
 		<button type='button' onClick='toggleVirtualSeriesDialogFromInput()'>Toggle virtual series create dialog</button>
+		<button type='button' onClick='clickMeasurementTool()'>Click measurement tool</button>
 	</div>
 	<br>
 	<div>

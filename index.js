@@ -108,6 +108,9 @@
                     this.performOnCreateVirtualSeriesCompletedCallback(actionData);
                     break;
                 default:
+                    if (callbacks[actionType]) {
+                        callbacks[actionType](actionData);
+                    }
                     break;
             }
         };
@@ -440,6 +443,10 @@
             this.postActionMessage('CHANGE_MEASUREMENT_DISPLAY_BY_ID', {containerId, measurementId, opts});
         };
 
+        functions.clickMeasurementTool = function (actionArgs) {
+            this.postActionMessage('SIMULATE_MEASUREMENT_ACTION', actionArgs);
+        }
+
         functions.subscribeEvent = function (eventType) {
             this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
         };
@@ -630,6 +637,16 @@
         functions.unsubscribeMeasurementUnmarkedEvent = function () {
             callbacks.onMeasurementUnmarkedCallback = undefined;
             this.unsubscribeEvent('MEASUREMENT_UNMARKED');
+        };
+
+        functions.subscribeEventByName = function (eventName, callback) {
+            callbacks[eventName] = callback;
+            this.subscribeEvent(eventName);
+        };
+
+        functions.unsubscribeEventByName = function (eventName) {
+            callbacks[eventName] = undefined;
+            this.unsubscribeEvent(eventName);
         };
 
         functions.createVirtualSeries = function (actionArgs) {
