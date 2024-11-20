@@ -1107,7 +1107,45 @@ Parameter `studyUid` goes together with parameter `fromSeries`. Either none of t
 The `studyUid` indicates the study, where new virtual series should be added. The `fromSeries` indicates what series must be displayed in
 Create Virtual Series dialog (and all of them will be displayed as pre-selected).
 
+#### Subscribe to event by event name
+```js
+const eventName = 'image-position-changed';
+const callback = (eventParams) => console.log(eventParams);
+viewerCommunication.subscribeEventByName(eventName, actionArgs);
+```
+
+Parameter:
+- `eventName` - The name of event to subscribe to. See documentation to viewports-core library, `CORE_EVENTS` for a list of available events.
+- `callback` - Callback function which is called when event is triggered. All arguments from fired event are assembled into single array, in the order of original appearance.
+
+#### Unsubscribe from event by event name
+```js
+const eventName = 'image-position-changed';
+viewerCommunication.unsubscribeEventByName(eventName);
+```
+
+Parameter:
+- `eventName` - The name of event to unsubscribe from.
+
+#### Click measurement tool menu item
+```js
+const actionArgs = {toolId: 'measure-line'};
+viewerCommunication.clickMeasurementTool(actionArgs);
+```
+
+Parameter:
+- `actionArgs`. An object with `toolId` field, identifying the measurement tool to be activated/deactivated.
+Note the tools available to manipulate via this call are exactly the same as in Measurements menu (i.e., if you
+can't see a menu item in Measurements menu - then this user would be able to invoke respective measurement via
+communication API).
+
 ## Change log
+### 1.0.33 (2024-11-20)
+#### Changes
+- Added function `subscribeEventByName` to allow subscribing to any event, that is being fired via `triggerEvent` mechanism by viewports-core library.
+- Added function `unsubscribeEventByName` to allow unsubscribing from events, previously subscribed via `subscribeEventByName`.
+- Added function `clickMeasurementTool` to allow manipulating menu items from Measurements menu (simulating clicks by end user).
+
 ### 1.0.32 (2024-11-08)
 #### Changes
 - Added function `getOpenedSeries` to request obtaining a list of currently opened series from all opened studies
