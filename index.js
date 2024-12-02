@@ -1,7 +1,8 @@
 (function(globals) {
     'use strict';
+    let functionsSingleton;
 
-    function ViewerCommunication (targetURL, integration = 'study') {
+    function createFunctionsObject (targetURL, integration) {
         let windowReference;
         let integrationType = integration === 'study' ? 'study' : 'token';
         const callbacks = {};
@@ -33,7 +34,7 @@
         };
 
         functions.registerMessageReceivedEvent = function () {
-            window.addEventListener('message', this.onMessageReceived.bind(this));
+            window.addEventListener('message', this.onMessageReceivedBind);
         };
 
         functions.onMessageReceived = function ({data, origin}) {
@@ -681,10 +682,33 @@
             this.addIntegrationFunctions();
         };
 
-        functions.addIntegrationFunctions();
-        functions.registerMessageReceivedEvent();
+        functions.destroy = function () {
+            if (this.onMessageReceivedBind) {
+                window.removeEventListener('message', this.onMessageReceivedBind);
+            }
+            Object.keys(callbacks).forEach(key => delete callbacks[key]);
+        };
+
+        functions.onMessageReceivedBind = functions.onMessageReceived.bind(functions);
 
         return functions;
+    }
+
+    function ViewerCommunication (targetURL, integration = 'study', singleton = true) {
+        if (singleton) {
+            if (functionsSingleton) {
+                functionsSingleton.destroy();
+            }
+            functionsSingleton = createFunctionsObject(targetURL, integration);
+            functionsSingleton.addIntegrationFunctions();
+            functionsSingleton.registerMessageReceivedEvent();
+
+            return functionsSingleton;
+        }
+        const multiConnection = createFunctionsObject(targetURL, integration);
+        multiConnection.addIntegrationFunctions();
+        multiConnection.registerMessageReceivedEvent();
+        return multiConnection;
     }
 
     if (typeof define !== 'undefined' && define.amd) {

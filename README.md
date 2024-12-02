@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.31 (2024-07-29)
+##### Version 1.0.34 (2024-12-02)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -1140,6 +1140,12 @@ can't see a menu item in Measurements menu - then this user would be able to inv
 communication API).
 
 ## Change log
+### 1.0.34 (2024-12-02)
+#### Changes
+- Fixed a problem with ViewerCommunication object being reinstantiated multiple times by some customers. The object should have been used as singleton,
+but multiple objects were created and left hanging around. A constructor of ViewerCommunication has been rewritten to destroy previously created
+objects.
+
 ### 1.0.33 (2024-11-20)
 #### Changes
 - Added function `subscribeEventByName` to allow subscribing to any event, that is being fired via `triggerEvent` mechanism by viewports-core library.
