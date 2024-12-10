@@ -1013,22 +1013,29 @@ function get2DImagePositionFrom3D (position3d) {
         + (position3d[2] - imagePosition[2]) * imageOrientation[2]) / pixelSpacing.x;
     const y = ((position3d[0] - imagePosition[0]) * imageOrientation[3] + (position3d[1] - imagePosition[1]) * imageOrientation[4]
         + (position3d[2] - imagePosition[2]) * imageOrientation[5]) / pixelSpacing.y;
-    return {x, y};
+    return {
+        x: x + 0.5,
+        y: y + 0.5
+    };
 }
 ```
 
 If you need to convert 2D coordinate back to 3D coordinate, then you can use this function:
 ```js
 function get3DImagePositionFrom2D (position2d) {
+    const offsetPosition = {
+        x: position2d.x - 0.5,
+        y: position2d.y - 0.5
+    };
     const imagePosition = this.getImagePosition();
     const imageOrientation = this.getImageOrientation();
     const pixelSpacing = this.getPixelSpacing();
-    const x = imagePosition[0] + imageOrientation[0] * position2d.x * pixelSpacing.x
-        + imageOrientation[3] * position2d.y * pixelSpacing.y;
-    const y = imagePosition[1] + imageOrientation[1] * position2d.x * pixelSpacing.x
-        + imageOrientation[4] * position2d.y * pixelSpacing.y;
-    const z = imagePosition[2] + imageOrientation[2] * position2d.x * pixelSpacing.x
-        + imageOrientation[5] * position2d.y * pixelSpacing.y;
+    const x = imagePosition[0] + imageOrientation[0] * offsetPosition.x * pixelSpacing.x
+        + imageOrientation[3] * offsetPosition.y * pixelSpacing.y;
+    const y = imagePosition[1] + imageOrientation[1] * offsetPosition.x * pixelSpacing.x
+        + imageOrientation[4] * offsetPosition.y * pixelSpacing.y;
+    const z = imagePosition[2] + imageOrientation[2] * offsetPosition.x * pixelSpacing.x
+        + imageOrientation[5] * offsetPosition.y * pixelSpacing.y;
     return [x, y, z];
 }
 ```
@@ -1140,6 +1147,10 @@ can't see a menu item in Measurements menu - then this user would be able to inv
 communication API).
 
 ## Change log
+### 1.0.35 (2024-12-10)
+#### Changes
+- Updated `Measurement coordinates conversion` section functions to adjust position based on viewport half pixel offset.
+
 ### 1.0.34 (2024-12-02)
 #### Changes
 - Fixed a problem with ViewerCommunication object being reinstantiated multiple times by some customers. The object should have been used as singleton,
