@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.35 (2024-12-10)
+##### Version 1.0.36 (2023-12-11)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -1147,6 +1147,10 @@ can't see a menu item in Measurements menu - then this user would be able to inv
 communication API).
 
 ## Change log
+### 1.0.36 (2023-12-11)
+#### Changes
+- Change log update.
+
 ### 1.0.35 (2024-12-10)
 #### Changes
 - Updated `Measurement coordinates conversion` section functions to adjust position based on viewport half pixel offset.
@@ -1194,7 +1198,6 @@ objects.
 #### Changes
 - Fix unsubscribe get list of available HP for study event description.
 
-## Change log
 ### 1.0.27 (2024-03-06)
 #### Changes
 - Added `getListOfAvailableHpForStudy` function to get available hanging protocol list for active study.
@@ -1210,7 +1213,6 @@ objects.
 #### Breaking changes
 - Renamed `hideDicomLabels` argument to `hideOriginalLabels`.
 
-## Change log
 ### 1.0.25 (2023-12-19)
 #### Changes
 - Updated `measurementData` object with `disabled` parameter which allows to disable measurement from editing.
