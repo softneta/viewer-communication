@@ -1,5 +1,5 @@
 # MedDream Viewer Communication API
-##### Version 1.0.36 (2023-12-11)
+##### Version 1.0.37 (2025-01-16)
 
 ## Add component to your project
 Import and create new Viewer Communication component in your project:
@@ -1147,7 +1147,11 @@ can't see a menu item in Measurements menu - then this user would be able to inv
 communication API).
 
 ## Change log
-### 1.0.36 (2023-12-11)
+### 1.0.37 (2025-01-16)
+#### Changes
+- Updated project license.
+
+### 1.0.36 (2024-12-11)
 #### Changes
 - Change log update.
 

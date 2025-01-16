@@ -1,8 +1,8 @@
 {
   "name": "@meddream/viewer-communication",
-  "version": "1.0.35",
+  "version": "1.0.37",
   "main": "index.js",
   "repository": "softneta/viewer-communication",
-  "author": "UAB Softneta",
-  "license": "UNLICENSED"
+  "author": "UAB MedDream",
+  "license": "SEE LICENSE IN LICENSE.txt"
 }
