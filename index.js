@@ -1,7 +1,8 @@
 (function(globals) {
     'use strict';
+    let functionsSingleton;
 
-    function ViewerCommunication (targetURL, integration = 'study') {
+    function createFunctionsObject (targetURL, integration) {
         let windowReference;
         let integrationType = integration === 'study' ? 'study' : 'token';
         const callbacks = {};
@@ -33,7 +34,7 @@
         };
 
         functions.registerMessageReceivedEvent = function () {
-            window.addEventListener('message', this.onMessageReceived.bind(this));
+            window.addEventListener('message', this.onMessageReceivedBind);
         };
 
         functions.onMessageReceived = function ({data, origin}) {
@@ -49,6 +50,9 @@
                     break;
                 case 'GET_OPENED_STUDIES':
                     this.performOnGetOpenedStudiesCallback(actionData);
+                    break;
+                case 'GET_OPENED_SERIES':
+                    this.performOnGetOpenedSeriesCallback(actionData);
                     break;
                 case 'GET_VIEWPORT_DATA':
                     this.performOnGetViewportDataCallback(actionData);
@@ -101,7 +105,13 @@
                 case 'MEASUREMENT_UNMARKED':
                     this.performOnMeasurementUnmarkedCallback(actionData);
                     break;
+                case 'CREATE_VIRTUAL_SERIES_COMPLETED':
+                    this.performOnCreateVirtualSeriesCompletedCallback(actionData);
+                    break;
                 default:
+                    if (callbacks[actionType]) {
+                        callbacks[actionType](actionData);
+                    }
                     break;
             }
         };
@@ -115,6 +125,12 @@
         functions.performOnGetOpenedStudiesCallback = function (actionData) {
             if (callbacks.onGetOpenedStudiesCallback) {
                 callbacks.onGetOpenedStudiesCallback(actionData);
+            }
+        }
+
+        functions.performOnGetOpenedSeriesCallback = function (actionData) {
+            if (callbacks.onGetOpenedSeriesCallback) {
+                callbacks.onGetOpenedSeriesCallback(actionData);
             }
         }
 
@@ -220,6 +236,12 @@
             }
         }
 
+        functions.performOnCreateVirtualSeriesCompletedCallback = function (actionData) {
+            if (callbacks.onCreateVirtualSeriesCompletedCallback) {
+                callbacks.onCreateVirtualSeriesCompletedCallback(actionData);
+            }
+        }
+
         functions.openInMedDreamWindow = function (value) {
             windowReference = window.open(`${targetURL}?${integrationType}=${value}`, '_blank');
         };
@@ -310,6 +332,10 @@
             this.postActionMessage('OPEN_INSTANCE', {instanceUid, viewportColumn, viewportRow, viewportActions});
         };
 
+        functions.openInstanceExt = function (openArgs) {
+            this.postActionMessage('OPEN_INSTANCE_EXT', openArgs);
+        };
+
         functions.exportInstance = function (viewportColumn, viewportRow) {
             this.postActionMessage('EXPORT_INSTANCE', {viewportColumn, viewportRow});
         };
@@ -320,6 +346,10 @@
 
         functions.getOpenedStudies = function () {
             this.postActionMessage('GET_OPENED_STUDIES');
+        };
+
+        functions.getOpenedSeries = function () {
+            this.postActionMessage('GET_OPENED_SERIES');
         };
 
         functions.getViewportData = function (showLabels) {
@@ -414,6 +444,10 @@
             this.postActionMessage('CHANGE_MEASUREMENT_DISPLAY_BY_ID', {containerId, measurementId, opts});
         };
 
+        functions.clickMeasurementTool = function (actionArgs) {
+            this.postActionMessage('SIMULATE_MEASUREMENT_ACTION', actionArgs);
+        }
+
         functions.subscribeEvent = function (eventType) {
             this.postActionMessage('SUBSCRIBE_EVENT', {eventType});
         };
@@ -436,6 +470,14 @@
 
         functions.unsubscribeGetOpenedStudiesEvent = function () {
             callbacks.onGetOpenedStudiesCallback = undefined;
+        }
+
+        functions.subscribeGetOpenedSeriesEvent = function (callback) {
+            callbacks.onGetOpenedSeriesCallback = callback;
+        };
+
+        functions.unsubscribeGetOpenedSeriesEvent = function () {
+            callbacks.onGetOpenedSeriesCallback = undefined;
         }
 
         functions.subscribeGetViewportDataEvent = function (callback) {
@@ -598,6 +640,32 @@
             this.unsubscribeEvent('MEASUREMENT_UNMARKED');
         };
 
+        functions.subscribeEventByName = function (eventName, callback) {
+            callbacks[eventName] = callback;
+            this.subscribeEvent(eventName);
+        };
+
+        functions.unsubscribeEventByName = function (eventName) {
+            callbacks[eventName] = undefined;
+            this.unsubscribeEvent(eventName);
+        };
+
+        functions.createVirtualSeries = function (actionArgs) {
+            this.postActionMessage('CREATE_VIRTUAL_SERIES', actionArgs);
+        };
+
+        functions.subscribeCreateVirtualSeriesCompletedEvent = function (callback) {
+            callbacks.onCreateVirtualSeriesCompletedCallback = callback;
+        };
+
+        functions.unsubscribeCreateVirtualSeriesCompletedEvent = function () {
+            callbacks.onCreateVirtualSeriesCompletedCallback = undefined;
+        }
+
+        functions.toggleVirtualSeriesDialog = function (actionArgs) {
+            this.postActionMessage('TOGGLE_VIRTUAL_SERIES_DIALOG', actionArgs);
+        }
+
         functions.getIntegrationType = function () {
             return integrationType;
         };
@@ -614,10 +682,33 @@
             this.addIntegrationFunctions();
         };
 
-        functions.addIntegrationFunctions();
-        functions.registerMessageReceivedEvent();
+        functions.destroy = function () {
+            if (this.onMessageReceivedBind) {
+                window.removeEventListener('message', this.onMessageReceivedBind);
+            }
+            Object.keys(callbacks).forEach(key => delete callbacks[key]);
+        };
+
+        functions.onMessageReceivedBind = functions.onMessageReceived.bind(functions);
 
         return functions;
+    }
+
+    function ViewerCommunication (targetURL, integration = 'study', singleton = true) {
+        if (singleton) {
+            if (functionsSingleton) {
+                functionsSingleton.destroy();
+            }
+            functionsSingleton = createFunctionsObject(targetURL, integration);
+            functionsSingleton.addIntegrationFunctions();
+            functionsSingleton.registerMessageReceivedEvent();
+
+            return functionsSingleton;
+        }
+        const multiConnection = createFunctionsObject(targetURL, integration);
+        multiConnection.addIntegrationFunctions();
+        multiConnection.registerMessageReceivedEvent();
+        return multiConnection;
     }
 
     if (typeof define !== 'undefined' && define.amd) {
